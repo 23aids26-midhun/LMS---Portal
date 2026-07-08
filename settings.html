@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/course.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="dashboard-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fa fa-graduation-cap"></i></div>
+      <span class="sidebar-brand">ACAD<span>EX</span></span>
+    </div>
+    <nav class="sidebar-nav" style="padding-top:20px">
+      <a href="student.html" class="sidebar-link" data-tooltip="Dashboard"><span class="sidebar-icon"><i class="fa fa-th-large"></i></span><span class="sidebar-label">Dashboard</span></a>
+      <a href="profile.html" class="sidebar-link" data-tooltip="Profile"><span class="sidebar-icon"><i class="fa fa-user"></i></span><span class="sidebar-label">Profile</span></a>
+      <a href="settings.html" class="sidebar-link active" data-tooltip="Settings"><span class="sidebar-icon"><i class="fa fa-cog"></i></span><span class="sidebar-label">Settings</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" data-logout><span class="sidebar-icon"><i class="fa fa-sign-out"></i></span><span class="sidebar-label">Logout</span></button>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <main class="main-content" id="mainContent">
+    <header class="inner-navbar" id="innerNavbar">
+      <div class="inner-navbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
+        <div class="breadcrumb"><a href="student.html">Dashboard</a><span class="breadcrumb-sep">/</span><span>Settings</span></div>
+      </div>
+      <div class="inner-navbar-right">
+        <button class="theme-toggle notif-btn" title="Toggle theme"><i class="fa fa-moon"></i></button>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <div class="page-header">
+        <h1 class="page-title">Settings ⚙️</h1>
+        <p class="page-subtitle">Manage your preferences and account settings.</p>
+      </div>
+
+      <div class="settings-grid">
+        <!-- Settings Nav -->
+        <div class="settings-nav">
+          <div class="settings-nav-item active" onclick="showSettingsSection('appearance', this)"><i class="fa fa-paint-brush"></i> Appearance</div>
+          <div class="settings-nav-item" onclick="showSettingsSection('notifications', this)"><i class="fa fa-bell"></i> Notifications</div>
+          <div class="settings-nav-item" onclick="showSettingsSection('security', this)"><i class="fa fa-lock"></i> Security</div>
+          <div class="settings-nav-item" onclick="showSettingsSection('privacy', this)"><i class="fa fa-shield"></i> Privacy</div>
+          <div class="settings-nav-item" onclick="showSettingsSection('language', this)"><i class="fa fa-globe"></i> Language</div>
+        </div>
+
+        <!-- Settings Panels -->
+        <div>
+          <!-- Appearance -->
+          <div class="settings-section active card" id="section-appearance">
+            <div class="card-header"><span class="card-title">Appearance</span></div>
+            <div class="card-body">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)">
+                <div>
+                  <div class="font-semi">Dark Mode</div>
+                  <div class="text-sm text-muted">Switch between light and dark theme</div>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" id="darkModeToggle" onchange="Theme.toggle()">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div style="padding:14px 0;border-bottom:1px solid var(--border)">
+                <div class="font-semi" style="margin-bottom:12px">Color Accent</div>
+                <div style="display:flex;gap:10px">
+                  <div onclick="setAccent('#2563EB')" style="width:32px;height:32px;border-radius:50%;background:#2563EB;cursor:pointer;border:3px solid var(--border)" title="Blue"></div>
+                  <div onclick="setAccent('#14B8A6')" style="width:32px;height:32px;border-radius:50%;background:#14B8A6;cursor:pointer;border:3px solid transparent" title="Teal"></div>
+                  <div onclick="setAccent('#8B5CF6')" style="width:32px;height:32px;border-radius:50%;background:#8B5CF6;cursor:pointer;border:3px solid transparent" title="Purple"></div>
+                  <div onclick="setAccent('#EF4444')" style="width:32px;height:32px;border-radius:50%;background:#EF4444;cursor:pointer;border:3px solid transparent" title="Red"></div>
+                  <div onclick="setAccent('#F59E0B')" style="width:32px;height:32px;border-radius:50%;background:#F59E0B;cursor:pointer;border:3px solid transparent" title="Amber"></div>
+                </div>
+              </div>
+              <div style="padding:14px 0">
+                <div class="font-semi" style="margin-bottom:6px">Font Size</div>
+                <input type="range" min="14" max="18" value="16" style="width:200px;accent-color:var(--primary)" oninput="document.documentElement.style.fontSize = this.value + 'px'">
+                <span class="text-sm text-muted" style="margin-left:12px">Default (16px)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notifications -->
+          <div class="settings-section card" id="section-notifications">
+            <div class="card-header"><span class="card-title">Notifications</span></div>
+            <div class="card-body">
+              <div style="display:flex;flex-direction:column;gap:0">
+                ${[
+                  ['email-notify','Email Notifications', 'Receive notifications via email'],
+                  ['push-notify','Push Notifications', 'Browser push notifications'],
+                  ['assign-notify','Assignment Reminders', 'Get reminded about due assignments'],
+                  ['quiz-notify','Quiz Alerts', 'Notifications for upcoming quizzes'],
+                  ['grade-notify','Grade Updates', 'When your assignments are graded'],
+                  ['news-notify','Course Updates', 'New content in enrolled courses']
+                ].map(([id, title, desc]) => `
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--border)">
+                    <div>
+                      <div class="font-semi">${title}</div>
+                      <div class="text-sm text-muted">${desc}</div>
+                    </div>
+                    <label class="toggle">
+                      <input type="checkbox" id="${id}" checked>
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+
+          <!-- Security -->
+          <div class="settings-section card" id="section-security">
+            <div class="card-header"><span class="card-title">Security</span></div>
+            <div class="card-body">
+              <div class="form-group">
+                <label class="form-label">Current Password</label>
+                <div class="input-group">
+                  <i class="fa fa-lock input-icon"></i>
+                  <input type="password" class="form-control" placeholder="Enter current password">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">New Password</label>
+                <div class="input-group">
+                  <i class="fa fa-lock input-icon"></i>
+                  <input type="password" class="form-control" id="newPassword" placeholder="New password">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Confirm New Password</label>
+                <div class="input-group">
+                  <i class="fa fa-lock input-icon"></i>
+                  <input type="password" class="form-control" placeholder="Confirm new password">
+                </div>
+              </div>
+              <button class="btn btn-primary" onclick="Toast.success('Password Updated!', 'Your password has been changed')"><i class="fa fa-key"></i> Change Password</button>
+              <div class="divider"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <div>
+                  <div class="font-semi">Two-Factor Authentication</div>
+                  <div class="text-sm text-muted">Add an extra layer of security</div>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Privacy -->
+          <div class="settings-section card" id="section-privacy">
+            <div class="card-header"><span class="card-title">Privacy</span></div>
+            <div class="card-body">
+              <div style="display:flex;flex-direction:column">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--border)">
+                  <div>
+                    <div class="font-semi">Public Profile</div>
+                    <div class="text-sm text-muted">Allow others to see your profile</div>
+                  </div>
+                  <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--border)">
+                  <div>
+                    <div class="font-semi">Show Activity</div>
+                    <div class="text-sm text-muted">Display your learning activity to peers</div>
+                  </div>
+                  <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                </div>
+                <div style="padding:16px 0">
+                  <div class="font-semi" style="color:var(--danger);margin-bottom:8px">Danger Zone</div>
+                  <button class="btn btn-danger" onclick="if(confirm('Delete your account? This cannot be undone.'))Toast.error('Account scheduled for deletion')">Delete Account</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Language -->
+          <div class="settings-section card" id="section-language">
+            <div class="card-header"><span class="card-title">Language & Region</span></div>
+            <div class="card-body">
+              <div class="form-group">
+                <label class="form-label">Display Language</label>
+                <select class="form-control">
+                  <option>English (US)</option>
+                  <option>English (UK)</option>
+                  <option>Hindi</option>
+                  <option>Spanish</option>
+                  <option>French</option>
+                  <option>German</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Timezone</label>
+                <select class="form-control">
+                  <option>Asia/Kolkata (IST)</option>
+                  <option>America/New_York (EST)</option>
+                  <option>America/Los_Angeles (PST)</option>
+                  <option>Europe/London (GMT)</option>
+                  <option>Europe/Paris (CET)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date Format</label>
+                <select class="form-control">
+                  <option>DD/MM/YYYY</option>
+                  <option>MM/DD/YYYY</option>
+                  <option>YYYY-MM-DD</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" onclick="Toast.success('Settings Saved!')"><i class="fa fa-save"></i> Save Preferences</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+function showSettingsSection(id, el) {
+  document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.settings-nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  el.classList.add('active');
+}
+
+function setAccent(color) {
+  document.documentElement.style.setProperty('--primary', color);
+  Toast.success('Accent Updated!', 'Color theme changed');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('darkModeToggle');
+  if (toggle) toggle.checked = Theme.isDark();
+  if (!Auth.requireAuth()) return;
+});
+</script>
+</body>
+</html>

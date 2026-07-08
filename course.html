@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courses — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/course.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<nav class="navbar" id="mainNavbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-brand">
+      <div class="logo-icon"><i class="fa fa-graduation-cap"></i></div>
+      <span class="logo-text">ACAD<span>EX</span></span>
+    </a>
+    <ul class="navbar-nav">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="course.html" class="nav-link active">Courses</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="navbar-actions">
+      <button class="theme-toggle" title="Toggle dark mode"><i class="fa fa-moon"></i></button>
+      <a href="dashboard.html" class="btn btn-primary btn-sm" id="dashboardBtn" style="display:none">Dashboard</a>
+      <a href="login.html" class="btn btn-primary btn-sm" id="loginBtn">Sign In</a>
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="course.html" class="nav-link">Courses</a>
+  <a href="contact.html" class="nav-link">Contact</a>
+</div>
+
+<!-- Hero -->
+<div style="padding:120px 0 60px;background:var(--gradient-hero);text-align:center;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(37,99,235,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,0.06) 1px,transparent 1px);background-size:50px 50px"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="section-tag" style="background:rgba(37,99,235,0.2);color:#93C5FD;margin-bottom:16px"><i class="fa fa-book"></i> All Courses</div>
+    <h1 style="font-family:var(--font-display);font-size:2.5rem;font-weight:900;color:#fff;margin-bottom:12px">Explore 1,200+ Courses</h1>
+    <p style="color:rgba(255,255,255,0.6);max-width:500px;margin:0 auto 32px">Learn from expert instructors across technology, design, business, and more.</p>
+    <div class="search-bar" style="max-width:500px;margin:0 auto;background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2)">
+      <i class="fa fa-search" style="color:rgba(255,255,255,0.5)"></i>
+      <input type="text" id="courseSearch" placeholder="Search courses..." style="color:#fff" oninput="filterCourses()">
+    </div>
+  </div>
+</div>
+
+<div class="container" style="padding:48px 24px">
+  <!-- Filters -->
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px">
+    <div class="courses-filter" style="margin-bottom:0">
+      <button class="filter-btn active" data-cat="all" onclick="filterByCategory('all',this)">All</button>
+      <button class="filter-btn" data-cat="web" onclick="filterByCategory('web',this)">Web Dev</button>
+      <button class="filter-btn" data-cat="ai" onclick="filterByCategory('ai',this)">AI & ML</button>
+      <button class="filter-btn" data-cat="design" onclick="filterByCategory('design',this)">Design</button>
+      <button class="filter-btn" data-cat="data" onclick="filterByCategory('data',this)">Data Science</button>
+      <button class="filter-btn" data-cat="mobile" onclick="filterByCategory('mobile',this)">Mobile</button>
+    </div>
+    <select class="form-control" style="width:180px" onchange="sortCourses(this.value)">
+      <option value="popular">Most Popular</option>
+      <option value="rating">Highest Rated</option>
+      <option value="newest">Newest</option>
+      <option value="price-low">Price: Low to High</option>
+      <option value="free">Free Only</option>
+    </select>
+  </div>
+
+  <div id="courseCount" style="margin-bottom:20px;color:var(--text-muted);font-size:0.875rem">Loading courses...</div>
+
+  <div class="courses-grid" id="coursesGrid"></div>
+</div>
+
+<!-- Footer -->
+<footer class="footer" style="margin-top:60px">
+  <div class="container">
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Acadex. All Rights Reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="index.html" class="footer-bottom-link">Home</a>
+        <a href="contact.html" class="footer-bottom-link">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+<script>
+const ALL_COURSES = [
+  { id:1, title:'Complete Web Development Bootcamp', instructor:'Dr. Angela Yu', category:'web', price:1299, rating:4.8, reviews:12400, lessons:180, duration:'48h', level:'Beginner', thumb:'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&q=80', free:false },
+  { id:2, title:'Machine Learning A-Z', instructor:'Prof. Hadelin', category:'ai', price:1499, rating:4.7, reviews:9800, lessons:120, duration:'36h', level:'Intermediate', thumb:'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=400&q=80', free:false },
+  { id:3, title:'UI/UX Design Masterclass', instructor:'Dr. Sarah Kim', category:'design', price:0, rating:4.9, reviews:15200, lessons:95, duration:'24h', level:'All Levels', thumb:'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&q=80', free:true },
+  { id:4, title:'Data Structures & Algorithms', instructor:'Prof. Tim Chen', category:'data', price:999, rating:4.6, reviews:7600, lessons:200, duration:'60h', level:'Intermediate', thumb:'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&q=80', free:false },
+  { id:5, title:'React & Redux Mastery', instructor:'Prof. Maximilian', category:'web', price:1199, rating:4.8, reviews:11000, lessons:160, duration:'40h', level:'Intermediate', thumb:'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=400&q=80', free:false },
+  { id:6, title:'Python for Data Science', instructor:'Dr. Jose P.', category:'data', price:799, rating:4.5, reviews:8200, lessons:100, duration:'28h', level:'Beginner', thumb:'https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=400&q=80', free:false },
+  { id:7, title:'iOS Development with Swift', instructor:'Angela Yu', category:'mobile', price:1299, rating:4.7, reviews:6500, lessons:140, duration:'35h', level:'Beginner', thumb:'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&q=80', free:false },
+  { id:8, title:'Deep Learning Specialization', instructor:'Andrew Ng', category:'ai', price:0, rating:4.9, reviews:25000, lessons:180, duration:'55h', level:'Advanced', thumb:'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&q=80', free:true },
+  { id:9, title:'Figma UI Design Bootcamp', instructor:'Dr. Lisa K.', category:'design', price:599, rating:4.6, reviews:4300, lessons:80, duration:'20h', level:'Beginner', thumb:'https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=400&q=80', free:false }
+];
+
+let filteredCourses = [...ALL_COURSES];
+let activeCategory = 'all';
+
+function renderCourses(courses) {
+  const grid = document.getElementById('coursesGrid');
+  const countEl = document.getElementById('courseCount');
+  if (countEl) countEl.textContent = `Showing ${courses.length} courses`;
+
+  if (!courses.length) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-state-icon">🔍</div><h3>No courses found</h3><p>Try a different search or category</p></div>';
+    return;
+  }
+
+  const letters = ['A','B','C','D'];
+  grid.innerHTML = courses.map((c, i) => `
+    <div class="course-card animate-fade-up" style="animation-delay:${i * 0.1}s">
+      <div class="course-thumbnail">
+        <img src="${c.thumb}" alt="${c.title}" onerror="this.parentElement.style.background='var(--gradient-primary)';this.style.display='none'">
+        <span class="course-category-tag">${c.category.toUpperCase()}</span>
+        <div class="course-bookmark"><i class="fa fa-bookmark-o"></i></div>
+      </div>
+      <div class="course-body">
+        <h4 class="course-title">${c.title}</h4>
+        <div class="course-instructor">
+          <div class="avatar-placeholder avatar-sm" style="border-radius:50%;background:var(--gradient-primary);color:#fff;font-size:0.7rem;font-weight:700;width:28px;height:28px;display:flex;align-items:center;justify-content:center">${c.instructor[0]}</div>
+          <span class="course-instructor-name">${c.instructor}</span>
+        </div>
+        <div class="course-rating">
+          <div class="stars">${'<i class="fa fa-star"></i>'.repeat(Math.floor(c.rating))}${c.rating % 1 ? '<i class="fa fa-star-half-o"></i>' : ''}</div>
+          <span class="rating-value">${c.rating}</span>
+          <span class="rating-count">(${c.reviews.toLocaleString()})</span>
+        </div>
+        <div class="course-meta">
+          <div class="course-meta-item"><i class="fa fa-clock-o"></i> ${c.duration}</div>
+          <div class="course-meta-item"><i class="fa fa-file-video-o"></i> ${c.lessons} lessons</div>
+          <div class="course-meta-item"><i class="fa fa-signal"></i> ${c.level}</div>
+        </div>
+        <div class="course-footer">
+          <span class="course-price ${c.free ? 'free' : ''}">${c.free ? 'FREE' : '₹ ' + c.price.toLocaleString()}</span>
+          <a href="course-details.html?id=${c.id}" class="btn ${c.free ? 'btn-accent' : 'btn-primary'} btn-sm">Enroll</a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterByCategory(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeCategory = cat;
+  applyFilters();
+}
+
+function filterCourses() {
+  applyFilters();
+}
+
+function sortCourses(val) {
+  if (val === 'popular')   filteredCourses.sort((a,b) => b.reviews - a.reviews);
+  if (val === 'rating')    filteredCourses.sort((a,b) => b.rating - a.rating);
+  if (val === 'price-low') filteredCourses.sort((a,b) => a.price - b.price);
+  if (val === 'free')      filteredCourses = filteredCourses.filter(c => c.free);
+  renderCourses(filteredCourses);
+}
+
+function applyFilters() {
+  const query = document.getElementById('courseSearch')?.value.toLowerCase() || '';
+  filteredCourses = ALL_COURSES.filter(c =>
+    (activeCategory === 'all' || c.category === activeCategory) &&
+    (c.title.toLowerCase().includes(query) || c.instructor.toLowerCase().includes(query))
+  );
+  renderCourses(filteredCourses);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderCourses(ALL_COURSES);
+  const user = Auth.getUser();
+  if (user) {
+    document.getElementById('dashboardBtn').style.display = 'inline-flex';
+    document.getElementById('loginBtn').style.display = 'none';
+  }
+});
+</script>
+</body>
+</html>

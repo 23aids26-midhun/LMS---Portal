@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Dashboard — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body id="facultyDashboard">
+<div class="dashboard-layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fa fa-graduation-cap"></i></div>
+      <span class="sidebar-brand">ACAD<span>EX</span></span>
+    </div>
+
+    <a href="profile.html" class="sidebar-user">
+      <div class="sidebar-avatar" style="background:var(--gradient-accent)" data-user-avatar></div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" data-user-name>Faculty</div>
+        <div class="sidebar-user-role">faculty</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Main</div>
+        <a href="faculty.html" class="sidebar-link active" data-tooltip="Dashboard">
+          <span class="sidebar-icon"><i class="fa fa-th-large"></i></span>
+          <span class="sidebar-label">Dashboard</span>
+        </a>
+        <a href="course.html" class="sidebar-link" data-tooltip="Upload Course">
+          <span class="sidebar-icon"><i class="fa fa-upload"></i></span>
+          <span class="sidebar-label">Upload Course</span>
+        </a>
+        <a href="course.html" class="sidebar-link" data-tooltip="Upload Notes">
+          <span class="sidebar-icon"><i class="fa fa-file-text"></i></span>
+          <span class="sidebar-label">Upload Notes</span>
+        </a>
+        <a href="quiz.html?id=1" class="sidebar-link" data-tooltip="Create Quiz">
+          <span class="sidebar-icon"><i class="fa fa-question-circle"></i></span>
+          <span class="sidebar-label">Create Quiz</span>
+        </a>
+        <a href="assignment.html" class="sidebar-link" data-tooltip="Assignments">
+          <span class="sidebar-icon"><i class="fa fa-tasks"></i></span>
+          <span class="sidebar-label">Assignments</span>
+          <span class="sidebar-badge" id="pendingGradesBadge">2</span>
+        </a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Reports</div>
+        <a href="attendance.html" class="sidebar-link" data-tooltip="Attendance">
+          <span class="sidebar-icon"><i class="fa fa-calendar-check-o"></i></span>
+          <span class="sidebar-label">Attendance</span>
+        </a>
+        <a href="#" class="sidebar-link" data-tooltip="Results">
+          <span class="sidebar-icon"><i class="fa fa-bar-chart"></i></span>
+          <span class="sidebar-label">Results</span>
+        </a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Account</div>
+        <a href="profile.html" class="sidebar-link" data-tooltip="Profile">
+          <span class="sidebar-icon"><i class="fa fa-user"></i></span>
+          <span class="sidebar-label">Profile</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" data-logout data-tooltip="Logout">
+        <span class="sidebar-icon"><i class="fa fa-sign-out"></i></span>
+        <span class="sidebar-label">Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="main-content" id="mainContent">
+
+    <header class="inner-navbar" id="innerNavbar">
+      <div class="inner-navbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
+        <div class="breadcrumb">
+          <a href="index.html">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Faculty Dashboard</span>
+        </div>
+      </div>
+      <div class="inner-navbar-right">
+        <button class="theme-toggle notif-btn" title="Toggle theme"><i class="fa fa-moon"></i></button>
+        <button class="notif-btn" title="Notifications"><i class="fa fa-bell"></i><span class="notif-badge">2</span></button>
+        <div class="dropdown">
+          <div class="user-menu" data-dropdown-toggle>
+            <div class="avatar-placeholder avatar-sm" style="border-radius:50%;background:var(--gradient-accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center" data-user-avatar></div>
+            <div class="user-info hide-md">
+              <span class="user-name" data-user-name>Faculty</span>
+              <span class="user-role">faculty</span>
+            </div>
+            <i class="fa fa-chevron-down" style="font-size:0.7rem;color:var(--text-muted)"></i>
+          </div>
+          <div class="dropdown-menu">
+            <a href="profile.html" class="dropdown-item"><i class="fa fa-user"></i> Profile</a>
+            <a href="settings.html" class="dropdown-item"><i class="fa fa-cog"></i> Settings</a>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item danger" data-logout><i class="fa fa-sign-out"></i> Logout</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <div class="page-header flex-between">
+        <div>
+          <h1 class="page-title">Faculty Dashboard 👩‍🏫</h1>
+          <p class="page-subtitle">Manage your courses, grade assignments, and track student performance.</p>
+        </div>
+        <button class="btn btn-primary" onclick="Modal.open('editCourseModal')">
+          <i class="fa fa-plus"></i> New Course
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fa fa-users"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="totalStudents">0</div>
+            <div class="stat-label">Total Students</div>
+            <div class="stat-change up"><i class="fa fa-arrow-up"></i> +12 this week</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon teal"><i class="fa fa-book"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="totalCourses">0</div>
+            <div class="stat-label">My Courses</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange"><i class="fa fa-clock-o"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="pendingGrades">0</div>
+            <div class="stat-label">Pending Grades</div>
+            <div class="stat-change down"><i class="fa fa-exclamation-circle"></i> Needs attention</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple"><i class="fa fa-star"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="avgRating">0</div>
+            <div class="stat-label">Avg. Course Rating</div>
+            <div class="stat-change up"><i class="fa fa-arrow-up"></i> Top rated</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="dashboard-grid" style="margin-bottom:24px">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title"><i class="fa fa-line-chart" style="color:var(--primary)"></i> Enrollment Trend</span>
+          </div>
+          <div class="card-body">
+            <div class="chart-wrapper">
+              <canvas id="enrollmentChart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title"><i class="fa fa-bar-chart" style="color:var(--accent)"></i> Student Performance</span>
+          </div>
+          <div class="card-body">
+            <div class="chart-wrapper">
+              <canvas id="performanceChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- My Courses Table -->
+      <div class="card" style="margin-bottom:24px">
+        <div class="card-header">
+          <span class="card-title"><i class="fa fa-book" style="color:var(--primary)"></i> My Courses</span>
+          <div class="flex gap-8">
+            <button class="btn btn-primary btn-sm" onclick="Modal.open('editCourseModal')"><i class="fa fa-plus"></i> Add Course</button>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Course</th>
+                <th>Students</th>
+                <th>Lessons</th>
+                <th>Status</th>
+                <th>Rating</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="facultyCourseTable">
+              <tr><td colspan="6" class="text-center" style="padding:32px;color:var(--text-muted)">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Recent Submissions -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title"><i class="fa fa-inbox" style="color:var(--warning)"></i> Recent Submissions</span>
+          <span class="badge badge-warning" id="pendingCount">Loading...</span>
+        </div>
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Assignment</th>
+                <th>Course</th>
+                <th>Submitted</th>
+                <th>Grade</th>
+              </tr>
+            </thead>
+            <tbody id="submissionsTable">
+              <tr><td colspan="5" class="text-center" style="padding:32px;color:var(--text-muted)">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Edit Course Modal -->
+<div class="modal-overlay" id="editCourseModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Edit Course</span>
+      <button class="modal-close" onclick="Modal.close('editCourseModal')"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editCourseId">
+      <div class="form-group">
+        <label class="form-label">Course Title</label>
+        <input type="text" id="editCourseTitle" class="form-control" placeholder="Enter course title">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <input type="text" id="editCourseCategory" class="form-control" placeholder="e.g. Web Dev">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="Modal.close('editCourseModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEditCourse()">Save Course</button>
+    </div>
+  </div>
+</div>
+
+<!-- Grade Modal -->
+<div class="modal-overlay" id="gradeModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Grade Submission</span>
+      <button class="modal-close" onclick="Modal.close('gradeModal')"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="submissionId">
+      <p style="margin-bottom:16px">Grading submission by: <strong id="gradeStudentName"></strong></p>
+      <div class="form-group">
+        <label class="form-label">Grade</label>
+        <select id="gradeInput" class="form-control">
+          <option value="">Select Grade</option>
+          <option value="A+">A+ (Exceptional)</option>
+          <option value="A">A (Excellent)</option>
+          <option value="B+">B+ (Very Good)</option>
+          <option value="B">B (Good)</option>
+          <option value="C+">C+ (Average)</option>
+          <option value="C">C (Pass)</option>
+          <option value="F">F (Fail)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Feedback (optional)</label>
+        <textarea class="form-control" placeholder="Write feedback for the student..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="Modal.close('gradeModal')">Cancel</button>
+      <button class="btn btn-success" onclick="submitGrade()"><i class="fa fa-check"></i> Submit Grade</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/faculty.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const pending = document.getElementById('pendingCount');
+    if (pending) {
+      setTimeout(() => {
+        const cnt = document.querySelectorAll('#submissionsTable tr').length;
+        pending.textContent = 'Recent submissions loaded';
+      }, 1000);
+    }
+  });
+</script>
+</body>
+</html>

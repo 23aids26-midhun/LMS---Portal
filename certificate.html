@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificates — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/course.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="dashboard-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fa fa-graduation-cap"></i></div>
+      <span class="sidebar-brand">ACAD<span>EX</span></span>
+    </div>
+    <nav class="sidebar-nav" style="padding-top:20px">
+      <a href="student.html" class="sidebar-link" data-tooltip="Dashboard"><span class="sidebar-icon"><i class="fa fa-th-large"></i></span><span class="sidebar-label">Dashboard</span></a>
+      <a href="course.html" class="sidebar-link" data-tooltip="Courses"><span class="sidebar-icon"><i class="fa fa-book"></i></span><span class="sidebar-label">My Courses</span></a>
+      <a href="assignment.html" class="sidebar-link" data-tooltip="Assignments"><span class="sidebar-icon"><i class="fa fa-tasks"></i></span><span class="sidebar-label">Assignments</span></a>
+      <a href="attendance.html" class="sidebar-link" data-tooltip="Attendance"><span class="sidebar-icon"><i class="fa fa-calendar"></i></span><span class="sidebar-label">Attendance</span></a>
+      <a href="certificate.html" class="sidebar-link active" data-tooltip="Certificates"><span class="sidebar-icon"><i class="fa fa-certificate"></i></span><span class="sidebar-label">Certificates</span></a>
+      <a href="profile.html" class="sidebar-link" data-tooltip="Profile"><span class="sidebar-icon"><i class="fa fa-user"></i></span><span class="sidebar-label">Profile</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" data-logout><span class="sidebar-icon"><i class="fa fa-sign-out"></i></span><span class="sidebar-label">Logout</span></button>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <main class="main-content" id="mainContent">
+    <header class="inner-navbar" id="innerNavbar">
+      <div class="inner-navbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
+        <div class="breadcrumb">
+          <a href="student.html">Dashboard</a><span class="breadcrumb-sep">/</span><span>Certificates</span>
+        </div>
+      </div>
+      <div class="inner-navbar-right">
+        <button class="theme-toggle notif-btn" title="Toggle theme"><i class="fa fa-moon"></i></button>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <div class="page-header">
+        <h1 class="page-title">My Certificates 🏆</h1>
+        <p class="page-subtitle">Your earned achievements and credentials.</p>
+      </div>
+
+      <!-- Stats -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:28px">
+        <div class="stat-card">
+          <div class="stat-icon teal"><i class="fa fa-certificate"></i></div>
+          <div class="stat-info">
+            <div class="stat-value">2</div>
+            <div class="stat-label">Certificates Earned</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fa fa-book"></i></div>
+          <div class="stat-info">
+            <div class="stat-value">4</div>
+            <div class="stat-label">Courses Enrolled</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple"><i class="fa fa-star"></i></div>
+          <div class="stat-info">
+            <div class="stat-value">2</div>
+            <div class="stat-label">In Progress</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certificate Cards -->
+      <h3 style="font-family:var(--font-display);margin-bottom:16px">Earned Certificates</h3>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:32px" id="certGrid">
+        <!-- Certificate 1 -->
+        <div class="certificate-card" id="cert1">
+          <div class="certificate-logo">Acadex</div>
+          <div class="certificate-title-text">Certificate of Completion</div>
+          <div class="certificate-course-name">HTML & CSS Mastery</div>
+          <div class="certificate-student">This certifies that <strong data-user-name>Student Name</strong> has successfully completed this course with distinction.</div>
+          <div class="certificate-footer-row">
+            <div>
+              <div class="certificate-date">Issued: October 15, 2024</div>
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:2px">ID: LQ-2024-001</div>
+            </div>
+            <div class="certificate-seal">🏆</div>
+          </div>
+          <div style="margin-top:16px;position:relative;z-index:1">
+            <button class="btn btn-sm" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.25)" onclick="window.print()">
+              <i class="fa fa-print"></i> Print
+            </button>
+            <button class="btn btn-sm" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.25);margin-left:8px">
+              <i class="fa fa-share"></i> Share
+            </button>
+          </div>
+        </div>
+
+        <!-- Certificate 2 -->
+        <div class="certificate-card" id="cert2" style="background:linear-gradient(135deg,#064E3B,#065F46)">
+          <div class="certificate-logo">Acadex</div>
+          <div class="certificate-title-text">Certificate of Completion</div>
+          <div class="certificate-course-name">Python Basics</div>
+          <div class="certificate-student">This certifies that <strong data-user-name>Student Name</strong> has successfully completed this course.</div>
+          <div class="certificate-footer-row">
+            <div>
+              <div class="certificate-date">Issued: November 2, 2024</div>
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:2px">ID: LQ-2024-042</div>
+            </div>
+            <div class="certificate-seal">🎓</div>
+          </div>
+          <div style="margin-top:16px;position:relative;z-index:1">
+            <button class="btn btn-sm" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.25)" onclick="window.print()">
+              <i class="fa fa-print"></i> Print
+            </button>
+            <button class="btn btn-sm" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.25);margin-left:8px">
+              <i class="fa fa-share"></i> Share
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- In Progress -->
+      <h3 style="font-family:var(--font-display);margin-bottom:16px">Courses In Progress</h3>
+      <div style="display:grid;gap:14px">
+        <div class="card">
+          <div class="card-body" style="display:flex;align-items:center;gap:16px;padding:18px">
+            <div style="width:48px;height:48px;border-radius:var(--radius);background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.25rem;flex-shrink:0">💻</div>
+            <div style="flex:1">
+              <div style="font-weight:600;margin-bottom:4px">Complete Web Development Bootcamp</div>
+              <div class="text-xs text-muted">72% Complete · 48 lessons</div>
+              <div class="progress" style="margin-top:8px"><div class="progress-bar" data-width="72" style="width:0%"></div></div>
+            </div>
+            <a href="course-details.html?id=1" class="btn btn-primary btn-sm">Continue</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body" style="display:flex;align-items:center;gap:16px;padding:18px">
+            <div style="width:48px;height:48px;border-radius:var(--radius);background:var(--gradient-accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.25rem;flex-shrink:0">🤖</div>
+            <div style="flex:1">
+              <div style="font-weight:600;margin-bottom:4px">Machine Learning A-Z</div>
+              <div class="text-xs text-muted">35% Complete · 36 lessons</div>
+              <div class="progress" style="margin-top:8px"><div class="progress-bar accent" data-width="35" style="width:0%"></div></div>
+            </div>
+            <a href="course-details.html?id=2" class="btn btn-primary btn-sm">Continue</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

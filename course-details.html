@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Details — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/course.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<nav class="navbar scrolled" id="mainNavbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-brand">
+      <div class="logo-icon"><i class="fa fa-graduation-cap"></i></div>
+      <span class="logo-text">ACAD<span>EX</span></span>
+    </a>
+    <ul class="navbar-nav">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="course.html" class="nav-link">Courses</a></li>
+    </ul>
+    <div class="navbar-actions">
+      <button class="theme-toggle" title="Toggle dark mode"><i class="fa fa-moon"></i></button>
+      <a href="dashboard.html" class="btn btn-primary btn-sm">My Dashboard</a>
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- Course Hero -->
+<div class="course-detail-hero" style="padding-top:var(--header-h)">
+  <div class="container">
+    <div class="course-detail-inner">
+      <div>
+        <div class="course-detail-breadcrumb">
+          <a href="course.html">Courses</a> / <span>Web Development</span>
+        </div>
+        <h1 class="course-detail-title" id="courseTitle">Loading...</h1>
+        <p style="color:rgba(255,255,255,0.7);margin-bottom:16px;line-height:1.7" id="courseDesc"></p>
+        <div class="course-detail-meta-row">
+          <div class="course-detail-meta-item"><div class="stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i></div> <span id="courseRating">4.8</span></div>
+          <div class="course-detail-meta-item"><i class="fa fa-users"></i> <span id="courseStudents">0</span> students</div>
+          <div class="course-detail-meta-item"><i class="fa fa-clock-o"></i> <span id="courseDuration"></span></div>
+          <div class="course-detail-meta-item"><i class="fa fa-signal"></i> <span id="courseLevel"></span></div>
+        </div>
+        <div class="course-detail-meta-item" style="color:rgba(255,255,255,0.5)">
+          <i class="fa fa-user-circle"></i> Instructor: <strong style="color:#fff" id="courseInstructor"></strong>
+        </div>
+      </div>
+
+      <!-- Sticky Enroll Card -->
+      <div class="course-sticky-card">
+        <div class="course-sticky-preview">
+          <img id="courseThumbnail" src="" alt="Course" style="width:100%;height:200px;object-fit:cover">
+          <div class="course-sticky-play">
+            <div class="play-btn"><i class="fa fa-play"></i></div>
+          </div>
+        </div>
+        <div class="course-sticky-body">
+          <div class="course-sticky-price" id="coursePrice">₹1,299</div>
+          <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;margin-bottom:12px" onclick="enrollCourse()">
+            <i class="fa fa-graduation-cap"></i> Enroll Now
+          </button>
+          <div class="course-sticky-features">
+            <div class="course-sticky-feature"><i class="fa fa-infinity"></i> Full lifetime access</div>
+            <div class="course-sticky-feature"><i class="fa fa-mobile"></i> Access on all devices</div>
+            <div class="course-sticky-feature"><i class="fa fa-certificate"></i> Certificate of completion</div>
+            <div class="course-sticky-feature"><i class="fa fa-download"></i> Downloadable resources</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Course Content -->
+<div class="course-content-area">
+  <div class="course-content-grid">
+    <!-- Left: Details -->
+    <div>
+      <!-- Tabs -->
+      <div class="tabs" style="margin-bottom:28px">
+        <button class="tab-btn active" data-tab="overview">Overview</button>
+        <button class="tab-btn" data-tab="curriculum">Curriculum</button>
+        <button class="tab-btn" data-tab="instructor">Instructor</button>
+        <button class="tab-btn" data-tab="reviews">Reviews</button>
+      </div>
+
+      <!-- Overview -->
+      <div data-pane="overview">
+        <div class="card" style="margin-bottom:20px">
+          <div class="card-header"><span class="card-title">What You'll Learn</span></div>
+          <div class="card-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div class="pricing-feature"><i class="fa fa-check" style="color:var(--success)"></i> Build full-stack web applications</div>
+              <div class="pricing-feature"><i class="fa fa-check" style="color:var(--success)"></i> Master HTML, CSS & JavaScript</div>
+              <div class="pricing-feature"><i class="fa fa-check" style="color:var(--success)"></i> Work with React & Node.js</div>
+              <div class="pricing-feature"><i class="fa fa-check" style="color:var(--success)"></i> Database design & SQL</div>
+              <div class="pricing-feature"><i class="fa fa-check" style="color:var(--success)"></i> Deploy apps to the cloud</div>
+              <div class="pricing-feature"><i class="fa fa-check" style="color:var(--success)"></i> REST API development</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">Requirements</span></div>
+          <div class="card-body">
+            <ul style="list-style:disc;padding-left:20px;display:flex;flex-direction:column;gap:8px;color:var(--text-muted);font-size:0.9rem">
+              <li>Basic computer knowledge</li>
+              <li>No prior programming experience needed</li>
+              <li>A computer with internet access</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Curriculum -->
+      <div data-pane="curriculum" style="display:none">
+        <div class="curriculum-section">
+          <div class="curriculum-header">
+            <span>8 sections · 48 lessons · 48h total</span>
+            <a href="#" style="color:var(--primary);font-size:0.85rem">Expand All</a>
+          </div>
+
+          <div class="curriculum-module">
+            <div class="module-header open">
+              <i class="fa fa-folder-open" style="color:var(--primary)"></i>
+              <span class="module-title">Section 1: Getting Started</span>
+              <span class="module-count">6 lessons · 3h 20m</span>
+              <i class="fa fa-chevron-down module-icon"></i>
+            </div>
+            <div class="module-lessons open">
+              <a href="#" class="lesson-item"><div class="lesson-icon done"><i class="fa fa-check"></i></div><span class="lesson-title">Introduction to Web Dev</span><span class="lesson-free">FREE</span><span class="lesson-dur">12:34</span></a>
+              <a href="#" class="lesson-item"><div class="lesson-icon done"><i class="fa fa-check"></i></div><span class="lesson-title">Setting Up Your Environment</span><span class="lesson-free">FREE</span><span class="lesson-dur">18:45</span></a>
+              <a href="#" class="lesson-item"><div class="lesson-icon"><i class="fa fa-play"></i></div><span class="lesson-title">How the Internet Works</span><span class="lesson-dur">22:00</span></a>
+              <a href="#" class="lesson-item"><div class="lesson-icon lock"><i class="fa fa-lock"></i></div><span class="lesson-title">HTML Basics</span><span class="lesson-dur">35:20</span></a>
+              <a href="#" class="lesson-item"><div class="lesson-icon lock"><i class="fa fa-lock"></i></div><span class="lesson-title">CSS Fundamentals</span><span class="lesson-dur">42:15</span></a>
+              <a href="#" class="lesson-item"><div class="lesson-icon lock"><i class="fa fa-lock"></i></div><span class="lesson-title">Section Quiz</span><span class="lesson-dur">15:00</span></a>
+            </div>
+          </div>
+
+          <div class="curriculum-module">
+            <div class="module-header">
+              <i class="fa fa-folder" style="color:var(--text-muted)"></i>
+              <span class="module-title">Section 2: Advanced HTML & CSS</span>
+              <span class="module-count">8 lessons · 5h 10m</span>
+              <i class="fa fa-chevron-down module-icon"></i>
+            </div>
+            <div class="module-lessons">
+              <a href="#" class="lesson-item"><div class="lesson-icon lock"><i class="fa fa-lock"></i></div><span class="lesson-title">Flexbox Deep Dive</span><span class="lesson-dur">55:00</span></a>
+              <a href="#" class="lesson-item"><div class="lesson-icon lock"><i class="fa fa-lock"></i></div><span class="lesson-title">CSS Grid Layout</span><span class="lesson-dur">48:30</span></a>
+            </div>
+          </div>
+
+          <div class="curriculum-module">
+            <div class="module-header">
+              <i class="fa fa-folder" style="color:var(--text-muted)"></i>
+              <span class="module-title">Section 3: JavaScript Fundamentals</span>
+              <span class="module-count">10 lessons · 7h</span>
+              <i class="fa fa-chevron-down module-icon"></i>
+            </div>
+            <div class="module-lessons"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Instructor -->
+      <div data-pane="instructor" style="display:none">
+        <div class="card">
+          <div class="card-body">
+            <div style="display:flex;align-items:flex-start;gap:20px;margin-bottom:20px">
+              <div class="avatar-placeholder" style="width:80px;height:80px;border-radius:50%;background:var(--gradient-primary);color:#fff;font-size:1.75rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">A</div>
+              <div>
+                <h3 style="margin-bottom:4px">Dr. Angela Yu</h3>
+                <div style="color:var(--text-muted);font-size:0.875rem;margin-bottom:10px">Lead Instructor · App Brewery</div>
+                <div style="display:flex;gap:16px;font-size:0.8rem;color:var(--text-muted)">
+                  <span><i class="fa fa-star" style="color:var(--warning)"></i> 4.8 Rating</span>
+                  <span><i class="fa fa-users"></i> 2.3M Students</span>
+                  <span><i class="fa fa-play-circle"></i> 12 Courses</span>
+                </div>
+              </div>
+            </div>
+            <p style="color:var(--text-muted);line-height:1.8;font-size:0.9rem">
+              Dr. Angela Yu is a developer and lead instructor with over 10 years of experience teaching web development. She has helped over 2 million students master programming through her engaging teaching style and practical projects.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reviews -->
+      <div data-pane="reviews" style="display:none">
+        <div class="card">
+          <div class="card-body">
+            <div style="display:flex;align-items:center;gap:32px;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)">
+              <div style="text-align:center">
+                <div style="font-size:4rem;font-weight:900;font-family:var(--font-display);color:var(--text);line-height:1">4.8</div>
+                <div class="stars" style="justify-content:center;margin:4px 0"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i></div>
+                <div class="text-xs text-muted">Course Rating</div>
+              </div>
+              <div style="flex:1">
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="display:flex;align-items:center;gap:10px"><div class="progress" style="flex:1"><div class="progress-bar" style="width:78%"></div></div><span class="text-xs">5 ★ (78%)</span></div>
+                  <div style="display:flex;align-items:center;gap:10px"><div class="progress" style="flex:1"><div class="progress-bar" style="width:15%"></div></div><span class="text-xs">4 ★ (15%)</span></div>
+                  <div style="display:flex;align-items:center;gap:10px"><div class="progress" style="flex:1"><div class="progress-bar warning" style="width:5%"></div></div><span class="text-xs">3 ★ (5%)</span></div>
+                  <div style="display:flex;align-items:center;gap:10px"><div class="progress" style="flex:1"><div class="progress-bar danger" style="width:2%"></div></div><span class="text-xs">2 ★ (2%)</span></div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:16px">
+              <div style="border-bottom:1px solid var(--border);padding-bottom:16px">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+                  <div class="avatar-placeholder" style="width:40px;height:40px;border-radius:50%;background:var(--gradient-accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">J</div>
+                  <div><div class="font-semi" style="font-size:0.875rem">James K.</div><div class="stars" style="font-size:0.75rem"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div></div>
+                  <span class="text-xs text-muted" style="margin-left:auto">2 weeks ago</span>
+                </div>
+                <p style="font-size:0.875rem;color:var(--text-muted)">Absolutely the best web development course! Angela's teaching style is so clear and engaging. I went from zero to building full-stack apps in 3 months.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+const COURSES_DB = {
+  1: { title:'Complete Web Development Bootcamp 2024', desc:'Learn web development from scratch — HTML, CSS, JavaScript, React, Node.js, SQL, and more. Build real-world projects.', instructor:'Dr. Angela Yu', rating:4.8, students:128543, duration:'48h', level:'Beginner', price:'₹1,299', thumb:'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&q=80', free:false },
+  2: { title:'Machine Learning A-Z', desc:'Learn machine learning from basic algorithms to deep neural networks. Python, NumPy, Scikit-learn, TensorFlow.', instructor:'Prof. Hadelin', rating:4.7, students:98000, duration:'36h', level:'Intermediate', price:'₹1,499', thumb:'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600&q=80', free:false },
+  3: { title:'UI/UX Design Masterclass', desc:'Complete Figma course — wireframing, prototyping, user research, design systems. Go from beginner to professional designer.', instructor:'Dr. Sarah Kim', rating:4.9, students:152000, duration:'24h', level:'All Levels', price:'FREE', thumb:'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80', free:true }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const id = parseInt(params.get('id')) || 1;
+  const course = COURSES_DB[id] || COURSES_DB[1];
+
+  document.title = course.title + ' — Acadex';
+  document.getElementById('courseTitle').textContent     = course.title;
+  document.getElementById('courseDesc').textContent      = course.desc;
+  document.getElementById('courseInstructor').textContent = course.instructor;
+  document.getElementById('courseRating').textContent    = course.rating;
+  document.getElementById('courseStudents').textContent  = course.students.toLocaleString();
+  document.getElementById('courseDuration').textContent  = course.duration;
+  document.getElementById('courseLevel').textContent     = course.level;
+  document.getElementById('coursePrice').textContent     = course.price;
+  document.getElementById('courseThumbnail').src         = course.thumb;
+
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('[data-pane]').forEach(p => p.style.display = 'none');
+      btn.classList.add('active');
+      const pane = document.querySelector(`[data-pane="${btn.dataset.tab}"]`);
+      if (pane) pane.style.display = 'block';
+    });
+  });
+
+  // Curriculum accordion
+  document.querySelectorAll('.module-header').forEach(h => {
+    h.addEventListener('click', () => {
+      h.classList.toggle('open');
+      h.nextElementSibling.classList.toggle('open');
+    });
+  });
+});
+
+function enrollCourse() {
+  if (!Auth.isLoggedIn()) {
+    Toast.info('Please Sign In', 'Create an account or sign in to enroll');
+    setTimeout(() => window.location.href = 'login.html', 1500);
+    return;
+  }
+  Toast.success('Enrolled!', 'You have been enrolled in this course');
+}
+</script>
+</body>
+</html>

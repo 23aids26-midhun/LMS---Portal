@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body id="adminDashboard">
+<div class="dashboard-layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fa fa-graduation-cap"></i></div>
+      <span class="sidebar-brand">ACAD<span>EX</span></span>
+    </div>
+
+    <a href="profile.html" class="sidebar-user">
+      <div class="sidebar-avatar" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)" data-user-avatar></div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" data-user-name>Admin</div>
+        <div class="sidebar-user-role">admin</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Overview</div>
+        <a href="admin.html" class="sidebar-link active" data-tooltip="Dashboard">
+          <span class="sidebar-icon"><i class="fa fa-th-large"></i></span>
+          <span class="sidebar-label">Dashboard</span>
+        </a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Management</div>
+        <a href="#users" class="sidebar-link" data-tooltip="Students" onclick="showAdminSection('users')">
+          <span class="sidebar-icon"><i class="fa fa-users"></i></span>
+          <span class="sidebar-label">Students</span>
+        </a>
+        <a href="#faculty" class="sidebar-link" data-tooltip="Faculty" onclick="showAdminSection('users')">
+          <span class="sidebar-icon"><i class="fa fa-chalkboard-teacher"></i></span>
+          <span class="sidebar-label">Faculty</span>
+        </a>
+        <a href="#departments" class="sidebar-link" data-tooltip="Departments" onclick="showAdminSection('departments')">
+          <span class="sidebar-icon"><i class="fa fa-building"></i></span>
+          <span class="sidebar-label">Departments</span>
+        </a>
+        <a href="course.html" class="sidebar-link" data-tooltip="Courses">
+          <span class="sidebar-icon"><i class="fa fa-book"></i></span>
+          <span class="sidebar-label">Courses</span>
+        </a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Analytics</div>
+        <a href="#analytics" class="sidebar-link" data-tooltip="Reports" onclick="showAdminSection('analytics')">
+          <span class="sidebar-icon"><i class="fa fa-bar-chart"></i></span>
+          <span class="sidebar-label">Reports</span>
+        </a>
+        <a href="settings.html" class="sidebar-link" data-tooltip="Settings">
+          <span class="sidebar-icon"><i class="fa fa-cog"></i></span>
+          <span class="sidebar-label">Settings</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" data-logout data-tooltip="Logout">
+        <span class="sidebar-icon"><i class="fa fa-sign-out"></i></span>
+        <span class="sidebar-label">Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="main-content" id="mainContent">
+    <header class="inner-navbar" id="innerNavbar">
+      <div class="inner-navbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
+        <div class="breadcrumb">
+          <a href="index.html">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Admin Dashboard</span>
+        </div>
+      </div>
+      <div class="inner-navbar-right">
+        <button class="theme-toggle notif-btn" title="Toggle theme"><i class="fa fa-moon"></i></button>
+        <button class="notif-btn" title="Notifications"><i class="fa fa-bell"></i><span class="notif-badge">5</span></button>
+        <div class="dropdown">
+          <div class="user-menu" data-dropdown-toggle>
+            <div class="avatar-placeholder avatar-sm" style="border-radius:50%;background:linear-gradient(135deg,#8B5CF6,#EC4899);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center" data-user-avatar></div>
+            <div class="user-info hide-md">
+              <span class="user-name" data-user-name>Admin</span>
+              <span class="user-role">admin</span>
+            </div>
+            <i class="fa fa-chevron-down" style="font-size:0.7rem;color:var(--text-muted)"></i>
+          </div>
+          <div class="dropdown-menu">
+            <a href="profile.html" class="dropdown-item"><i class="fa fa-user"></i> Profile</a>
+            <a href="settings.html" class="dropdown-item"><i class="fa fa-cog"></i> Settings</a>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item danger" data-logout><i class="fa fa-sign-out"></i> Logout</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <div class="page-header flex-between">
+        <div>
+          <h1 class="page-title">Admin Dashboard ⚙️</h1>
+          <p class="page-subtitle">Manage your institution — users, departments, analytics.</p>
+        </div>
+        <button class="btn btn-primary" onclick="openAddUserModal()">
+          <i class="fa fa-user-plus"></i> Add User
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fa fa-users"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="adminTotalStudents">0</div>
+            <div class="stat-label">Total Students</div>
+            <div class="stat-change up"><i class="fa fa-arrow-up"></i> +48 this month</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon teal"><i class="fa fa-chalkboard-teacher"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="adminTotalFaculty">0</div>
+            <div class="stat-label">Faculty Members</div>
+            <div class="stat-change up"><i class="fa fa-arrow-up"></i> +3 this month</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange"><i class="fa fa-building"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="adminTotalDepts">0</div>
+            <div class="stat-label">Departments</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple"><i class="fa fa-users-cog"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="adminTotalUsers">0</div>
+            <div class="stat-label">Total Users</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="dashboard-grid" style="margin-bottom:24px">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title"><i class="fa fa-line-chart" style="color:var(--primary)"></i> Enrollment Trend</span>
+            <span class="badge badge-success">↑ 12% YoY</span>
+          </div>
+          <div class="card-body">
+            <div class="chart-wrapper lg">
+              <canvas id="enrollmentTrendChart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title"><i class="fa fa-pie-chart" style="color:var(--accent)"></i> By Department</span>
+          </div>
+          <div class="card-body">
+            <canvas id="deptPieChart" height="280"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Revenue Chart -->
+      <div class="card" style="margin-bottom:24px">
+        <div class="card-header">
+          <span class="card-title"><i class="fa fa-dollar" style="color:var(--success)"></i> Monthly Revenue</span>
+          <span class="badge badge-success">₹40,100 this month</span>
+        </div>
+        <div class="card-body">
+          <div class="chart-wrapper">
+            <canvas id="revenueChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Users Table -->
+      <div class="card" id="usersSection" style="margin-bottom:24px">
+        <div class="card-header">
+          <span class="card-title"><i class="fa fa-users" style="color:var(--primary)"></i> User Management</span>
+          <div class="flex gap-8 items-center">
+            <div class="search-bar" style="max-width:240px;padding:8px 14px">
+              <i class="fa fa-search" style="color:var(--text-muted)"></i>
+              <input type="text" id="userSearch" placeholder="Search users..." style="font-size:0.85rem">
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openAddUserModal()">
+              <i class="fa fa-plus"></i> Add
+            </button>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Role</th>
+                <th>Department</th>
+                <th>Joined</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <tr><td colspan="6" class="text-center" style="padding:32px;color:var(--text-muted)">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Departments -->
+      <div class="card" id="departmentsSection">
+        <div class="card-header">
+          <span class="card-title"><i class="fa fa-building" style="color:var(--accent)"></i> Departments</span>
+          <button class="btn btn-primary btn-sm" onclick="Modal.open('editDeptModal')"><i class="fa fa-plus"></i> Add Dept</button>
+        </div>
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Department</th>
+                <th>Head</th>
+                <th>Students</th>
+                <th>Faculty</th>
+                <th>Courses</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="deptTableBody">
+              <tr><td colspan="6" class="text-center" style="padding:32px;color:var(--text-muted)">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Add User Modal -->
+<div class="modal-overlay" id="addUserModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Add New User</span>
+      <button class="modal-close" onclick="Modal.close('addUserModal')"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <form id="addUserForm">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" id="newName" class="form-control" placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" id="newEmail" class="form-control" placeholder="user@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Role</label>
+          <select id="newRole" class="form-control">
+            <option value="">Select role</option>
+            <option value="student">Student</option>
+            <option value="faculty">Faculty</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Department</label>
+          <input type="text" id="newDept" class="form-control" placeholder="e.g. Computer Science">
+        </div>
+      </form>
+      <p style="font-size:0.78rem;color:var(--text-muted)"><i class="fa fa-info-circle"></i> Default password: <code>change123</code></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="Modal.close('addUserModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveNewUser()"><i class="fa fa-user-plus"></i> Add User</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit User Modal -->
+<div class="modal-overlay" id="editUserModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Edit User</span>
+      <button class="modal-close" onclick="Modal.close('editUserModal')"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editUserId">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input type="text" id="editUserName" class="form-control">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" id="editUserEmail" class="form-control">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Role</label>
+        <select id="editUserRole" class="form-control">
+          <option value="student">Student</option>
+          <option value="faculty">Faculty</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Department</label>
+        <input type="text" id="editUserDept" class="form-control">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="Modal.close('editUserModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEditUser()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Dept Modal -->
+<div class="modal-overlay" id="editDeptModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Department</span>
+      <button class="modal-close" onclick="Modal.close('editDeptModal')"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editDeptId">
+      <div class="form-group">
+        <label class="form-label">Department Name</label>
+        <input type="text" id="editDeptName" class="form-control" placeholder="Department name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Head of Department</label>
+        <input type="text" id="editDeptHead" class="form-control" placeholder="Prof. Name">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="Modal.close('editDeptModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEditDept()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/admin.js"></script>
+<script>
+function showAdminSection(section) {
+  event.preventDefault();
+  const target = document.getElementById(section + 'Section') || document.getElementById('usersSection');
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+</body>
+</html>

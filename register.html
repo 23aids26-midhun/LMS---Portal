@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account — Acadex</title>
+  <meta name="description" content="Join Acadex as a Student, Faculty member, or Administrator.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .auth-left {
+      background: var(--gradient-hero);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(37,99,235,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37,99,235,0.08) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+    .auth-orb {
+      position:absolute;border-radius:50%;filter:blur(60px);opacity:0.5;
+    }
+    .auth-orb-1 { width:350px;height:350px;background:radial-gradient(circle,#7C3AED,transparent);top:-100px;left:-100px; }
+    .auth-orb-2 { width:250px;height:250px;background:radial-gradient(circle,#14B8A6,transparent);bottom:-60px;right:10%; }
+    .auth-left-content { position: relative; z-index: 1; }
+
+    .auth-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 40px;
+      background: var(--bg);
+      overflow-y: auto;
+    }
+    .auth-card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      padding: 40px;
+    }
+    .auth-card-title { font-family:var(--font-display);font-size:1.5rem;font-weight:800;color:var(--text);margin-bottom:6px;text-align:center; }
+    .auth-card-subtitle { color:var(--text-muted);font-size:0.875rem;text-align:center;margin-bottom:28px; }
+
+    .role-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 24px; }
+    .role-card {
+      padding: 14px 8px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      background: var(--bg);
+    }
+    .role-card:hover { border-color: var(--primary); background: var(--primary-light); }
+    .role-card.selected { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+    .role-card .role-icon { font-size: 1.75rem; margin-bottom: 4px; }
+    .role-card .role-name { font-size: 0.8rem; font-weight: 700; color: var(--text); }
+    .role-card .role-desc { font-size: 0.7rem; color: var(--text-muted); }
+    .role-card.selected .role-name { color: var(--primary); }
+
+    .strength-wrap { margin-top: 6px; }
+    .strength-bar-bg { height: 4px; background: var(--border); border-radius: 4px; overflow: hidden; }
+    #strengthBar { height: 100%; width: 0; border-radius: 4px; transition: all 0.3s; }
+    .strength-label { font-size: 0.72rem; margin-top: 4px; }
+
+    .theme-toggle-auth {
+      position: fixed; top: 20px; right: 20px;
+      width:38px;height:38px;border-radius:var(--radius);
+      background:var(--surface);border:1.5px solid var(--border);
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;color:var(--text-muted);font-size:1rem;transition:var(--transition);z-index:10;
+    }
+    .theme-toggle-auth:hover { background:var(--primary-light);color:var(--primary);border-color:var(--primary); }
+
+    @media (max-width: 768px) {
+      .auth-page { grid-template-columns: 1fr; }
+      .auth-left  { display: none; }
+      .auth-right { padding: 24px 16px; min-height: 100vh; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="theme-toggle theme-toggle-auth" title="Toggle theme"><i class="fa fa-moon"></i></button>
+
+<div class="auth-page">
+  <!-- Left Branding -->
+  <div class="auth-left">
+    <div class="auth-orb auth-orb-1"></div>
+    <div class="auth-orb auth-orb-2"></div>
+    <div class="auth-left-content">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:48px">
+        <div class="logo-icon"><i class="fa fa-graduation-cap"></i></div>
+        <span style="font-family:var(--font-display);font-size:1.35rem;font-weight:800;color:#fff">Layer<span style="color:#60A5FA">IQ</span></span>
+      </a>
+
+      <h1 style="font-family:var(--font-display);font-size:2.25rem;font-weight:900;color:#fff;margin-bottom:16px;line-height:1.2">
+        Start Your Learning<br>
+        <span style="background:linear-gradient(135deg,#A78BFA,#14B8A6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Journey Today</span>
+      </h1>
+      <p style="color:rgba(255,255,255,0.6);font-size:1rem;margin-bottom:40px;line-height:1.6">
+        Join thousands of learners worldwide. Access courses, track progress, and earn certificates.
+      </p>
+
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:14px;color:rgba(255,255,255,0.7);font-size:0.9rem">
+          <div style="width:36px;height:36px;border-radius:var(--radius);background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0"><i class="fa fa-bolt"></i></div>
+          Set up your account in under 60 seconds
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;color:rgba(255,255,255,0.7);font-size:0.9rem">
+          <div style="width:36px;height:36px;border-radius:var(--radius);background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0"><i class="fa fa-lock"></i></div>
+          Your data is secure and private
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;color:rgba(255,255,255,0.7);font-size:0.9rem">
+          <div style="width:36px;height:36px;border-radius:var(--radius);background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0"><i class="fa fa-gift"></i></div>
+          Free plan — no credit card required
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: Register Form -->
+  <div class="auth-right">
+    <div class="auth-card animate-fade-up">
+      <div class="auth-card-title">Create Your Account</div>
+      <div class="auth-card-subtitle">Choose your role and get started</div>
+
+      <!-- Role Selector -->
+      <input type="hidden" id="role">
+      <div class="role-cards">
+        <div class="role-card" data-role="student" onclick="selectRole(this)">
+          <div class="role-icon">👨‍🎓</div>
+          <div class="role-name">Student</div>
+          <div class="role-desc">Learn & grow</div>
+        </div>
+        <div class="role-card" data-role="faculty" onclick="selectRole(this)">
+          <div class="role-icon">👩‍🏫</div>
+          <div class="role-name">Faculty</div>
+          <div class="role-desc">Teach & mentor</div>
+        </div>
+        <div class="role-card" data-role="admin" onclick="selectRole(this)">
+          <div class="role-icon">⚙️</div>
+          <div class="role-name">Admin</div>
+          <div class="role-desc">Manage all</div>
+        </div>
+      </div>
+      <span class="form-error" id="roleError" style="display:none;margin-bottom:12px"></span>
+
+      <form id="registerForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="fullName">Full Name <span style="color:var(--danger)">*</span></label>
+          <div class="input-group">
+            <i class="fa fa-user input-icon"></i>
+            <input type="text" id="fullName" class="form-control" placeholder="John Doe" autocomplete="name">
+          </div>
+          <span class="form-error" id="nameError"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address <span style="color:var(--danger)">*</span></label>
+          <div class="input-group">
+            <i class="fa fa-envelope input-icon"></i>
+            <input type="email" id="email" class="form-control" placeholder="you@email.com" autocomplete="email">
+          </div>
+          <span class="form-error" id="emailError"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password <span style="color:var(--danger)">*</span></label>
+          <div class="input-group">
+            <i class="fa fa-lock input-icon"></i>
+            <input type="password" id="password" class="form-control" placeholder="Min. 6 characters" autocomplete="new-password">
+          </div>
+          <span class="form-error" id="passwordError"></span>
+          <div class="strength-wrap">
+            <div class="strength-bar-bg"><div id="strengthBar"></div></div>
+            <div class="strength-label"><span id="strengthText" style="color:var(--text-light)">Enter a password</span></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="confirmPassword">Confirm Password <span style="color:var(--danger)">*</span></label>
+          <div class="input-group">
+            <i class="fa fa-lock input-icon"></i>
+            <input type="password" id="confirmPassword" class="form-control" placeholder="Repeat password" autocomplete="new-password">
+          </div>
+          <span class="form-error" id="confirmError"></span>
+        </div>
+
+        <div class="form-check" style="margin-bottom:24px">
+          <input type="checkbox" id="terms" required>
+          <label for="terms" style="font-size:0.82rem;color:var(--text-muted);cursor:pointer">
+            I agree to the <a href="#" style="color:var(--primary)">Terms of Service</a> and <a href="#" style="color:var(--primary)">Privacy Policy</a>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">
+          <i class="fa fa-user-plus"></i> Create Account
+        </button>
+      </form>
+
+      <div style="text-align:center;margin-top:24px;font-size:0.875rem;color:var(--text-muted)">
+        Already have an account? <a href="login.html" style="color:var(--primary);font-weight:600">Sign In</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/login.js"></script>
+<script>
+function selectRole(card) {
+  document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  document.getElementById('role').value = card.dataset.role;
+}
+</script>
+</body>
+</html>

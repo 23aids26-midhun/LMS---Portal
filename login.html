@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — Acadex</title>
+  <meta name="description" content="Sign in to your Acadex account as Student, Faculty, or Admin.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+    }
+
+    /* Left panel */
+    .auth-left {
+      background: var(--gradient-hero);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(37,99,235,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37,99,235,0.08) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    .auth-left-content { position: relative; z-index: 1; }
+    .auth-left-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.5;
+    }
+    .auth-left-orb-1 { width:350px;height:350px;background:radial-gradient(circle,#2563EB,transparent);top:-100px;right:-100px; }
+    .auth-left-orb-2 { width:250px;height:250px;background:radial-gradient(circle,#14B8A6,transparent);bottom:-60px;left:20%; }
+
+    .auth-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 48px;
+      text-decoration: none;
+    }
+
+    .auth-heading {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .auth-heading span {
+      background: linear-gradient(135deg, #60A5FA, #14B8A6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .auth-tagline { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 40px; line-height: 1.6; }
+
+    .auth-features { display: flex; flex-direction: column; gap: 16px; }
+    .auth-feature {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+    }
+    .auth-feature-icon {
+      width: 36px;height:36px;border-radius:var(--radius);
+      background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1rem;flex-shrink:0;
+    }
+
+    /* Right panel */
+    .auth-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      background: var(--bg);
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      padding: 40px;
+    }
+
+    .auth-card-header { text-align: center; margin-bottom: 32px; }
+    .auth-card-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+    .auth-card-subtitle { color: var(--text-muted); font-size: 0.875rem; }
+
+    .demo-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
+    .demo-btn {
+      padding: 10px 8px;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--border);
+      background: var(--bg);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+    }
+    .demo-btn:hover { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
+    .demo-btn .demo-icon { font-size: 1.1rem; display: block; margin-bottom: 2px; }
+
+    .divider-text {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      color: var(--text-light);
+      font-size: 0.8rem;
+    }
+    .divider-text::before, .divider-text::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .auth-footer { text-align: center; margin-top: 24px; font-size: 0.875rem; color: var(--text-muted); }
+    .auth-footer a { color: var(--primary); font-weight: 600; }
+
+    .theme-toggle-auth {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 38px;height:38px;
+      border-radius: var(--radius);
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;color:var(--text-muted);font-size:1rem;
+      transition:var(--transition);z-index:10;
+    }
+    .theme-toggle-auth:hover { background:var(--primary-light);color:var(--primary);border-color:var(--primary); }
+
+    @media (max-width: 768px) {
+      .auth-page { grid-template-columns: 1fr; }
+      .auth-left  { display: none; }
+      .auth-right { padding: 24px 16px; min-height: 100vh; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="theme-toggle theme-toggle-auth" title="Toggle theme"><i class="fa fa-moon"></i></button>
+
+<div class="auth-page">
+  <!-- Left: Branding -->
+  <div class="auth-left">
+    <div class="auth-left-orb auth-left-orb-1"></div>
+    <div class="auth-left-orb auth-left-orb-2"></div>
+    <div class="auth-left-content">
+      <a href="index.html" class="auth-brand">
+        <div class="logo-icon"><i class="fa fa-graduation-cap"></i></div>
+        <span class="logo-text" style="color:#fff;font-family:var(--font-display);font-size:1.35rem;font-weight:800">Layer<span style="color:#60A5FA">IQ</span></span>
+      </a>
+      <h1 class="auth-heading">Welcome Back to Your <span>Learning Journey</span></h1>
+      <p class="auth-tagline">Access your personalized dashboard and continue where you left off.</p>
+      <div class="auth-features">
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="fa fa-play-circle"></i></div>
+          Continue your enrolled courses
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="fa fa-bar-chart"></i></div>
+          Track your progress & analytics
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="fa fa-certificate"></i></div>
+          Earn certificates on completion
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="fa fa-clock-o"></i></div>
+          Attend classes & track schedule
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: Login Form -->
+  <div class="auth-right">
+    <div class="auth-card animate-fade-up">
+      <div class="auth-card-header">
+        <div style="margin-bottom:16px">
+          <div class="logo-icon" style="margin:0 auto 12px;width:50px;height:50px;font-size:1.5rem"><i class="fa fa-graduation-cap"></i></div>
+        </div>
+        <div class="auth-card-title">Sign In to Acadex</div>
+        <div class="auth-card-subtitle">Quick demo — try any role below</div>
+      </div>
+
+      <!-- Demo login buttons -->
+      <div class="demo-btns">
+        <button class="demo-btn" data-demo-login="student">
+          <span class="demo-icon">👨‍🎓</span>Student
+        </button>
+        <button class="demo-btn" data-demo-login="faculty">
+          <span class="demo-icon">👩‍🏫</span>Faculty
+        </button>
+        <button class="demo-btn" data-demo-login="admin">
+          <span class="demo-icon">⚙️</span>Admin
+        </button>
+      </div>
+
+      <div class="divider-text">or sign in with email</div>
+
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <div class="input-group">
+            <i class="fa fa-envelope input-icon"></i>
+            <input type="email" id="email" class="form-control"
+                   placeholder="your@email.com" autocomplete="email">
+          </div>
+          <span class="form-error" id="emailError"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">
+            Password
+            <a href="#" style="float:right;font-size:0.78rem;color:var(--primary);font-weight:500">Forgot?</a>
+          </label>
+          <div class="input-group">
+            <i class="fa fa-lock input-icon"></i>
+            <input type="password" id="password" class="form-control"
+                   placeholder="Enter password" autocomplete="current-password">
+            <i class="fa fa-eye input-icon-right"></i>
+          </div>
+          <span class="form-error" id="passwordError"></span>
+        </div>
+
+        <div class="form-check" style="margin-bottom:24px">
+          <input type="checkbox" id="remember">
+          <label for="remember" style="font-size:0.875rem;color:var(--text-muted);cursor:pointer">Remember me for 30 days</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">
+          <i class="fa fa-sign-in"></i> Sign In
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        Don't have an account? <a href="register.html">Create one free</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>

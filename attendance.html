@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/course.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body id="attendancePage">
+<div class="dashboard-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fa fa-graduation-cap"></i></div>
+      <span class="sidebar-brand">ACAD<span>EX</span></span>
+    </div>
+    <nav class="sidebar-nav" style="padding-top:20px">
+      <a href="student.html" class="sidebar-link" data-tooltip="Dashboard"><span class="sidebar-icon"><i class="fa fa-th-large"></i></span><span class="sidebar-label">Dashboard</span></a>
+      <a href="course.html" class="sidebar-link" data-tooltip="Courses"><span class="sidebar-icon"><i class="fa fa-book"></i></span><span class="sidebar-label">My Courses</span></a>
+      <a href="assignment.html" class="sidebar-link" data-tooltip="Assignments"><span class="sidebar-icon"><i class="fa fa-tasks"></i></span><span class="sidebar-label">Assignments</span></a>
+      <a href="quiz.html?id=1" class="sidebar-link" data-tooltip="Quiz"><span class="sidebar-icon"><i class="fa fa-question-circle"></i></span><span class="sidebar-label">Quiz</span></a>
+      <a href="attendance.html" class="sidebar-link active" data-tooltip="Attendance"><span class="sidebar-icon"><i class="fa fa-calendar-check-o"></i></span><span class="sidebar-label">Attendance</span></a>
+      <a href="certificate.html" class="sidebar-link" data-tooltip="Certificates"><span class="sidebar-icon"><i class="fa fa-certificate"></i></span><span class="sidebar-label">Certificates</span></a>
+      <a href="profile.html" class="sidebar-link" data-tooltip="Profile"><span class="sidebar-icon"><i class="fa fa-user"></i></span><span class="sidebar-label">Profile</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" data-logout><span class="sidebar-icon"><i class="fa fa-sign-out"></i></span><span class="sidebar-label">Logout</span></button>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <main class="main-content" id="mainContent">
+    <header class="inner-navbar" id="innerNavbar">
+      <div class="inner-navbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
+        <div class="breadcrumb">
+          <a href="student.html">Dashboard</a><span class="breadcrumb-sep">/</span><span>Attendance</span>
+        </div>
+      </div>
+      <div class="inner-navbar-right">
+        <button class="theme-toggle notif-btn" title="Toggle theme"><i class="fa fa-moon"></i></button>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <div class="page-header flex-between">
+        <div>
+          <h1 class="page-title">Attendance Tracker 📅</h1>
+          <p class="page-subtitle">Monitor your attendance month by month.</p>
+        </div>
+        <span id="attBadge" class="badge badge-success" style="font-size:0.875rem;padding:8px 16px">Excellent</span>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="stats-grid" style="margin-bottom:24px">
+        <div class="stat-card">
+          <div class="stat-icon green"><i class="fa fa-check-circle"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="attPresent">0</div>
+            <div class="stat-label">Present Days</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon red"><i class="fa fa-times-circle"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="attAbsent">0</div>
+            <div class="stat-label">Absent Days</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange"><i class="fa fa-clock-o"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="attLate">0</div>
+            <div class="stat-label">Late Arrivals</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fa fa-percent"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="attPercent">0%</div>
+            <div class="stat-label">Overall Rate</div>
+            <div class="progress" style="margin-top:6px">
+              <div class="progress-bar" id="attPercentBar" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Calendar -->
+        <div>
+          <div class="card" style="margin-bottom:24px">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-calendar" style="color:var(--primary)"></i> <span id="calMonthTitle">Month</span></span>
+              <div class="cal-nav">
+                <button id="prevMonthBtn" title="Previous month"><i class="fa fa-chevron-left"></i></button>
+                <button id="nextMonthBtn" title="Next month"><i class="fa fa-chevron-right"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- Day labels -->
+              <div class="attendance-grid" style="margin-bottom:4px">
+                <div class="att-day-name">Sun</div>
+                <div class="att-day-name">Mon</div>
+                <div class="att-day-name">Tue</div>
+                <div class="att-day-name">Wed</div>
+                <div class="att-day-name">Thu</div>
+                <div class="att-day-name">Fri</div>
+                <div class="att-day-name">Sat</div>
+              </div>
+              <div class="attendance-grid" id="attendanceCal"></div>
+              <div class="divider"></div>
+              <div class="attendance-legend">
+                <div class="legend-item"><div class="legend-dot present"></div> Present</div>
+                <div class="legend-item"><div class="legend-dot absent"></div> Absent</div>
+                <div class="legend-item"><div class="legend-dot late"></div> Late</div>
+                <div class="legend-item"><div class="legend-dot holiday"></div> Holiday</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subject Breakdown -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-list" style="color:var(--accent)"></i> Subject-wise Attendance</span>
+            </div>
+            <div class="card-body" style="padding:16px 20px">
+              <div id="subjectAttendance"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Trend Chart -->
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-line-chart" style="color:var(--primary)"></i> Monthly Trend</span>
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper lg">
+                <canvas id="monthlyTrendChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Day Detail Modal -->
+<div class="modal-overlay" id="dayDetailModal">
+  <div class="modal" style="max-width:360px">
+    <div class="modal-header">
+      <span class="modal-title">Attendance Detail</span>
+      <button class="modal-close" onclick="Modal.close('dayDetailModal')"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="modal-body" style="text-align:center;padding:32px">
+      <div style="font-size:2.5rem;margin-bottom:12px">📆</div>
+      <div style="font-size:1rem;font-weight:600;margin-bottom:8px" id="dayDetailDate"></div>
+      <span id="dayDetailStatus" class="badge"></span>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/attendance.js"></script>
+</body>
+</html>

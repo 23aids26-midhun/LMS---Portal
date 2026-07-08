@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/course.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body id="quizPage">
+<div class="dashboard-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fa fa-graduation-cap"></i></div>
+      <span class="sidebar-brand">ACAD<span>EX</span></span>
+    </div>
+    <nav class="sidebar-nav" style="padding-top:20px">
+      <a href="student.html" class="sidebar-link" data-tooltip="Dashboard">
+        <span class="sidebar-icon"><i class="fa fa-th-large"></i></span>
+        <span class="sidebar-label">Dashboard</span>
+      </a>
+      <a href="course.html" class="sidebar-link" data-tooltip="Courses">
+        <span class="sidebar-icon"><i class="fa fa-book"></i></span>
+        <span class="sidebar-label">My Courses</span>
+      </a>
+      <a href="assignment.html" class="sidebar-link" data-tooltip="Assignments">
+        <span class="sidebar-icon"><i class="fa fa-tasks"></i></span>
+        <span class="sidebar-label">Assignments</span>
+      </a>
+      <a href="quiz.html?id=1" class="sidebar-link active" data-tooltip="Quiz">
+        <span class="sidebar-icon"><i class="fa fa-question-circle"></i></span>
+        <span class="sidebar-label">Quiz</span>
+      </a>
+      <a href="attendance.html" class="sidebar-link" data-tooltip="Attendance">
+        <span class="sidebar-icon"><i class="fa fa-calendar"></i></span>
+        <span class="sidebar-label">Attendance</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" data-logout><span class="sidebar-icon"><i class="fa fa-sign-out"></i></span><span class="sidebar-label">Logout</span></button>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <main class="main-content" id="mainContent">
+    <header class="inner-navbar" id="innerNavbar">
+      <div class="inner-navbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
+        <div class="breadcrumb">
+          <a href="student.html">Dashboard</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Quiz</span>
+        </div>
+      </div>
+      <div class="inner-navbar-right">
+        <button class="theme-toggle notif-btn" title="Toggle theme"><i class="fa fa-moon"></i></button>
+        <a href="student.html" class="btn btn-ghost btn-sm"><i class="fa fa-arrow-left"></i> Back</a>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <!-- Quiz Body -->
+      <div id="quizBody">
+        <div class="quiz-container">
+          <!-- Progress Header -->
+          <div class="quiz-header-bar">
+            <div class="quiz-progress-text" id="quizProgressText">Question 1 of 10</div>
+            <div class="quiz-timer" id="quizTimerWrap">
+              <i class="fa fa-clock-o"></i>
+              <span id="quizTimer">10:00</span>
+            </div>
+          </div>
+
+          <div class="quiz-progress-wrap">
+            <div class="progress">
+              <div class="progress-bar" id="quizProgressBar" style="width:10%"></div>
+            </div>
+          </div>
+
+          <!-- Question Card -->
+          <div class="question-card">
+            <div class="question-number" id="questionNumber">Question 1</div>
+            <div class="question-text" id="questionText">Loading question...</div>
+            <div class="quiz-options" id="optionsContainer"></div>
+          </div>
+
+          <!-- Question Navigation -->
+          <div style="margin-bottom:20px">
+            <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;font-weight:600">QUESTION NAVIGATOR</div>
+            <div id="questionNav" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="quiz-nav">
+            <button id="prevBtn" class="btn btn-ghost btn-lg"><i class="fa fa-arrow-left"></i> Previous</button>
+            <button id="nextBtn" class="btn btn-primary btn-lg">Next <i class="fa fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz Results (hidden initially) -->
+      <div id="quizResults" style="display:none">
+        <div class="quiz-container">
+          <div class="quiz-results card">
+            <h2 style="font-family:var(--font-display);margin-bottom:8px">Quiz Complete! 🎉</h2>
+            <p id="resultMessage" style="margin-bottom:24px;color:var(--text-muted)"></p>
+
+            <div class="score-ring" id="scoreRing">
+              <span id="finalScore">0%</span>
+            </div>
+
+            <div class="quiz-results-stats">
+              <div class="result-stat">
+                <div class="result-stat-val" style="color:var(--success)" id="correctCount">0</div>
+                <div class="result-stat-lbl">Correct</div>
+              </div>
+              <div class="result-stat">
+                <div class="result-stat-val" style="color:var(--danger)" id="wrongCount">0</div>
+                <div class="result-stat-lbl">Wrong</div>
+              </div>
+              <div class="result-stat">
+                <div class="result-stat-val" id="timeTaken">0m 0s</div>
+                <div class="result-stat-lbl">Time Taken</div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:12px;justify-content:center;margin-bottom:32px">
+              <button id="retryBtn" class="btn btn-outline btn-lg"><i class="fa fa-refresh"></i> Retry Quiz</button>
+              <a href="student.html" class="btn btn-primary btn-lg"><i class="fa fa-home"></i> Dashboard</a>
+            </div>
+          </div>
+
+          <!-- Answer Review -->
+          <div style="margin-top:28px">
+            <h3 style="font-family:var(--font-display);margin-bottom:16px">📋 Answer Review</h3>
+            <div id="reviewContainer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/quiz.js"></script>
+</body>
+</html>

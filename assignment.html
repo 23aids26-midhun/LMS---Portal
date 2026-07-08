@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignments — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/course.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body id="assignmentPage">
+<div class="dashboard-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fa fa-graduation-cap"></i></div>
+      <span class="sidebar-brand">ACAD<span>EX</span></span>
+    </div>
+    <nav class="sidebar-nav" style="padding-top:20px">
+      <a href="student.html" class="sidebar-link" data-tooltip="Dashboard"><span class="sidebar-icon"><i class="fa fa-th-large"></i></span><span class="sidebar-label">Dashboard</span></a>
+      <a href="course.html" class="sidebar-link" data-tooltip="Courses"><span class="sidebar-icon"><i class="fa fa-book"></i></span><span class="sidebar-label">My Courses</span></a>
+      <a href="assignment.html" class="sidebar-link active" data-tooltip="Assignments"><span class="sidebar-icon"><i class="fa fa-tasks"></i></span><span class="sidebar-label">Assignments</span></a>
+      <a href="quiz.html?id=1" class="sidebar-link" data-tooltip="Quiz"><span class="sidebar-icon"><i class="fa fa-question-circle"></i></span><span class="sidebar-label">Quiz</span></a>
+      <a href="attendance.html" class="sidebar-link" data-tooltip="Attendance"><span class="sidebar-icon"><i class="fa fa-calendar"></i></span><span class="sidebar-label">Attendance</span></a>
+      <a href="certificate.html" class="sidebar-link" data-tooltip="Certificates"><span class="sidebar-icon"><i class="fa fa-certificate"></i></span><span class="sidebar-label">Certificates</span></a>
+      <a href="profile.html" class="sidebar-link" data-tooltip="Profile"><span class="sidebar-icon"><i class="fa fa-user"></i></span><span class="sidebar-label">Profile</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" data-logout><span class="sidebar-icon"><i class="fa fa-sign-out"></i></span><span class="sidebar-label">Logout</span></button>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <main class="main-content" id="mainContent">
+    <header class="inner-navbar" id="innerNavbar">
+      <div class="inner-navbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
+        <div class="breadcrumb">
+          <a href="student.html">Dashboard</a><span class="breadcrumb-sep">/</span><span>Assignments</span>
+        </div>
+      </div>
+      <div class="inner-navbar-right">
+        <button class="theme-toggle notif-btn" title="Toggle theme"><i class="fa fa-moon"></i></button>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <div class="page-header">
+        <h1 class="page-title">Assignments 📋</h1>
+        <p class="page-subtitle">Track, submit, and review all your assignments.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 380px;gap:24px">
+        <!-- Left: Assignment List -->
+        <div>
+          <!-- Filters -->
+          <div class="filters-row">
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="pending">Pending</button>
+              <button class="filter-btn" data-filter="submitted">Submitted</button>
+              <button class="filter-btn" data-filter="graded">Graded</button>
+            </div>
+            <select id="assignmentSort" class="form-control" style="width:160px">
+              <option value="due">Sort by Due Date</option>
+              <option value="points">Sort by Points</option>
+              <option value="priority">Sort by Priority</option>
+            </select>
+          </div>
+
+          <div id="assignmentsList" style="display:flex;flex-direction:column;gap:14px"></div>
+        </div>
+
+        <!-- Right: Detail Panel -->
+        <div>
+          <div class="card" id="assignmentDetail" style="position:sticky;top:calc(var(--header-h) + 24px)">
+            <div class="card-body" style="text-align:center;padding:48px 24px">
+              <div style="font-size:3rem;margin-bottom:12px;opacity:0.4">📋</div>
+              <h3 style="color:var(--text-muted)">Select an Assignment</h3>
+              <p style="font-size:0.875rem">Click any assignment to see its details.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Submit Modal -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Submit Assignment</span>
+      <button class="modal-close" onclick="Modal.close('submitModal')"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="submitAssignmentId">
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-icon"><i class="fa fa-cloud-upload"></i></div>
+        <div class="upload-title">Drag & drop files here</div>
+        <div class="upload-desc">PDF, DOC, ZIP accepted · Max 50MB</div>
+        <label class="btn btn-outline btn-sm" style="margin-top:12px;cursor:pointer">
+          <i class="fa fa-folder-open"></i> Browse Files
+          <input type="file" id="fileInput" multiple style="display:none" accept=".pdf,.doc,.docx,.zip,.png,.jpg">
+        </label>
+      </div>
+      <div id="uploadedFiles"></div>
+      <div class="form-group" style="margin-top:16px">
+        <label class="form-label">Submission Note <span style="color:var(--danger)">*</span></label>
+        <textarea id="submitText" class="form-control" placeholder="Describe what you've submitted..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="Modal.close('submitModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitAssignment()"><i class="fa fa-paper-plane"></i> Submit</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/assignment.js"></script>
+</body>
+</html>

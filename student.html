@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body id="studentDashboard">
+<div class="dashboard-layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fa fa-graduation-cap"></i></div>
+      <span class="sidebar-brand">ACAD<span>EX</span></span>
+    </div>
+
+    <a href="profile.html" class="sidebar-user">
+      <div class="sidebar-avatar" data-user-avatar></div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" data-user-name>Student</div>
+        <div class="sidebar-user-role">student</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Main</div>
+        <a href="student.html" class="sidebar-link active" data-tooltip="Dashboard">
+          <span class="sidebar-icon"><i class="fa fa-th-large"></i></span>
+          <span class="sidebar-label">Dashboard</span>
+        </a>
+        <a href="course.html" class="sidebar-link" data-tooltip="My Courses">
+          <span class="sidebar-icon"><i class="fa fa-book"></i></span>
+          <span class="sidebar-label">My Courses</span>
+          <span class="sidebar-badge">4</span>
+        </a>
+        <a href="assignment.html" class="sidebar-link" data-tooltip="Assignments">
+          <span class="sidebar-icon"><i class="fa fa-tasks"></i></span>
+          <span class="sidebar-label">Assignments</span>
+          <span class="sidebar-badge">3</span>
+        </a>
+        <a href="quiz.html?id=1" class="sidebar-link" data-tooltip="Quiz">
+          <span class="sidebar-icon"><i class="fa fa-question-circle"></i></span>
+          <span class="sidebar-label">Quiz</span>
+        </a>
+        <a href="attendance.html" class="sidebar-link" data-tooltip="Attendance">
+          <span class="sidebar-icon"><i class="fa fa-calendar-check-o"></i></span>
+          <span class="sidebar-label">Attendance</span>
+        </a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Achievements</div>
+        <a href="certificate.html" class="sidebar-link" data-tooltip="Certificates">
+          <span class="sidebar-icon"><i class="fa fa-certificate"></i></span>
+          <span class="sidebar-label">Certificates</span>
+        </a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Account</div>
+        <a href="profile.html" class="sidebar-link" data-tooltip="Profile">
+          <span class="sidebar-icon"><i class="fa fa-user"></i></span>
+          <span class="sidebar-label">Profile</span>
+        </a>
+        <a href="settings.html" class="sidebar-link" data-tooltip="Settings">
+          <span class="sidebar-icon"><i class="fa fa-cog"></i></span>
+          <span class="sidebar-label">Settings</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" data-logout data-tooltip="Logout">
+        <span class="sidebar-icon"><i class="fa fa-sign-out"></i></span>
+        <span class="sidebar-label">Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="main-content" id="mainContent">
+
+    <!-- Inner Navbar -->
+    <header class="inner-navbar" id="innerNavbar">
+      <div class="inner-navbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
+        <div class="breadcrumb">
+          <a href="index.html">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Dashboard</span>
+        </div>
+      </div>
+      <div class="inner-navbar-right">
+        <button class="theme-toggle notif-btn" title="Toggle theme"><i class="fa fa-moon"></i></button>
+        <div class="dropdown">
+          <button class="notif-btn" data-dropdown-toggle title="Notifications">
+            <i class="fa fa-bell"></i>
+            <span class="notif-badge">3</span>
+          </button>
+          <div class="dropdown-menu notif-dropdown" style="min-width:320px">
+            <div class="notif-dropdown-header">
+              <span class="notif-dropdown-title">Notifications</span>
+              <span class="notif-mark-all">Mark all read</span>
+            </div>
+            <div class="notif-item unread">
+              <div class="notif-avatar" style="background:var(--primary-light);color:var(--primary)"><i class="fa fa-book"></i></div>
+              <div class="notif-content">
+                <div class="notif-text">New lesson added to Web Development</div>
+                <div class="notif-time">2 hours ago</div>
+              </div>
+              <div class="notif-unread-dot"></div>
+            </div>
+            <div class="notif-item unread">
+              <div class="notif-avatar" style="background:var(--danger-light);color:var(--danger)"><i class="fa fa-clock-o"></i></div>
+              <div class="notif-content">
+                <div class="notif-text">Assignment due in 2 days: Build REST API</div>
+                <div class="notif-time">4 hours ago</div>
+              </div>
+              <div class="notif-unread-dot"></div>
+            </div>
+            <div class="notif-item">
+              <div class="notif-avatar" style="background:var(--success-light);color:var(--success)"><i class="fa fa-check"></i></div>
+              <div class="notif-content">
+                <div class="notif-text">Quiz graded: JavaScript Fundamentals — 88%</div>
+                <div class="notif-time">1 day ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dropdown">
+          <div class="user-menu" data-dropdown-toggle>
+            <div class="avatar-placeholder avatar-sm" style="border-radius:50%;background:var(--gradient-primary);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center" data-user-avatar></div>
+            <div class="user-info hide-md">
+              <span class="user-name" data-user-name>Student</span>
+              <span class="user-role">student</span>
+            </div>
+            <i class="fa fa-chevron-down" style="font-size:0.7rem;color:var(--text-muted)"></i>
+          </div>
+          <div class="dropdown-menu">
+            <a href="profile.html" class="dropdown-item"><i class="fa fa-user"></i> Profile</a>
+            <a href="settings.html" class="dropdown-item"><i class="fa fa-cog"></i> Settings</a>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item danger" data-logout><i class="fa fa-sign-out"></i> Logout</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-content">
+      <div class="page-header">
+        <h1 class="page-title">Welcome back, <span data-user-name style="color:var(--primary)">Student</span>! 👋</h1>
+        <p class="page-subtitle">Here's your learning overview for today.</p>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fa fa-book"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="totalCourses">0</div>
+            <div class="stat-label">Enrolled Courses</div>
+            <div class="stat-change up"><i class="fa fa-arrow-up"></i> 2 this month</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon teal"><i class="fa fa-check-circle"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="completedCourses">0</div>
+            <div class="stat-label">Completed</div>
+            <div class="stat-change up"><i class="fa fa-arrow-up"></i> 1 this week</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange"><i class="fa fa-calendar"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="attendancePercent">0%</div>
+            <div class="stat-label">Attendance Rate</div>
+            <div class="stat-change up"><i class="fa fa-arrow-up"></i> +2% vs last month</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple"><i class="fa fa-tasks"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="pendingAssignments">0</div>
+            <div class="stat-label">Pending Assignments</div>
+            <div class="stat-change down"><i class="fa fa-arrow-down"></i> Due soon</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Grid -->
+      <div class="dashboard-grid">
+        <!-- Left: Courses + Chart -->
+        <div>
+          <!-- My Courses -->
+          <div class="card" style="margin-bottom:24px">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-book" style="color:var(--primary)"></i> My Courses</span>
+              <a href="course.html" class="btn btn-ghost btn-sm">View All <i class="fa fa-arrow-right"></i></a>
+            </div>
+            <div class="card-body">
+              <div id="courseList" class="enrolled-list">
+                <div class="skeleton" style="height:70px;margin-bottom:12px"></div>
+                <div class="skeleton" style="height:70px;margin-bottom:12px"></div>
+                <div class="skeleton" style="height:70px"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Monthly Progress Chart -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-bar-chart" style="color:var(--primary)"></i> Monthly Attendance</span>
+              <span class="badge badge-success">On Track</span>
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper">
+                <canvas id="progressChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Sidebar Widgets -->
+        <div>
+          <!-- Assignments -->
+          <div class="card" style="margin-bottom:24px">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-tasks" style="color:var(--warning)"></i> Assignments</span>
+              <a href="assignment.html" class="btn btn-ghost btn-sm">View All</a>
+            </div>
+            <div class="card-body" style="padding:16px">
+              <div id="assignmentList" class="assignment-list"></div>
+            </div>
+          </div>
+
+          <!-- Attendance Donut -->
+          <div class="card" style="margin-bottom:24px">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-pie-chart" style="color:var(--accent)"></i> Attendance</span>
+              <a href="attendance.html" class="btn btn-ghost btn-sm">Details</a>
+            </div>
+            <div class="card-body">
+              <canvas id="attendanceChart" height="180"></canvas>
+            </div>
+          </div>
+
+          <!-- Quiz Results -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-question-circle" style="color:var(--primary)"></i> Quiz Results</span>
+              <a href="quiz.html?id=1" class="btn btn-primary btn-sm">Take Quiz</a>
+            </div>
+            <div class="card-body" style="padding:16px">
+              <div id="quizResults"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/student.js"></script>
+</body>
+</html>

@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acadex — Smart Learning Platform</title>
+  <meta name="description" content="Acadex is a modern Learning Management System for students, faculty, and administrators. Manage courses, assignments, quizzes, and more.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════════════════════════ -->
+<nav class="navbar hero-nav" id="mainNavbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-brand">
+      <div class="logo-icon"><i class="fa fa-graduation-cap"></i></div>
+      <span class="logo-text">ACAD<span>EX</span></span>
+    </a>
+
+    <ul class="navbar-nav">
+      <li><a href="#about"         class="nav-link">About</a></li>
+      <li><a href="#features"      class="nav-link">Features</a></li>
+      <li><a href="#courses"       class="nav-link">Courses</a></li>
+      <li><a href="#pricing"       class="nav-link">Pricing</a></li>
+      <li><a href="contact.html"   class="nav-link">Contact</a></li>
+    </ul>
+
+    <div class="navbar-actions">
+      <button class="theme-toggle" title="Toggle dark mode"><i class="fa fa-moon"></i></button>
+      <a href="login.html"    class="btn btn-ghost">Sign In</a>
+      <a href="register.html" class="btn btn-primary">Get Started</a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about"       class="nav-link">About</a>
+  <a href="#features"    class="nav-link">Features</a>
+  <a href="#courses"     class="nav-link">Courses</a>
+  <a href="#pricing"     class="nav-link">Pricing</a>
+  <a href="contact.html" class="nav-link">Contact</a>
+  <div class="navbar-actions">
+    <a href="login.html"    class="btn btn-outline">Sign In</a>
+    <a href="register.html" class="btn btn-primary">Get Started</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HERO SECTION
+══════════════════════════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+
+  <div class="hero-inner">
+    <div class="hero-content animate-fade-up">
+      <div class="hero-tag">
+        <span class="dot"></span>
+        🎓 Modern Learning Management System
+      </div>
+
+      <h1 class="hero-title">
+        Transform Your Learning Journey with <span class="highlight">Acadex</span>
+      </h1>
+
+      <p class="hero-desc">
+        A modern Learning Management System designed to simplify online education with intuitive course management, interactive assessments, progress tracking, and a seamless learning experience.
+      </p>
+
+      <div class="hero-actions">
+        <a href="register.html" class="btn btn-accent btn-lg">
+          <i class="fa fa-rocket"></i> Get Started
+        </a>
+        <a href="course.html" class="btn btn-lg" style="background:rgba(255,255,255,0.1);color:#fff;border:1.5px solid rgba(255,255,255,0.25);backdrop-filter:blur(8px)">
+          <i class="fa fa-book"></i> Explore Courses
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-value" data-counter="50000" data-suffix="+">0+</div>
+          <div class="hero-stat-label">Students Enrolled</div>
+        </div>
+        <div>
+          <div class="hero-stat-value" data-counter="1200" data-suffix="+">0+</div>
+          <div class="hero-stat-label">Courses Available</div>
+        </div>
+        <div>
+          <div class="hero-stat-value" data-counter="98.5" data-suffix="%">0%</div>
+          <div class="hero-stat-label">Satisfaction Rate</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual animate-fade-in-right delay-300">
+      <div class="hero-card-main">
+        <img src="images/hero-banner.jpg" alt="LMS Dashboard" class="hero-img"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div style="display:none;height:300px;border-radius:var(--radius-lg);background:var(--gradient-primary);align-items:center;justify-content:center;margin-bottom:20px;font-size:4rem">🎓</div>
+        <div class="hero-course-info">
+          <div>
+            <div class="hero-course-title">Web Development Bootcamp</div>
+            <div class="hero-course-meta">Progress: 72% Complete · 48 Lessons</div>
+          </div>
+          <span class="badge badge-success">Enrolled</span>
+        </div>
+        <div style="margin-top:14px">
+          <div class="progress">
+            <div class="progress-bar" style="width:72%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-floating hero-floating-1">
+        <div class="floating-icon blue"><i class="fa fa-trophy"></i></div>
+        <div>
+          <div class="floating-value">4.9 ★</div>
+          <div class="floating-label">Top Rated</div>
+        </div>
+      </div>
+
+      <div class="hero-floating hero-floating-2">
+        <div class="floating-icon green"><i class="fa fa-check-circle"></i></div>
+        <div>
+          <div class="floating-value">Quiz Passed</div>
+          <div class="floating-label">Score: 92%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     COUNTER STATS
+══════════════════════════════════════════════════════════════ -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-inner">
+      <div data-animate="animate-fade-up">
+        <div class="counter-icon">👨‍🎓</div>
+        <div class="counter-value" data-counter="50000" data-suffix="+">0+</div>
+        <div class="counter-label">Active Students</div>
+      </div>
+      <div data-animate="animate-fade-up" style="animation-delay:0.1s">
+        <div class="counter-icon">📚</div>
+        <div class="counter-value" data-counter="1200" data-suffix="+">0+</div>
+        <div class="counter-label">Courses</div>
+      </div>
+      <div data-animate="animate-fade-up" style="animation-delay:0.2s">
+        <div class="counter-icon">👩‍🏫</div>
+        <div class="counter-value" data-counter="350" data-suffix="+">0+</div>
+        <div class="counter-label">Expert Faculty</div>
+      </div>
+      <div data-animate="animate-fade-up" style="animation-delay:0.3s">
+        <div class="counter-icon">🏆</div>
+        <div class="counter-value" data-counter="98" data-suffix="%">0%</div>
+        <div class="counter-label">Satisfaction Rate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ABOUT & MISSION
+══════════════════════════════════════════════════════════════ -->
+<section class="about-section" id="about" style="padding: 80px 0; background: var(--surface); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center;">
+      <div data-animate="animate-fade-in-left">
+        <div class="section-tag" style="background:var(--primary-light); color:var(--primary); display: inline-flex; margin-bottom: 16px;">
+          <i class="fa fa-info-circle"></i> About Acadex
+        </div>
+        <h2 class="section-title" style="margin-bottom: 20px; font-family: var(--font-display); font-size: 2.25rem; font-weight: 800;">
+          Empowering Digital Education Beyond Boundaries
+        </h2>
+        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 1.05rem; line-height: 1.75;">
+          Acadex is a professional, intelligent, and highly accessible Learning Management System (LMS). We provide a unified digital campus that bridges the gap between students, educators, and administrators, turning education into a collaborative and data-driven experience.
+        </p>
+        <div style="background: var(--bg); padding: 24px; border-left: 4px solid var(--primary); border-radius: 0 var(--radius) var(--radius) 0; box-shadow: var(--shadow-sm);">
+          <h4 style="font-family: var(--font-display); font-weight: 700; color: var(--text); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+            🎯 Our Mission
+          </h4>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0;">
+            Empower students, educators, and institutions with an intelligent, engaging, and efficient digital learning platform that transforms education into an accessible, collaborative, and data-driven experience.
+          </p>
+        </div>
+      </div>
+      <div data-animate="animate-fade-in-right" class="text-center" style="position: relative;">
+        <div style="position: absolute; inset: 0; background: var(--gradient-primary); filter: blur(40px); opacity: 0.15; border-radius: 50%;"></div>
+        <div style="position: relative; background: var(--gradient-primary); padding: 48px 32px; border-radius: var(--radius-lg); color: #fff; box-shadow: var(--shadow-md); text-align: left; overflow: hidden;">
+          <div style="position: absolute; top: -20px; right: -20px; font-size: 8rem; opacity: 0.1;"><i class="fa fa-graduation-cap"></i></div>
+          <h3 style="font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; margin-bottom: 12px;">Learn Smarter.<br>Achieve More.</h3>
+          <p style="opacity: 0.8; font-size: 0.9rem; margin-bottom: 24px; line-height: 1.5;">Join a community of learners and educators worldwide building the future of classroom management.</p>
+          <div style="display: flex; gap: 16px;">
+            <a href="register.html" class="btn btn-accent btn-sm">Get Started Now</a>
+            <a href="#features" class="btn btn-sm" style="background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.25);">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FEATURES
+══════════════════════════════════════════════════════════════ -->
+<section class="features-section" id="features">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag"><i class="fa fa-star"></i> Key Features</div>
+      <h2 class="section-title">Everything You Need to Learn Smarter</h2>
+      <p class="section-subtitle">A complete ecosystem for modern education — built for students, instructors, and administrators.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card" data-animate="animate-fade-up">
+        <div class="feature-icon"><i class="fa fa-play-circle"></i></div>
+        <h3 class="feature-title">Interactive Courses</h3>
+        <p class="feature-desc">Access video lectures, reading materials, and hands-on labs. Track your progress in real-time with smart progress bars.</p>
+      </div>
+      <div class="feature-card" data-animate="animate-fade-up" style="animation-delay:0.1s">
+        <div class="feature-icon"><i class="fa fa-question-circle"></i></div>
+        <h3 class="feature-title">Smart Quiz Engine</h3>
+        <p class="feature-desc">Timed MCQ quizzes with instant feedback, detailed explanations, and result analytics to identify weak areas.</p>
+      </div>
+      <div class="feature-card" data-animate="animate-fade-up" style="animation-delay:0.2s">
+        <div class="feature-icon"><i class="fa fa-calendar-check-o"></i></div>
+        <h3 class="feature-title">Attendance Tracking</h3>
+        <p class="feature-desc">Visual calendar-based attendance system. Get alerts when your attendance falls below the required threshold.</p>
+      </div>
+      <div class="feature-card" data-animate="animate-fade-up" style="animation-delay:0.3s">
+        <div class="feature-icon"><i class="fa fa-bar-chart"></i></div>
+        <h3 class="feature-title">Analytics Dashboard</h3>
+        <p class="feature-desc">Beautiful charts and insights for all roles. Monitor performance, identify trends, and make data-driven decisions.</p>
+      </div>
+      <div class="feature-card" data-animate="animate-fade-up" style="animation-delay:0.4s">
+        <div class="feature-icon"><i class="fa fa-certificate"></i></div>
+        <h3 class="feature-title">Certificates</h3>
+        <p class="feature-desc">Earn printable, shareable certificates upon course completion. Showcase your achievements professionally.</p>
+      </div>
+      <div class="feature-card" data-animate="animate-fade-up" style="animation-delay:0.5s">
+        <div class="feature-icon"><i class="fa fa-users"></i></div>
+        <h3 class="feature-title">Multi-Role System</h3>
+        <p class="feature-desc">Separate tailored dashboards for Students, Faculty, and Admins. Everyone gets exactly what they need.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     COURSES PREVIEW
+══════════════════════════════════════════════════════════════ -->
+<section class="courses-section" id="courses">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag"><i class="fa fa-book"></i> Courses</div>
+      <h2 class="section-title">Explore Popular Courses</h2>
+      <p class="section-subtitle">Hundreds of expertly crafted courses across technology, design, business, and more.</p>
+    </div>
+
+    <div class="courses-filter">
+      <button class="filter-btn active" data-cat="all">All</button>
+      <button class="filter-btn" data-cat="web">Web Dev</button>
+      <button class="filter-btn" data-cat="ai">AI & ML</button>
+      <button class="filter-btn" data-cat="design">Design</button>
+      <button class="filter-btn" data-cat="data">Data Science</button>
+      <button class="filter-btn" data-cat="mobile">Mobile</button>
+    </div>
+
+    <div class="courses-grid" id="homeCourseGrid">
+      <!-- Populated by JS or static -->
+      <div class="course-card" data-animate="animate-fade-up">
+        <div class="course-thumbnail">
+          <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=500&q=80" alt="Web Dev" onerror="this.parentElement.style.background='var(--gradient-primary)';this.style.display='none'">
+          <span class="course-category-tag">Web Dev</span>
+          <div class="course-bookmark"><i class="fa fa-bookmark-o"></i></div>
+        </div>
+        <div class="course-body">
+          <h4 class="course-title">Complete Web Development Bootcamp 2024</h4>
+          <div class="course-instructor">
+            <div class="avatar-placeholder avatar-sm" style="border-radius:50%;background:var(--gradient-primary);color:#fff;font-size:0.7rem;font-weight:700;width:28px;height:28px;display:flex;align-items:center;justify-content:center">A</div>
+            <span class="course-instructor-name">Dr. Angela Yu</span>
+          </div>
+          <div class="course-rating">
+            <div class="stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i></div>
+            <span class="rating-value">4.8</span>
+            <span class="rating-count">(12.4k)</span>
+          </div>
+          <div class="course-meta">
+            <div class="course-meta-item"><i class="fa fa-clock-o"></i> 48h</div>
+            <div class="course-meta-item"><i class="fa fa-file-video-o"></i> 180 lessons</div>
+            <div class="course-meta-item"><i class="fa fa-signal"></i> Beginner</div>
+          </div>
+          <div class="course-footer">
+            <span class="course-price">₹ 1,299</span>
+            <a href="course-details.html?id=1" class="btn btn-primary btn-sm">Enroll</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="course-card" data-animate="animate-fade-up" style="animation-delay:0.15s">
+        <div class="course-thumbnail">
+          <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=500&q=80" alt="ML" onerror="this.parentElement.style.background='var(--gradient-accent)';this.style.display='none'">
+          <span class="course-category-tag">AI & ML</span>
+          <div class="course-bookmark"><i class="fa fa-bookmark-o"></i></div>
+        </div>
+        <div class="course-body">
+          <h4 class="course-title">Machine Learning A-Z: From Zero to Expert</h4>
+          <div class="course-instructor">
+            <div class="avatar-placeholder avatar-sm" style="border-radius:50%;background:var(--gradient-accent);color:#fff;font-size:0.7rem;font-weight:700;width:28px;height:28px;display:flex;align-items:center;justify-content:center">H</div>
+            <span class="course-instructor-name">Prof. Hadelin</span>
+          </div>
+          <div class="course-rating">
+            <div class="stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i></div>
+            <span class="rating-value">4.7</span>
+            <span class="rating-count">(9.8k)</span>
+          </div>
+          <div class="course-meta">
+            <div class="course-meta-item"><i class="fa fa-clock-o"></i> 36h</div>
+            <div class="course-meta-item"><i class="fa fa-file-video-o"></i> 120 lessons</div>
+            <div class="course-meta-item"><i class="fa fa-signal"></i> Intermediate</div>
+          </div>
+          <div class="course-footer">
+            <span class="course-price">₹ 1,499</span>
+            <a href="course-details.html?id=2" class="btn btn-primary btn-sm">Enroll</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="course-card" data-animate="animate-fade-up" style="animation-delay:0.3s">
+        <div class="course-thumbnail">
+          <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&q=80" alt="UX" onerror="this.parentElement.style.background='linear-gradient(135deg,#F59E0B,#EF4444)';this.style.display='none'">
+          <span class="course-category-tag">Design</span>
+          <div class="course-bookmark"><i class="fa fa-bookmark-o"></i></div>
+        </div>
+        <div class="course-body">
+          <h4 class="course-title">UI/UX Design Masterclass: Figma to Prototype</h4>
+          <div class="course-instructor">
+            <div class="avatar-placeholder avatar-sm" style="border-radius:50%;background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;font-size:0.7rem;font-weight:700;width:28px;height:28px;display:flex;align-items:center;justify-content:center">S</div>
+            <span class="course-instructor-name">Dr. Sarah Kim</span>
+          </div>
+          <div class="course-rating">
+            <div class="stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+            <span class="rating-value">4.9</span>
+            <span class="rating-count">(15.2k)</span>
+          </div>
+          <div class="course-meta">
+            <div class="course-meta-item"><i class="fa fa-clock-o"></i> 24h</div>
+            <div class="course-meta-item"><i class="fa fa-file-video-o"></i> 95 lessons</div>
+            <div class="course-meta-item"><i class="fa fa-signal"></i> All Levels</div>
+          </div>
+          <div class="course-footer">
+            <span class="course-price free">FREE</span>
+            <a href="course-details.html?id=3" class="btn btn-accent btn-sm">Enroll</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center" style="margin-top:40px">
+      <a href="course.html" class="btn btn-outline btn-lg">
+        <i class="fa fa-th-large"></i> View All Courses
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     WHY CHOOSE US
+══════════════════════════════════════════════════════════════ -->
+<section class="why-section" id="why">
+  <div class="container">
+    <div class="why-inner">
+      <div data-animate="animate-fade-in-left">
+        <div class="section-tag" style="background:rgba(37,99,235,0.2);color:#93C5FD">
+          <i class="fa fa-check-circle"></i> Why Acadex
+        </div>
+        <h2 class="why-title section-title" style="margin-bottom:14px">Learn Smarter, Not Just Harder</h2>
+        <p class="why-desc" style="margin-bottom:32px">Our intelligent platform adapts to your learning style and helps you achieve mastery faster with evidence-based techniques.</p>
+
+        <div class="why-list">
+          <div class="why-item">
+            <div class="why-icon"><i class="fa fa-bolt"></i></div>
+            <div>
+              <div class="why-item-title">Adaptive Learning Paths</div>
+              <p class="why-item-desc">AI-powered recommendations guide you through the most effective learning sequence for your goals.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon"><i class="fa fa-bar-chart"></i></div>
+            <div>
+              <div class="why-item-title">Real-Time Progress Analytics</div>
+              <p class="why-item-desc">Detailed dashboards show your performance metrics, helping you focus on areas that need improvement.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon"><i class="fa fa-shield"></i></div>
+            <div>
+              <div class="why-item-title">Industry-Recognized Certificates</div>
+              <p class="why-item-desc">Earn certificates upon completion that are recognized by top employers in the industry.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon"><i class="fa fa-globe"></i></div>
+            <div>
+              <div class="why-item-title">Learn Anywhere, Anytime</div>
+              <p class="why-item-desc">Fully responsive platform works on any device. Download content for offline access on mobile.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="why-image-area" data-animate="animate-fade-in-right">
+        <div class="why-img-card">
+          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&q=80" alt="Students learning" onerror="this.parentElement.style.background='var(--gradient-primary)';this.style.height='250px';this.remove()">
+        </div>
+        <div class="why-img-card">
+          <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&q=80" alt="Online course" onerror="this.parentElement.style.background='var(--gradient-accent)';this.style.height='150px';this.remove()">
+        </div>
+        <div class="why-img-card">
+          <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&q=80" alt="Study group" onerror="this.parentElement.style.background='linear-gradient(135deg,#8B5CF6,#EC4899)';this.style.height='150px';this.remove()">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TESTIMONIALS
+══════════════════════════════════════════════════════════════ -->
+<section class="testimonials-section" id="testimonials">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag"><i class="fa fa-heart"></i> Testimonials</div>
+      <h2 class="section-title">Loved by Thousands of Learners</h2>
+      <p class="section-subtitle">Hear from students and educators who transformed their learning with Acadex.</p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card" data-animate="animate-fade-up">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">Acadex completely changed how I approach studying. The progress tracking and quiz system helped me ace my exams with confidence. Best LMS I've ever used!</p>
+        <div class="testimonial-author">
+          <div class="avatar-placeholder avatar" style="border-radius:50%;background:var(--gradient-primary);color:#fff;font-weight:700">A</div>
+          <div>
+            <div class="testimonial-name">Alex Johnson</div>
+            <div class="testimonial-role">CS Student</div>
+          </div>
+          <div class="stars" style="margin-left:auto"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+        </div>
+      </div>
+      <div class="testimonial-card" data-animate="animate-fade-up" style="animation-delay:0.15s">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">As a faculty member, Acadex makes course management a breeze. I can create quizzes, track student performance, and grade assignments all in one place.</p>
+        <div class="testimonial-author">
+          <div class="avatar-placeholder avatar" style="border-radius:50%;background:var(--gradient-accent);color:#fff;font-weight:700">S</div>
+          <div>
+            <div class="testimonial-name">Dr. Sarah Chen</div>
+            <div class="testimonial-role">Professor, Computer Science</div>
+          </div>
+          <div class="stars" style="margin-left:auto"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+        </div>
+      </div>
+      <div class="testimonial-card" data-animate="animate-fade-up" style="animation-delay:0.3s">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">The admin panel gives me complete control over the institution. User management, department analytics, and reports are incredibly well designed.</p>
+        <div class="testimonial-author">
+          <div class="avatar-placeholder avatar" style="border-radius:50%;background:linear-gradient(135deg,#8B5CF6,#EC4899);color:#fff;font-weight:700">M</div>
+          <div>
+            <div class="testimonial-name">Marcus Thompson</div>
+            <div class="testimonial-role">Academic Director</div>
+          </div>
+          <div class="stars" style="margin-left:auto"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PRICING
+══════════════════════════════════════════════════════════════ -->
+<section class="pricing-section" id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag"><i class="fa fa-tag"></i> Pricing</div>
+      <h2 class="section-title">Simple, Transparent Pricing</h2>
+      <p class="section-subtitle">Choose the plan that fits your institution. No hidden fees, cancel anytime.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- Free -->
+      <div class="pricing-card" data-animate="animate-fade-up">
+        <div class="pricing-plan">Free</div>
+        <div class="pricing-price"><sup>₹</sup>0<span>/mo</span></div>
+        <p class="pricing-desc">Perfect for individual students getting started with online learning.</p>
+        <div class="pricing-features">
+          <div class="pricing-feature"><i class="fa fa-check"></i> 5 Course Access</div>
+          <div class="pricing-feature"><i class="fa fa-check"></i> Basic Quizzes</div>
+          <div class="pricing-feature"><i class="fa fa-check"></i> Progress Tracking</div>
+          <div class="pricing-feature disabled"><i class="fa fa-times"></i> Certificates</div>
+          <div class="pricing-feature disabled"><i class="fa fa-times"></i> Priority Support</div>
+          <div class="pricing-feature disabled"><i class="fa fa-times"></i> Analytics</div>
+        </div>
+        <a href="register.html" class="btn btn-outline" style="width:100%;justify-content:center">Get Started Free</a>
+      </div>
+
+      <!-- Pro (Popular) -->
+      <div class="pricing-card popular" data-animate="animate-fade-up" style="animation-delay:0.15s">
+        <div class="pricing-badge">Most Popular</div>
+        <div class="pricing-plan">Pro</div>
+        <div class="pricing-price"><sup>₹</sup>499<span>/mo</span></div>
+        <p class="pricing-desc">For serious learners who want full access to all features and courses.</p>
+        <div class="pricing-features">
+          <div class="pricing-feature"><i class="fa fa-check"></i> Unlimited Courses</div>
+          <div class="pricing-feature"><i class="fa fa-check"></i> All Quiz Types</div>
+          <div class="pricing-feature"><i class="fa fa-check"></i> Progress Tracking</div>
+          <div class="pricing-feature"><i class="fa fa-check"></i> Certificates</div>
+          <div class="pricing-feature"><i class="fa fa-check"></i> Priority Support</div>
+          <div class="pricing-feature disabled"><i class="fa fa-times"></i> Custom Analytics</div>
+        </div>
+        <a href="register.html" class="btn btn-primary" style="width:100%;justify-content:center">Start Pro Trial</a>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="pricing-card" data-animate="animate-fade-up" style="animation-delay:0.3s">
+        <div class="pricing-plan">Enterprise</div>
+        <div class="pricing-price"><sup>₹</sup>1999<span>/mo</span></div>
+        <p class="pricing-desc">For institutions needing full control with multi-role management and analytics.</p>
+        <div class="pricing-features">
+          <div class="pricing-feature"><i class="fa fa-check"></i> Unlimited Everything</div>
+          <div class="pricing-feature"><i class="fa fa-check"></i> All Quiz Types</div>
+          <div class="pricing-feature"><i class="fa fa-check"></i> Advanced Analytics</div>
+          <div class="pricing-feature"><i class="fa fa-check"></i> Certificates</div>
+          <div class="pricing-feature"><i class="fa fa-check"></i> 24/7 Dedicated Support</div>
+          <div class="pricing-feature"><i class="fa fa-check"></i> Custom Branding</div>
+        </div>
+        <a href="contact.html" class="btn btn-outline" style="width:100%;justify-content:center">Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FAQ
+══════════════════════════════════════════════════════════════ -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag"><i class="fa fa-question-circle"></i> FAQ</div>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+    </div>
+
+    <div class="faq-inner accordion-single">
+      <div class="accordion-item">
+        <div class="accordion-header">
+          How do I get started with Acadex?
+          <i class="fa fa-chevron-down icon"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">Simply click "Get Started Free" and create your account. Choose your role (Student, Faculty, or Admin), and you'll be redirected to your personalized dashboard within seconds.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          Can I switch between roles?
+          <i class="fa fa-chevron-down icon"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">Each account has one role assigned during registration. If you need a different role, you can create a separate account. Contact support to upgrade or change your role.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          Are the certificates globally recognized?
+          <i class="fa fa-chevron-down icon"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">Acadex certificates are issued upon course completion and recognized by our industry partners. Each certificate has a unique verification code. Pro and Enterprise plans include certificates.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          Is there a mobile app?
+          <i class="fa fa-chevron-down icon"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">Acadex is fully responsive and works perfectly on all mobile browsers. A dedicated native app is coming soon for iOS and Android.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          Can I try the platform before subscribing?
+          <i class="fa fa-chevron-down icon"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">Yes! Our Free plan lets you explore the platform with access to 5 courses. Pro plan includes a 14-day free trial with no credit card required.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CTA SECTION
+══════════════════════════════════════════════════════════════ -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner">
+      <h2 class="cta-title">Ready to Transform Your Learning?</h2>
+      <p class="cta-desc">Join 50,000+ students and educators already using Acadex to achieve their goals.</p>
+      <div class="cta-actions">
+        <a href="register.html" class="btn btn-lg" style="background:#fff;color:var(--primary);box-shadow:0 4px 15px rgba(0,0,0,0.2)">
+          <i class="fa fa-rocket"></i> Start for Free
+        </a>
+        <a href="login.html" class="btn btn-lg" style="background:rgba(255,255,255,0.15);color:#fff;border:1.5px solid rgba(255,255,255,0.4)">
+          <i class="fa fa-sign-in"></i> Sign In
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <a href="index.html" class="footer-brand">
+          <div class="logo-icon"><i class="fa fa-graduation-cap"></i></div>
+          <span class="logo-text" style="color:#fff">ACAD<span>EX</span></span>
+        </a>
+        <p class="footer-desc">A next-generation Learning Management System built for modern education. Smart, fast, and beautifully designed.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" title="Twitter"><i class="fa fa-twitter"></i></a>
+          <a href="#" class="social-btn" title="LinkedIn"><i class="fa fa-linkedin"></i></a>
+          <a href="#" class="social-btn" title="YouTube"><i class="fa fa-youtube"></i></a>
+          <a href="#" class="social-btn" title="GitHub"><i class="fa fa-github"></i></a>
+          <a href="#" class="social-btn" title="Instagram"><i class="fa fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Platform</div>
+        <div class="footer-links">
+          <a href="course.html"      class="footer-link">Browse Courses</a>
+          <a href="register.html"    class="footer-link">Get Started</a>
+          <a href="#pricing"         class="footer-link">Pricing</a>
+          <a href="#faq"             class="footer-link">FAQ</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">For Users</div>
+        <div class="footer-links">
+          <a href="student.html"  class="footer-link">Student Portal</a>
+          <a href="faculty.html"  class="footer-link">Faculty Portal</a>
+          <a href="admin.html"    class="footer-link">Admin Panel</a>
+          <a href="profile.html"  class="footer-link">My Profile</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Company</div>
+        <div class="footer-links">
+          <a href="contact.html" class="footer-link">Contact Us</a>
+          <a href="#"            class="footer-link">Privacy Policy</a>
+          <a href="#"            class="footer-link">Terms of Service</a>
+          <a href="#"            class="footer-link">Careers</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Acadex. All Rights Reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#" class="footer-bottom-link">Privacy</a>
+        <a href="#" class="footer-bottom-link">Terms</a>
+        <a href="#" class="footer-bottom-link">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>
