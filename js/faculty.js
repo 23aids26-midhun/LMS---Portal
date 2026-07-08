@@ -257,6 +257,256 @@ function initFacultyDashboard() {
   renderSubmissions();
   renderPerformanceChart();
   renderEnrollmentChart();
+  renderFacultyStudentDirectory();
+}
+
+function renderFacultyStudentDirectory() {
+  const tbody = document.getElementById('facultyStudentDirectoryTable');
+  if (!tbody) return;
+
+  const users = Store.get('users', []);
+  const students = users.filter(u => u.role === 'student');
+
+  // 1. Populate Interventions alerts table
+  const interventionTable = document.getElementById('facultyInterventionTable');
+  if (interventionTable) {
+    const atRiskStudents = students.filter(s => {
+      const p = s.progress || {};
+      return (p.attendance < 75) || (p.assignments < 50) || (p.project < 20) || (p.internshipTasks < 30);
+    });
+
+    if (atRiskStudents.length === 0) {
+      interventionTable.innerHTML = '<tr><td colspan="5" class="text-center text-muted" style="padding:16px;">All students on track. No interventions required.</td></tr>';
+    } else {
+      interventionTable.innerHTML = atRiskStudents.map(s => {
+        const p = s.progress || {};
+        let alerts = [];
+        if (p.attendance < 75) alerts.push(`<span class="badge badge-danger">Low Attendance (${p.attendance}%)</span>`);
+        if (p.assignments < 50) alerts.push(`<span class="badge badge-warning">Delayed Assignments (${p.assignments}%)</span>`);
+        if (p.project < 20) alerts.push(`<span class="badge badge-warning">Delayed Project (${p.project}%)</span>`);
+        if (p.internshipTasks < 30) alerts.push(`<span class="badge badge-warning">Delayed Internship (${p.internshipTasks}%)</span>`);
+
+        return `
+          <tr>
+            <td>
+              <div class="font-semi" style="font-size:0.875rem">${s.name}</div>
+              <div style="font-size:0.7rem;color:var(--text-light)">ID: ${s.studentId || 'N/A'}</div>
+            </td>
+            <td><div style="display:flex;gap:4px;flex-wrap:wrap;">${alerts.join(' ')}</div></td>
+            <td><strong style="color:var(--danger)">${p.attendance || 0}%</strong></td>
+            <td>
+              <div style="font-size:0.75rem;">
+                Course: ${p.course || 0}% · Project: ${p.project || 0}% · Intern: ${p.internshipTasks || 0}%
+              </div>
+            </td>
+            <td>
+              <button class="btn btn-primary btn-sm" onclick="sendInterventionNotice(${s.id})" style="padding:4px 8px;font-size:0.72rem;"><i class="fa fa-envelope-o"></i> Send Notice</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+  }
+
+  if (students.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted" style="padding:32px">No student records found</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = students.map(s => {
+    const progress = s.progress || { course: 0, attendance: 100, assignments: 0, quizzes: 0, internshipTasks: 0, project: 0, placement: 0 };
+    const attendanceVal = progress.attendance || 100;
+    const isArchiveRecommended = s.archiveRecommended || false;
+    const isArchived = s.status === 'Archived';
+    
+    // Status color
+    const statusColorMap = {
+      'Active': 'primary',
+      'In Progress': 'info',
+      'Completed': 'success',
+      'Expired': 'danger',
+      'Archived': 'warning'
+    };
+    const statusColor = statusColorMap[s.status || 'Active'] || 'primary';
+
+    // Actions depending on archive state
+    let actionButtonsHtml = '';
+    if (isArchived) {
+      actionButtonsHtml = '<span class="text-xs text-muted">Archived</span>';
+    } else {
+      actionButtonsHtml = `
+        <div style="display:flex;gap:4px;flex-wrap:wrap;">
+          <button class="btn btn-secondary btn-sm" onclick="facultyMarkAttendance(${s.id})" title="Mark Attendance" style="padding:4px 8px;font-size:0.75rem;"><i class="fa fa-calendar"></i> Attendance</button>
+          <button class="btn btn-warning btn-sm" onclick="facultyRecommendArchive(${s.id})" ${isArchiveRecommended ? 'disabled' : ''} style="padding:4px 8px;font-size:0.75rem;"><i class="fa fa-thumbs-o-down"></i> ${isArchiveRecommended ? 'Recommended' : 'Recommend'}</button>
+          <button class="btn btn-primary btn-sm" onclick="facultyArchiveStudent(${s.id})" style="background:var(--danger);border-color:var(--danger);padding:4px 8px;font-size:0.75rem;"><i class="fa fa-archive"></i> Archive</button>
+        </div>
+      `;
+    }
+
+    // Certificate Approval layout
+    let approvalHtml = '';
+    if (s.facultyApprovedForCertificate) {
+      approvalHtml = `<span class="badge badge-success" style="font-size:0.72rem;"><i class="fa fa-check"></i> Approved</span>`;
+    } else {
+      // Check if they satisfy criteria
+      const isEligible = (progress.course >= 100) && (attendanceVal >= 75) && (progress.assignments >= 100) && (progress.quizzes >= 100) && (progress.internshipTasks >= 100) && (progress.project >= 100);
+      if (isEligible) {
+        approvalHtml = `<button class="btn btn-success btn-sm" onclick="approveStudentCertificate(${s.id})" style="padding:4px 8px;font-size:0.7rem;"><i class="fa fa-certificate"></i> Approve Credentials</button>`;
+      } else {
+        const tooltip = `Course: ${progress.course}% (Req: 100%)\nAttendance: ${attendanceVal}% (Req: >=75%)\nAssignments: ${progress.assignments}% (Req: 100%)\nQuizzes: ${progress.quizzes}% (Req: 100%)\nInternship: ${progress.internshipTasks}% (Req: 100%)\nProject: ${progress.project}% (Req: 100%)`;
+        approvalHtml = `<span class="text-xs text-muted" title="${tooltip}" style="text-decoration:underline;cursor:help;">Criteria Incomplete</span>`;
+      }
+    }
+
+    return `
+      <tr>
+        <td>
+          <div class="font-semi" style="font-size:0.875rem">${s.name}</div>
+          <div class="text-xs text-muted">${s.email}</div>
+          <div style="font-size:0.7rem;color:var(--text-light);margin-top:2px;">ID: ${s.studentId || 'N/A'} · Reg: ${s.registerNumber || 'N/A'}</div>
+        </td>
+        <td>
+          <div class="font-semi" style="font-size:0.82rem">${s.courseName || 'N/A'}</div>
+          <div class="text-xs text-muted">Mentor: ${s.facultyMentor || 'Unassigned'}</div>
+        </td>
+        <td>
+          <div style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem;">
+            <div>Course Syllabus: <strong>${progress.course}%</strong></div>
+            <div>Tasks/Quizzes: <strong>${progress.assignments}% / ${progress.quizzes}%</strong></div>
+            <div>Intern / Project: <strong>${progress.internshipTasks}% / ${progress.project}%</strong></div>
+            <div style="margin-top:2px;"><span class="badge badge-${statusColor}">${s.status || 'Active'}</span></div>
+          </div>
+        </td>
+        <td>
+          <span style="font-weight:700; color:${attendanceVal >= 75 ? 'var(--success)' : 'var(--danger)'}">${attendanceVal}%</span>
+          <div class="text-xs text-light" style="font-size:0.68rem;">Req: >= 75%</div>
+        </td>
+        <td>
+          ${approvalHtml}
+        </td>
+        <td>
+          ${actionButtonsHtml}
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function sendInterventionNotice(id) {
+  const allUsers = Store.get('users', []);
+  const student = allUsers.find(u => u.id === id);
+  if (student && typeof Lifecycle !== 'undefined') {
+    Lifecycle.addNotification(student, 'Academic Intervention Alert ⚠️', 'Your Faculty Mentor requests immediate contact regarding attendance or milestone delays.', 'error');
+    Lifecycle.logActivity(student, 'Faculty mentor sent academic intervention notice.');
+    Lifecycle.syncStudent(student);
+    Toast.success('Notice Sent', `Performance intervention notice successfully dispatched to ${student.name}`);
+    renderFacultyStudentDirectory();
+  }
+}
+
+function approveStudentCertificate(id) {
+  const allUsers = Store.get('users', []);
+  const idx = allUsers.findIndex(u => u.id === id);
+  if (idx >= 0) {
+    const student = allUsers[idx];
+    student.facultyApprovedForCertificate = true;
+    
+    // Evaluate status so completed certificates generate immediately
+    if (typeof Lifecycle !== 'undefined') {
+      Lifecycle.evaluateStudentStatus(student, allUsers);
+      Lifecycle.syncStudent(student);
+    }
+    
+    Toast.success('Certificates Approved!', `Approved credentials for ${student.name}. Certificate has been generated.`);
+    renderFacultyStudentDirectory();
+  }
+}
+
+function facultyMarkAttendance(id) {
+  const percentage = prompt('Enter student attendance percentage (0-100):');
+  if (percentage === null) return;
+  const val = parseInt(percentage);
+  if (isNaN(val) || val < 0 || val > 100) {
+    Toast.error('Invalid input', 'Attendance percentage must be a number between 0 and 100.');
+    return;
+  }
+
+  const allUsers = Store.get('users', []);
+  const idx = allUsers.findIndex(u => u.id === id);
+  if (idx >= 0) {
+    const student = allUsers[idx];
+    if (!student.progress) student.progress = {};
+    const oldVal = student.progress.attendance || 100;
+    student.progress.attendance = val;
+
+    if (typeof Lifecycle !== 'undefined') {
+      Lifecycle.logActivity(student, `Faculty Mentor updated attendance from ${oldVal}% to ${val}%.`);
+      Lifecycle.addNotification(student, 'Attendance Updated 📝', `Your course attendance progress was marked as ${val}% by your faculty mentor.`, 'info');
+      Lifecycle.evaluateStudentStatus(student, allUsers);
+    } else {
+      allUsers[idx] = student;
+      Store.set('users', allUsers);
+    }
+    
+    renderFacultyStudentDirectory();
+    Toast.success('Attendance Updated');
+  }
+}
+
+function facultyRecommendArchive(id) {
+  if (!confirm('Recommend this student for archiving? (Administrators will receive a request to archive)')) return;
+
+  const allUsers = Store.get('users', []);
+  const idx = allUsers.findIndex(u => u.id === id);
+  if (idx >= 0) {
+    const student = allUsers[idx];
+    student.archiveRecommended = true;
+
+    if (typeof Lifecycle !== 'undefined') {
+      Lifecycle.logActivity(student, 'Faculty mentor recommended account for archiving.');
+      Lifecycle.addNotification(student, 'Archive Recommended 📦', 'Your faculty mentor has recommended this profile for archival.', 'warning');
+    }
+
+    allUsers[idx] = student;
+    Store.set('users', allUsers);
+    renderFacultyStudentDirectory();
+    Toast.success('Archive Recommended');
+  }
+}
+
+function facultyArchiveStudent(id) {
+  const settings = typeof Lifecycle !== 'undefined' ? Lifecycle.getSettings() : { allowFacultyArchive: false };
+  const allUsers = Store.get('users', []);
+  const idx = allUsers.findIndex(u => u.id === id);
+  if (idx < 0) return;
+
+  const student = allUsers[idx];
+
+  if (!settings.allowFacultyArchive) {
+    Toast.warning('Archive Recommendation Sent', 'Faculty archiving is disabled by Admin. Sending archive recommendation instead.');
+    student.archiveRecommended = true;
+    if (typeof Lifecycle !== 'undefined') {
+      Lifecycle.logActivity(student, 'Faculty mentor recommended account for archiving (Direct archive disabled by admin settings).');
+    }
+    allUsers[idx] = student;
+    Store.set('users', allUsers);
+    renderFacultyStudentDirectory();
+    return;
+  }
+
+  if (!confirm(`Archive student ${student.name} immediately?`)) return;
+
+  student.status = 'Archived';
+  student.archiveRecommended = false;
+  if (typeof Lifecycle !== 'undefined') {
+    Lifecycle.logActivity(student, 'Account archived directly by Faculty Mentor.');
+    Lifecycle.addNotification(student, 'Account Archived 📦', 'Your account has been archived by your Faculty Mentor.', 'info');
+  }
+
+  allUsers[idx] = student;
+  Store.set('users', allUsers);
+  renderFacultyStudentDirectory();
+  Toast.success('Student Archived Successfully');
 }
 
 document.addEventListener('DOMContentLoaded', initFacultyDashboard);

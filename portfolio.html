@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Builder — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/training.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body id="studentDashboard">
+<div class="dashboard-layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fa fa-graduation-cap"></i></div>
+      <span class="sidebar-brand">ACAD<span>EX</span></span>
+    </div>
+
+    <a href="profile.html" class="sidebar-user">
+      <div class="sidebar-avatar" data-user-avatar></div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" data-user-name>Student</div>
+        <div class="sidebar-user-role">student</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Main</div>
+        <a href="student.html" class="sidebar-link" data-tooltip="Dashboard">
+          <span class="sidebar-icon"><i class="fa fa-th-large"></i></span>
+          <span class="sidebar-label">Dashboard</span>
+        </a>
+        <a href="course.html" class="sidebar-link" data-tooltip="My Courses">
+          <span class="sidebar-icon"><i class="fa fa-book"></i></span>
+          <span class="sidebar-label">My Courses</span>
+        </a>
+        <a href="assignment.html" class="sidebar-link" data-tooltip="Assignments">
+          <span class="sidebar-icon"><i class="fa fa-tasks"></i></span>
+          <span class="sidebar-label">Assignments</span>
+        </a>
+      </div>
+      
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Training & Placement</div>
+        <a href="training.html" class="sidebar-link" data-tooltip="Training Programs">
+          <span class="sidebar-icon"><i class="fa fa-graduation-cap"></i></span>
+          <span class="sidebar-label">Training Programs</span>
+        </a>
+        <a href="live-classes.html" class="sidebar-link" data-tooltip="Live Classes">
+          <span class="sidebar-icon"><i class="fa fa-video-camera"></i></span>
+          <span class="sidebar-label">Live Classes</span>
+        </a>
+        <a href="notes.html" class="sidebar-link" data-tooltip="Notes Submissions">
+          <span class="sidebar-icon"><i class="fa fa-file-text"></i></span>
+          <span class="sidebar-label">Notes</span>
+        </a>
+        <a href="tasks.html" class="sidebar-link" data-tooltip="Task Management">
+          <span class="sidebar-icon"><i class="fa fa-check-square-o"></i></span>
+          <span class="sidebar-label">Tasks</span>
+        </a>
+        <a href="placement.html" class="sidebar-link" data-tooltip="Placement Training">
+          <span class="sidebar-icon"><i class="fa fa-briefcase"></i></span>
+          <span class="sidebar-label">Placement Dashboard</span>
+        </a>
+        <a href="resume-builder.html" class="sidebar-link" data-tooltip="Resume Builder">
+          <span class="sidebar-icon"><i class="fa fa-id-card-o"></i></span>
+          <span class="sidebar-label">Resume Builder</span>
+        </a>
+        <a href="portfolio.html" class="sidebar-link active" data-tooltip="Portfolio Builder">
+          <span class="sidebar-icon"><i class="fa fa-globe"></i></span>
+          <span class="sidebar-label">Portfolio Builder</span>
+        </a>
+        <a href="placement-tracker.html" class="sidebar-link" data-tooltip="Placement Tracker">
+          <span class="sidebar-icon"><i class="fa fa-line-chart"></i></span>
+          <span class="sidebar-label">Placement Tracker</span>
+        </a>
+        <a href="reports.html" class="sidebar-link" data-tooltip="Reports">
+          <span class="sidebar-icon"><i class="fa fa-file-pdf-o"></i></span>
+          <span class="sidebar-label">Reports</span>
+        </a>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Achievements</div>
+        <a href="certificate.html" class="sidebar-link" data-tooltip="Certificates">
+          <span class="sidebar-icon"><i class="fa fa-certificate"></i></span>
+          <span class="sidebar-label">Certificates</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" data-logout data-tooltip="Logout">
+        <span class="sidebar-icon"><i class="fa fa-sign-out"></i></span>
+        <span class="sidebar-label">Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="main-content" id="mainContent">
+    <!-- Inner Navbar -->
+    <header class="inner-navbar" id="innerNavbar">
+      <div class="inner-navbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
+        <div class="breadcrumb">
+          <a href="student.html">LMS</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Portfolio Builder</span>
+        </div>
+      </div>
+      <div class="inner-navbar-right">
+        <button class="theme-toggle notif-btn" title="Toggle theme"><i class="fa fa-moon"></i></button>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-content tp-animate-in">
+      <div class="tp-page-header">
+        <div>
+          <h1 class="page-title">Portfolio Builder</h1>
+          <p class="page-subtitle">Publish a personal web page detailing your bio, code achievements, and links.</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-primary" onclick="launchLivePortfolio()"><i class="fa fa-external-link"></i> Launch Live Site</button>
+        </div>
+      </div>
+
+      <!-- Portfolio Strength Tracker -->
+      <div class="resume-completion">
+        <div class="resume-completion-label">
+          <span>Portfolio Completion strength</span>
+          <span id="portfolioCompletionValue">0%</span>
+        </div>
+        <div class="tp-progress-bar">
+          <div class="tp-progress-fill" id="portfolioCompletionBar"></div>
+        </div>
+      </div>
+
+      <div class="portfolio-layout">
+        <!-- Sidebar Navigation links -->
+        <div class="portfolio-nav">
+          <button class="portfolio-nav-item active" onclick="showPortfolioSection('profile')"><i class="fa fa-user-circle-o"></i> Banner Profile</button>
+          <button class="portfolio-nav-item" onclick="showPortfolioSection('socials')"><i class="fa fa-share-alt"></i> GitHub & LinkedIn</button>
+          <button class="portfolio-nav-item" onclick="showPortfolioSection('preview')"><i class="fa fa-desktop"></i> Portfolio Preview</button>
+        </div>
+
+        <!-- Contents panel -->
+        <div class="portfolio-content-panel">
+          <!-- Profile Form -->
+          <div id="p-profile" class="portfolio-section active">
+            <h3 class="portfolio-section-title"><i class="fa fa-user" style="color:var(--primary)"></i> Profile Details</h3>
+            <div class="tp-form-group">
+              <label>Personal Tagline</label>
+              <input type="text" id="portTagline" oninput="savePortfolioData()" placeholder="e.g. Passionate Backend Developer & ML Student">
+            </div>
+            <div class="tp-form-group">
+              <label>About Me Intro Bio</label>
+              <textarea id="portAbout" oninput="savePortfolioData()" rows="8" placeholder="Share your experience, technical interests, and what makes you unique..."></textarea>
+            </div>
+          </div>
+
+          <!-- Social links Form -->
+          <div id="p-socials" class="portfolio-section">
+            <h3 class="portfolio-section-title"><i class="fa fa-share-alt" style="color:var(--accent)"></i> Integrations & Handles</h3>
+            
+            <div class="tp-form-group">
+              <label><i class="fa fa-github"></i> GitHub Profile Link</label>
+              <input type="url" id="portGithub" oninput="savePortfolioData()" placeholder="https://github.com/username">
+            </div>
+
+            <!-- LinkedIn & Verification -->
+            <div class="card p-3 border mb-3">
+              <div class="tp-form-group" style="margin-bottom: 0;">
+                <label><i class="fa fa-linkedin"></i> LinkedIn URL Link</label>
+                <div style="display:flex; gap:10px;">
+                  <input type="url" id="portLinkedin" oninput="savePortfolioData()" placeholder="https://linkedin.com/in/username" style="flex:1;">
+                  <button class="btn btn-secondary" onclick="handleVerifyLinkedin()" id="verifyLinkBtn">Verify Link</button>
+                </div>
+                <div class="linkedin-completion" style="margin-top: 10px;" id="verificationStatusDisplay">
+                  <span class="text-xs text-muted">LinkedIn Preview State: Unlinked</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Preview render -->
+          <div id="p-preview" class="portfolio-section">
+            <h3 class="portfolio-section-title"><i class="fa fa-desktop" style="color:var(--warning)"></i> Live Mock Webpage</h3>
+            
+            <!-- Mock Portfolio Design Frame -->
+            <div class="card border" style="background:var(--bg); border-radius: var(--radius-md); overflow:hidden;">
+              <!-- Header banner -->
+              <div class="text-center p-4" style="background: var(--gradient-primary); color:#fff;">
+                <div class="avatar-placeholder avatar-sm mx-auto mb-2" style="border-radius:50%; background:rgba(255,255,255,0.2); width:64px; height:64px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; font-weight:700;" id="portMockAvatar">J</div>
+                <h2 id="prevPortName" class="font-bold text-lg" style="margin-top:8px;">John Doe</h2>
+                <p id="prevPortTagline" class="text-xs" style="opacity:0.9; margin-top:2px;">Tagline goes here</p>
+                <div class="flex justify-center gap-3 mt-3" style="display:flex; justify-content:center; gap:12px; margin-top:12px;">
+                  <a href="#" id="prevPortGithub" class="text-white" style="color:#fff;" target="_blank"><i class="fa fa-github" style="font-size:1.1rem;"></i></a>
+                  <a href="#" id="prevPortLinkedin" class="text-white" style="color:#fff;" target="_blank"><i class="fa fa-linkedin" style="font-size:1.1rem;"></i></a>
+                </div>
+              </div>
+
+              <!-- Body -->
+              <div class="p-4" style="background: var(--surface);">
+                <div class="mb-4">
+                  <h4 style="font-size:0.8rem; text-transform:uppercase; color:var(--primary); font-weight:700; border-bottom:1px solid var(--border); padding-bottom:4px; margin-bottom:8px;">About Me</h4>
+                  <p id="prevPortAbout" style="font-size:0.8rem; color:var(--text-muted); line-height:1.4;">About biography here...</p>
+                </div>
+
+                <div class="mb-4">
+                  <h4 style="font-size:0.8rem; text-transform:uppercase; color:var(--primary); font-weight:700; border-bottom:1px solid var(--border); padding-bottom:4px; margin-bottom:8px;">Core Skills</h4>
+                  <div id="prevPortSkills" style="display:flex; flex-wrap:wrap; gap:4px;"></div>
+                </div>
+
+                <div>
+                  <h4 style="font-size:0.8rem; text-transform:uppercase; color:var(--primary); font-weight:700; border-bottom:1px solid var(--border); padding-bottom:4px; margin-bottom:8px;">Featured Projects</h4>
+                  <div id="prevPortProjects"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/training.js"></script>
+<script>
+  function loadPortfolio() {
+    const p = TP.db.portfolio;
+    const r = TP.db.resume;
+
+    document.getElementById('portTagline').value = p.profile.tagline || '';
+    document.getElementById('portAbout').value = p.profile.about || '';
+    document.getElementById('portGithub').value = p.github || '';
+    document.getElementById('portLinkedin').value = p.linkedin || '';
+
+    updateVerificationBadge();
+    updateStrengthIndex();
+  }
+
+  function showPortfolioSection(tab) {
+    document.querySelectorAll('.portfolio-nav-item').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('onclick').includes(tab));
+    });
+    document.querySelectorAll('.portfolio-section').forEach(div => {
+      div.classList.toggle('active', div.id === `p-${tab}`);
+    });
+    if (tab === 'preview') {
+      renderMockPreview();
+    }
+  }
+
+  function savePortfolioData() {
+    const p = TP.db.portfolio;
+    p.profile.tagline = document.getElementById('portTagline').value;
+    p.profile.about = document.getElementById('portAbout').value;
+    p.github = document.getElementById('portGithub').value;
+    p.linkedin = document.getElementById('portLinkedin').value;
+
+    TP.db.linkedinProfile.url = p.linkedin;
+    if (!p.linkedin) {
+      TP.db.linkedinProfile.verified = false;
+      TP.db.linkedinProfile.completion = 0;
+    }
+
+    TP.save();
+    updateStrengthIndex();
+  }
+
+  function updateStrengthIndex() {
+    const score = TP.calculatePortfolioCompletion();
+    document.getElementById('portfolioCompletionValue').innerText = score + '%';
+    document.getElementById('portfolioCompletionBar').style.width = score + '%';
+  }
+
+  function handleVerifyLinkedin() {
+    const input = document.getElementById('portLinkedin');
+    const url = input.value.trim();
+    if (!url) {
+      Toast.error('Error', 'Please input a valid LinkedIn URL link first.');
+      return;
+    }
+
+    Toast.info('Verifying URL', 'Checking API verification webhook details...');
+    setTimeout(() => {
+      TP.db.linkedinProfile.verified = true;
+      TP.db.linkedinProfile.completion = 100;
+      TP.save();
+      updateVerificationBadge();
+      updateStrengthIndex();
+      Toast.success('Verified', 'LinkedIn profile link successfully verified and integrated!');
+    }, 1200);
+  }
+
+  function updateVerificationBadge() {
+    const isVerified = TP.db.linkedinProfile.verified;
+    const container = document.getElementById('verificationStatusDisplay');
+    const btn = document.getElementById('verifyLinkBtn');
+
+    if (isVerified) {
+      container.innerHTML = '<span class="linkedin-verified"><i class="fa fa-check-circle"></i> Linked & Verified — Preview Ready</span>';
+      btn.innerText = 'Verified';
+      btn.disabled = true;
+    } else {
+      container.innerHTML = '<span class="text-xs text-muted"><i class="fa fa-info-circle"></i> URL Unverified. Press button to verify ownership API.</span>';
+      btn.innerText = 'Verify Link';
+      btn.disabled = false;
+    }
+  }
+
+  function renderMockPreview() {
+    const p = TP.db.portfolio;
+    const r = TP.db.resume;
+
+    document.getElementById('prevPortName').innerText = r.personalDetails.name || 'John Doe';
+    document.getElementById('prevPortTagline').innerText = p.profile.tagline || 'Student at Acadex';
+    document.getElementById('prevPortAbout').innerText = p.profile.about || 'A dedicated student looking for placement opportunities.';
+    
+    // Set avatars first letter
+    const initials = (r.personalDetails.name || 'J')[0].toUpperCase();
+    document.getElementById('portMockAvatar').innerText = initials;
+
+    // Links
+    const githubLink = document.getElementById('prevPortGithub');
+    githubLink.href = p.github || '#';
+    githubLink.style.opacity = p.github ? '1' : '0.4';
+
+    const linkedinLink = document.getElementById('prevPortLinkedin');
+    linkedinLink.href = p.linkedin || '#';
+    linkedinLink.style.opacity = p.linkedin ? '1' : '0.4';
+
+    // Core skills tags
+    const skillsDiv = document.getElementById('prevPortSkills');
+    if (r.skills.length === 0) {
+      skillsDiv.innerHTML = '<span class="text-muted text-xs">No skills listed in resume.</span>';
+    } else {
+      skillsDiv.innerHTML = r.skills.map(s => `
+        <span class="resume-skill-tag" style="font-size: 0.65rem; padding: 2px 6px;">${s}</span>
+      `).join('');
+    }
+
+    // Projects list
+    const projDiv = document.getElementById('prevPortProjects');
+    if (r.projects.length === 0) {
+      projDiv.innerHTML = '<p class="text-xs text-muted">No projects listed in resume.</p>';
+    } else {
+      projDiv.innerHTML = r.projects.map(p => `
+        <div style="margin-top:6px;">
+          <h5 style="font-size:0.75rem; font-weight:700; color:#1E293B;">${p.title}</h5>
+          <p style="font-size:0.68rem; color:#64748B; margin-top:2px;">${p.desc}</p>
+        </div>
+      `).join('');
+    }
+  }
+
+  function launchLivePortfolio() {
+    Toast.success('Site Online', 'Your online portfolio has been hosted securely on Acadex Cloud Subdomain!');
+    setTimeout(() => {
+      window.open('https://portfolio.acadex.edu/johndoe-lms', '_blank');
+    }, 500);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(loadPortfolio, 100);
+  });
+</script>
+</body>
+</html>

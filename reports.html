@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Reports — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/training.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    @media print {
+      body * { visibility: hidden; }
+      #printableReportArea, #printableReportArea * { visibility: visible; }
+      #printableReportArea {
+        position: absolute;
+        left: 0; top: 0;
+        width: 100%;
+        background: #fff !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        border: none !important;
+      }
+      .main-content, .sidebar, .inner-navbar, .page-actions { display: none !important; }
+    }
+  </style>
+</head>
+<body id="studentDashboard">
+<div class="dashboard-layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fa fa-graduation-cap"></i></div>
+      <span class="sidebar-brand">ACAD<span>EX</span></span>
+    </div>
+
+    <a href="profile.html" class="sidebar-user">
+      <div class="sidebar-avatar" data-user-avatar></div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" data-user-name>User</div>
+        <div class="sidebar-user-role" data-user-role>student</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav" id="sidebarNavList">
+      <!-- Loaded dynamically based on role -->
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" data-logout data-tooltip="Logout">
+        <span class="sidebar-icon"><i class="fa fa-sign-out"></i></span>
+        <span class="sidebar-label">Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="main-content" id="mainContent">
+    <!-- Inner Navbar -->
+    <header class="inner-navbar" id="innerNavbar">
+      <div class="inner-navbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
+        <div class="breadcrumb">
+          <a href="student.html">LMS</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Class Reports</span>
+        </div>
+      </div>
+      <div class="inner-navbar-right">
+        <button class="theme-toggle notif-btn" title="Toggle theme"><i class="fa fa-moon"></i></button>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-content tp-animate-in">
+      <div class="tp-page-header">
+        <div>
+          <h1 class="page-title">Acadex LMS Reports & Analytics Suite 📊</h1>
+          <p class="page-subtitle">Search, filter, review, and download institutional class logs and learning reports.</p>
+        </div>
+        <div class="page-actions" style="display:flex; gap:10px;">
+          <button class="btn btn-secondary" onclick="exportExcel()"><i class="fa fa-file-excel-o"></i> Export Excel</button>
+          <button class="btn btn-secondary" onclick="exportCSV()"><i class="fa fa-file-text-o"></i> Export CSV</button>
+          <button class="btn btn-primary" onclick="printReport()"><i class="fa fa-print"></i> Print Report</button>
+        </div>
+      </div>
+
+      <!-- Advanced Search & Filter Panel -->
+      <div class="card border" style="margin-bottom:24px; box-shadow: var(--shadow-sm);">
+        <div class="card-body" style="padding:16px;">
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:12px;">
+            <div>
+              <label class="form-label" style="font-size:0.75rem; margin-bottom:4px;">Search Student</label>
+              <input type="text" id="reportSearch" class="form-control" placeholder="Search name or ID..." oninput="filterReports()" style="height:36px; font-size:0.82rem;">
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.75rem; margin-bottom:4px;">Course Program</label>
+              <select id="reportFilterCourse" class="form-control" onchange="filterReports()" style="height:36px; font-size:0.82rem;">
+                <option value="">All Courses</option>
+                <option value="Complete Web Development Bootcamp">Web Dev Bootcamp</option>
+                <option value="Machine Learning A-Z">Machine Learning A-Z</option>
+                <option value="UI/UX Design Fundamentals">UI/UX Design</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.75rem; margin-bottom:4px;">Faculty Mentor</label>
+              <select id="reportFilterFaculty" class="form-control" onchange="filterReports()" style="height:36px; font-size:0.82rem;">
+                <option value="">All Mentors</option>
+                <option value="Dr. Sarah Chen">Dr. Sarah Chen</option>
+                <option value="Dr. Alan Turing">Dr. Alan Turing</option>
+                <option value="Dr. Fei-Fei Li">Dr. Fei-Fei Li</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.75rem; margin-bottom:4px;">Training Batch</label>
+              <select id="reportFilterBatch" class="form-control" onchange="filterReports()" style="height:36px; font-size:0.82rem;">
+                <option value="">All Batches</option>
+                <option value="Batch 2026-A">Batch 2026-A</option>
+                <option value="Batch 2026-B">Batch 2026-B</option>
+                <option value="Batch 2025-C">Batch 2025-C</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.75rem; margin-bottom:4px;">Specific Date</label>
+              <input type="date" id="reportFilterDate" class="form-control" onchange="filterReports()" style="height:36px; font-size:0.82rem; padding:4px 8px;">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Report Selection Tabs -->
+      <div style="display:flex; border-bottom:2px solid var(--border); margin-bottom:20px; gap:8px; overflow-x:auto; padding-bottom:2px;">
+        <button class="btn tab-btn active" id="tab-attendance" onclick="selectReportTab('attendance')" style="background:none; border:none; border-bottom:3px solid var(--primary); border-radius:0; color:var(--text); padding:10px 16px; font-weight:700; font-size:0.85rem; cursor:pointer;"><i class="fa fa-calendar-check-o"></i> Attendance Logs</button>
+        <button class="btn tab-btn" id="tab-progress" onclick="selectReportTab('progress')" style="background:none; border:none; border-bottom:3px solid transparent; border-radius:0; color:var(--text-muted); padding:10px 16px; font-weight:600; font-size:0.85rem; cursor:pointer;"><i class="fa fa-line-chart"></i> Academic Progress</button>
+        <button class="btn tab-btn" id="tab-activity" onclick="selectReportTab('activity')" style="background:none; border:none; border-bottom:3px solid transparent; border-radius:0; color:var(--text-muted); padding:10px 16px; font-weight:600; font-size:0.85rem; cursor:pointer;"><i class="fa fa-clock-o"></i> Daily Activity</button>
+        <button class="btn tab-btn" id="tab-faculty" onclick="selectReportTab('faculty')" style="background:none; border:none; border-bottom:3px solid transparent; border-radius:0; color:var(--text-muted); padding:10px 16px; font-weight:600; font-size:0.85rem; cursor:pointer;"><i class="fa fa-mortar-board"></i> Faculty Overview</button>
+        <button class="btn tab-btn" id="tab-admin" onclick="selectReportTab('admin')" style="background:none; border:none; border-bottom:3px solid transparent; border-radius:0; color:var(--text-muted); padding:10px 16px; font-weight:600; font-size:0.85rem; cursor:pointer;"><i class="fa fa-building-o"></i> Institution Summary</button>
+      </div>
+
+      <!-- Report Card Content Container -->
+      <div class="card border" id="printableReportArea" style="box-shadow: var(--shadow-md);">
+        <div class="card-body" style="padding: 24px;">
+          
+          <!-- Report Header -->
+          <div style="display:flex; justify-content:space-between; border-bottom: 2px solid var(--border); padding-bottom: 16px; margin-bottom: 20px; align-items: center; flex-wrap: wrap; gap:16px;">
+            <div>
+              <h2 style="font-family: var(--font-display); font-weight: 800; color: var(--primary); font-size: 1.6rem; margin:0;"><i class="fa fa-graduation-cap"></i> ACADEX LMS</h2>
+              <p class="text-xs text-muted" style="margin: 2px 0 0 0;">Institutional Audit & Performance Reporting Module</p>
+            </div>
+            <div style="text-align: right;">
+              <h3 style="font-size: 1rem; font-weight: 700; margin:0;" id="reportTitleName">Attendance Audit Log Report</h3>
+              <p class="text-xs text-muted" id="reportDateText" style="margin: 2px 0 0 0;">Generated: July 8, 2026</p>
+            </div>
+          </div>
+
+          <!-- Report Details Table -->
+          <div class="report-table-wrap" style="overflow-x:auto;">
+            <table class="report-table" style="width:100%; border-collapse:collapse;" id="reportsMainTable">
+              <thead id="reportTableHeader">
+                <!-- Filled dynamically based on selected tab -->
+              </thead>
+              <tbody id="reportTableBody">
+                <!-- Filled dynamically -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/training.js"></script>
+<script src="js/excel-export.js"></script>
+<script>
+  const loggedInUser = Auth.getUser();
+  let activeTab = 'attendance';
+  let filteredRowsData = [];
+  let currentHeaders = [];
+
+  function renderSidebarNav() {
+    const nav = document.getElementById('sidebarNavList');
+    if (!nav) return;
+
+    const baseLinks = `
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Main</div>
+        <a href="${loggedInUser.role}.html" class="sidebar-link" data-tooltip="Dashboard">
+          <span class="sidebar-icon"><i class="fa fa-th-large"></i></span>
+          <span class="sidebar-label">Dashboard</span>
+        </a>
+      </div>
+    `;
+
+    if (loggedInUser.role === 'faculty') {
+      nav.innerHTML = baseLinks + `
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Training & Placement</div>
+          <a href="live-classes.html" class="sidebar-link" data-tooltip="Live Classes">
+            <span class="sidebar-icon"><i class="fa fa-video-camera"></i></span>
+            <span class="sidebar-label">Live Classes</span>
+          </a>
+          <a href="reports.html" class="sidebar-link active" data-tooltip="Reports">
+            <span class="sidebar-icon"><i class="fa fa-file-pdf-o"></i></span>
+            <span class="sidebar-label">Reports</span>
+          </a>
+        </div>
+      `;
+    } else if (loggedInUser.role === 'admin') {
+      nav.innerHTML = baseLinks + `
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Reports & Configs</div>
+          <a href="reports.html" class="sidebar-link active" data-tooltip="Reports">
+            <span class="sidebar-icon"><i class="fa fa-file-pdf-o"></i></span>
+            <span class="sidebar-label">Reports</span>
+          </a>
+          <a href="settings.html" class="sidebar-link" data-tooltip="Settings">
+            <span class="sidebar-icon"><i class="fa fa-cog"></i></span>
+            <span class="sidebar-label">Settings</span>
+          </a>
+        </div>
+      `;
+    } else {
+      nav.innerHTML = baseLinks + `
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Training</div>
+          <a href="live-classes.html" class="sidebar-link" data-tooltip="Live Classes">
+            <span class="sidebar-icon"><i class="fa fa-video-camera"></i></span>
+            <span class="sidebar-label">Live Classes</span>
+          </a>
+          <a href="attendance.html" class="sidebar-link" data-tooltip="Attendance Details">
+            <span class="sidebar-icon"><i class="fa fa-calendar-check-o"></i></span>
+            <span class="sidebar-label">Attendance Details</span>
+          </a>
+          <a href="reports.html" class="sidebar-link active" data-tooltip="Reports">
+            <span class="sidebar-icon"><i class="fa fa-file-pdf-o"></i></span>
+            <span class="sidebar-label">Reports</span>
+          </a>
+        </div>
+      `;
+    }
+  }
+
+  function selectReportTab(tab) {
+    activeTab = tab;
+    
+    // Toggle active classes on tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      const isMatch = btn.id === `tab-${tab}`;
+      btn.classList.toggle('active', isMatch);
+      btn.style.borderBottomColor = isMatch ? 'var(--primary)' : 'transparent';
+      btn.style.color = isMatch ? 'var(--text)' : 'var(--text-muted)';
+      btn.style.fontWeight = isMatch ? '700' : '600';
+    });
+
+    const titleMap = {
+      attendance: 'Attendance Audit Log Report',
+      progress: 'Academic Progress Report',
+      activity: 'Student Daily Activity Report',
+      faculty: 'Faculty Performance Overview',
+      admin: 'Institution Cohort Summary'
+    };
+    document.getElementById('reportTitleName').innerText = titleMap[tab];
+
+    filterReports();
+  }
+
+  function filterReports() {
+    const users = Store.get('users', []);
+    const students = users.filter(u => u.role === 'student');
+    const classes = Store.get('classes', []) || [];
+
+    const searchVal = document.getElementById('reportSearch').value.toLowerCase();
+    const courseVal = document.getElementById('reportFilterCourse').value;
+    const facultyVal = document.getElementById('reportFilterFaculty').value;
+    const batchVal = document.getElementById('reportFilterBatch').value;
+    const dateVal = document.getElementById('reportFilterDate').value;
+
+    const thead = document.getElementById('reportTableHeader');
+    const tbody = document.getElementById('reportTableBody');
+    tbody.innerHTML = '';
+    filteredRowsData = [];
+
+    // Helper: matches general metadata filters
+    const matchesFilters = (s) => {
+      const nameMatch = !searchVal || s.name.toLowerCase().includes(searchVal) || (s.studentId && s.studentId.toLowerCase().includes(searchVal));
+      const courseMatch = !courseVal || s.courseName === courseVal;
+      const facultyMatch = !facultyVal || s.facultyMentor === facultyVal;
+      const batchMatch = !batchVal || s.trainingBatch === batchVal;
+      return nameMatch && courseMatch && facultyMatch && batchMatch;
+    };
+
+    if (activeTab === 'attendance') {
+      currentHeaders = ['Student ID', 'Student Name', 'Course Program', 'Class Name', 'Faculty Mentor', 'Date', 'Join Time', 'Exit Time', 'Duration', 'Status', 'Duration Watched'];
+      thead.innerHTML = `
+        <tr>
+          <th>Student ID</th>
+          <th>Student Name</th>
+          <th>Course</th>
+          <th>Class Name</th>
+          <th>Faculty</th>
+          <th>Date</th>
+          <th>Join/Exit</th>
+          <th>Duration</th>
+          <th>Status</th>
+          <th style="text-align:right;">Watched Ratio</th>
+        </tr>
+      `;
+
+      students.filter(matchesFilters).forEach(s => {
+        const logs = s.attendanceLogs || [];
+        logs.forEach(log => {
+          if (dateVal && log.date !== dateVal) return;
+          
+          filteredRowsData.push([
+            s.studentId || 'N/A',
+            s.name,
+            s.courseName || 'N/A',
+            log.className || 'N/A',
+            log.faculty || 'N/A',
+            log.date || 'N/A',
+            `${log.joinTime || ''} - ${log.exitTime || ''}`,
+            `${log.durationMinutes || 0} mins`,
+            log.status,
+            `${Math.round((log.durationMinutes / 120) * 100)}%`
+          ]);
+        });
+      });
+
+      if (filteredRowsData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="10" class="text-center text-muted" style="padding:24px;">No class attendance records found matching filters.</td></tr>';
+      } else {
+        tbody.innerHTML = filteredRowsData.map(row => `
+          <tr>
+            <td><strong>${row[0]}</strong></td>
+            <td>${row[1]}</td>
+            <td><span style="font-size:0.75rem;">${row[2]}</span></td>
+            <td>${row[3]}</td>
+            <td>${row[4]}</td>
+            <td>${row[5]}</td>
+            <td style="font-size:0.75rem;">${row[6]}</td>
+            <td>${row[7]}</td>
+            <td><span class="badge-status ${getBadgeClass(row[8])}">${row[8]}</span></td>
+            <td style="text-align:right; font-weight:700;">${row[9]}</td>
+          </tr>
+        `).join('');
+      }
+
+    } else if (activeTab === 'progress') {
+      currentHeaders = ['Student ID', 'Student Name', 'Course Program', 'Syllabus Modules Completed', 'Assignments Submitted', 'Quiz Score', 'Internship Tasks', 'Project Progress', 'Overall Progress %', 'Learning Study Hours'];
+      thead.innerHTML = `
+        <tr>
+          <th>Student ID</th>
+          <th>Student Name</th>
+          <th>Course</th>
+          <th>Modules</th>
+          <th>Assignments</th>
+          <th>Quizzes</th>
+          <th>Internship</th>
+          <th>Project Milestones</th>
+          <th>Overall Progress</th>
+          <th style="text-align:right;">Study Hours</th>
+        </tr>
+      `;
+
+      students.filter(matchesFilters).forEach(s => {
+        const p = s.progress || {};
+        
+        let totalHours = 0;
+        (s.dailyActivities || []).forEach(a => totalHours += parseFloat(a.learningTimeHours || 0));
+
+        filteredRowsData.push([
+          s.studentId || 'N/A',
+          s.name,
+          s.courseName || 'N/A',
+          `${p.courseCompletedModules ?? 7}/${p.courseTotalModules ?? 10}`,
+          `${p.assignmentsCompleted ?? 4}/${p.assignmentsTotal ?? 6}`,
+          `${p.quizzesCompleted ?? 4}/${p.quizzesTotal ?? 5}`,
+          s.internshipName ? `${p.internshipTasks}%` : 'N/A',
+          s.projectName ? `${p.project}%` : 'N/A',
+          `${p.course || 0}%`,
+          `${totalHours.toFixed(1)} hrs`
+        ]);
+      });
+
+      if (filteredRowsData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="10" class="text-center text-muted" style="padding:24px;">No academic progress records found.</td></tr>';
+      } else {
+        tbody.innerHTML = filteredRowsData.map(row => `
+          <tr>
+            <td><strong>${row[0]}</strong></td>
+            <td>${row[1]}</td>
+            <td><span style="font-size:0.75rem;">${row[2]}</span></td>
+            <td>${row[3]}</td>
+            <td>${row[4]}</td>
+            <td>${row[5]}</td>
+            <td>${row[6]}</td>
+            <td>${row[7]}</td>
+            <td><div style="font-weight:700; color:var(--primary);">${row[8]}</div></td>
+            <td style="text-align:right;">${row[9]}</td>
+          </tr>
+        `).join('');
+      }
+
+    } else if (activeTab === 'activity') {
+      currentHeaders = ['Date', 'Student ID', 'Student Name', 'Login Time', 'Logout Time', 'Live Classes Attended', 'Videos Watched', 'Notes Uploaded', 'Assignments Submitted', 'Quiz Attempts', 'Total Learning Hours'];
+      thead.innerHTML = `
+        <tr>
+          <th>Date</th>
+          <th>Student Details</th>
+          <th>Login/Logout</th>
+          <th>Classes Attended</th>
+          <th>Videos Watched</th>
+          <th>Notes Uploaded</th>
+          <th>Assignments Submitted</th>
+          <th>Quiz Attempted</th>
+          <th style="text-align:right;">Study Hours</th>
+        </tr>
+      `;
+
+      students.filter(matchesFilters).forEach(s => {
+        const activities = s.dailyActivities || [];
+        activities.forEach(a => {
+          if (dateVal && a.date !== dateVal) return;
+
+          filteredRowsData.push([
+            a.date,
+            `${s.name} (${s.studentId || 'N/A'})`,
+            `${a.loginTime || ''} - ${a.logoutTime || ''}`,
+            a.classesAttended || 0,
+            a.videosWatched || 0,
+            a.notesUploaded || 0,
+            a.assignmentsSubmitted || 0,
+            a.quizAttempted || 0,
+            `${a.learningTimeHours || 0} hrs`
+          ]);
+        });
+      });
+
+      if (filteredRowsData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" class="text-center text-muted" style="padding:24px;">No daily activity logs found.</td></tr>';
+      } else {
+        tbody.innerHTML = filteredRowsData.map(row => `
+          <tr>
+            <td><strong>${row[0]}</strong></td>
+            <td>${row[1]}</td>
+            <td>${row[2]}</td>
+            <td>${row[3]}</td>
+            <td>${row[4]}</td>
+            <td>${row[5]}</td>
+            <td>${row[6]}</td>
+            <td>${row[7]}</td>
+            <td style="text-align:right; font-weight:700;">${row[8]}</td>
+          </tr>
+        `).join('');
+      }
+
+    } else if (activeTab === 'faculty') {
+      currentHeaders = ['Faculty Mentor', 'Students Present Today', 'Students Absent Today', 'Attendance Average Rate', 'Assignments Completed Average', 'Student Performance Rating', 'Pending Tasks Graded'];
+      thead.innerHTML = `
+        <tr>
+          <th>Faculty Mentor</th>
+          <th>Total Mentored Students</th>
+          <th>Attendance Avg</th>
+          <th>Assignment Avg</th>
+          <th>Avg Performance Score</th>
+          <th style="text-align:right;">Certificates Approved</th>
+        </tr>
+      `;
+
+      // Group statistics by Faculty
+      const facultyMap = {};
+      students.forEach(s => {
+        const mentor = s.facultyMentor || 'Unassigned';
+        if (!facultyMap[mentor]) {
+          facultyMap[mentor] = { name: mentor, count: 0, attSum: 0, assignSum: 0, perfSum: 0, certsSum: 0 };
+        }
+        const p = s.progress || {};
+        facultyMap[mentor].count++;
+        facultyMap[mentor].attSum += (p.attendance || 0);
+        facultyMap[mentor].assignSum += (p.assignments || 0);
+        facultyMap[mentor].perfSum += (p.placement || 0);
+        facultyMap[mentor].certsSum += s.facultyApprovedForCertificate ? 1 : 0;
+      });
+
+      Object.values(facultyMap).forEach(f => {
+        const count = f.count || 1;
+        filteredRowsData.push([
+          f.name,
+          f.count,
+          `${Math.round(f.attSum / count)}%`,
+          `${Math.round(f.assignSum / count)}%`,
+          `${Math.round(f.perfSum / count)} pts`,
+          f.certsSum
+        ]);
+      });
+
+      if (filteredRowsData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted" style="padding:24px;">No faculty summaries compiled.</td></tr>';
+      } else {
+        tbody.innerHTML = filteredRowsData.map(row => `
+          <tr>
+            <td><strong>${row[0]}</strong></td>
+            <td>${row[1]} students</td>
+            <td>${row[2]}</td>
+            <td>${row[3]}</td>
+            <td>${row[4]}</td>
+            <td style="text-align:right; font-weight:700; color:var(--success);">${row[5]} approved</td>
+          </tr>
+        `).join('');
+      }
+
+    } else if (activeTab === 'admin') {
+      currentHeaders = ['Batch / Course', 'Total Enrolled Students', 'Active Students Count', 'Average Attendance Rate', 'Syllabus Course Comp %', 'Internship Comp %', 'Project Comp %', 'Placement Score Average', 'Issued Certificates Count'];
+      thead.innerHTML = `
+        <tr>
+          <th>Batch Program Name</th>
+          <th>Cohort Size</th>
+          <th>Active Size</th>
+          <th>Attendance Avg</th>
+          <th>Course Comp Avg</th>
+          <th>Internship Avg</th>
+          <th>Project Avg</th>
+          <th style="text-align:right;">Certificates Issued</th>
+        </tr>
+      `;
+
+      // Group statistics by Batch
+      const batchMap = {};
+      students.forEach(s => {
+        const batch = s.trainingBatch || 'Batch 2026-A';
+        if (!batchMap[batch]) {
+          batchMap[batch] = { name: batch, size: 0, active: 0, attSum: 0, courseSum: 0, internSum: 0, projSum: 0, certs: 0 };
+        }
+        const p = s.progress || {};
+        batchMap[batch].size++;
+        if (s.status === 'In Progress' || s.status === 'Active') batchMap[batch].active++;
+        batchMap[batch].attSum += (p.attendance || 0);
+        batchMap[batch].courseSum += (p.course || 0);
+        batchMap[batch].internSum += (p.internshipTasks || 0);
+        batchMap[batch].projSum += (p.project || 0);
+        batchMap[batch].certs += (s.certificates || []).length;
+      });
+
+      Object.values(batchMap).forEach(b => {
+        const size = b.size || 1;
+        filteredRowsData.push([
+          b.name,
+          b.size,
+          b.active,
+          `${Math.round(b.attSum / size)}%`,
+          `${Math.round(b.courseSum / size)}%`,
+          `${Math.round(b.internSum / size)}%`,
+          `${Math.round(b.projSum / size)}%`,
+          b.certs
+        ]);
+      });
+
+      if (filteredRowsData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted" style="padding:24px;">No batch metrics generated.</td></tr>';
+      } else {
+        tbody.innerHTML = filteredRowsData.map(row => `
+          <tr>
+            <td><strong>${row[0]}</strong></td>
+            <td>${row[1]} students</td>
+            <td>${row[2]} active</td>
+            <td>${row[3]}</td>
+            <td>${row[4]}</td>
+            <td>${row[5]}</td>
+            <td>${row[6]}</td>
+            <td style="text-align:right; font-weight:700; color:var(--primary);">${row[7]} certificates</td>
+          </tr>
+        `).join('');
+      }
+    }
+  }
+
+  function getBadgeClass(status) {
+    const map = {
+      'Present': 'approved',
+      'Completed': 'completed',
+      'In Progress': 'in-progress',
+      'Late': 'pending',
+      'Absent': 'rejected'
+    };
+    return map[status] || 'in-progress';
+  }
+
+  function printReport() {
+    window.print();
+  }
+
+  function exportExcel() {
+    const title = document.getElementById('reportTitleName').innerText;
+    const filename = `${title.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0,10)}`;
+    
+    Toast.success('Exporting spreadsheet...', 'Downloading formatted Excel file.');
+    ExcelExport.downloadExcel(filename, currentHeaders, filteredRowsData);
+  }
+
+  function exportCSV() {
+    const title = document.getElementById('reportTitleName').innerText;
+    const filename = `${title.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0,10)}`;
+    
+    Toast.success('Exporting CSV...', 'Downloading comma-separated text file.');
+    ExcelExport.downloadCSV(filename, currentHeaders, filteredRowsData);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Populate layout elements
+    document.querySelectorAll('[data-user-name]').forEach(el => el.innerText = loggedInUser.name);
+    document.querySelectorAll('[data-user-role]').forEach(el => el.innerText = loggedInUser.role);
+    const avatar = document.querySelector('[data-user-avatar]');
+    if (avatar) avatar.innerText = loggedInUser.name ? loggedInUser.name[0].toUpperCase() : 'U';
+
+    document.getElementById('reportDateText').innerText = 'Generated: ' + Format.date(new Date());
+
+    renderSidebarNav();
+    selectReportTab('attendance');
+  });
+</script>
+</body>
+</html>

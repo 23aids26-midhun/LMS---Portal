@@ -181,15 +181,38 @@
         </div>
       </div>
 
-      <!-- Revenue Chart -->
+      <!-- Institution-wide Academic & Attendance Analytics -->
       <div class="card" style="margin-bottom:24px">
-        <div class="card-header">
-          <span class="card-title"><i class="fa fa-dollar" style="color:var(--success)"></i> Monthly Revenue</span>
-          <span class="badge badge-success">₹40,100 this month</span>
+        <div class="card-header flex-between">
+          <span class="card-title"><i class="fa fa-line-chart" style="color:var(--primary)"></i> Institution-wide Academic & Attendance Analytics</span>
+          <span class="badge badge-primary" id="adminActiveCount">Active: 0 Students</span>
         </div>
-        <div class="card-body">
-          <div class="chart-wrapper">
-            <canvas id="revenueChart"></canvas>
+        <div class="card-body" style="padding:20px">
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:12px; margin-bottom:20px;">
+            <div style="background:var(--bg); padding:12px; border-radius:8px; text-align:center;">
+              <div style="font-size:1.4rem; font-weight:700; color:var(--primary);" id="adminValAttendance">0%</div>
+              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">Attendance Average</div>
+            </div>
+            <div style="background:var(--bg); padding:12px; border-radius:8px; text-align:center;">
+              <div style="font-size:1.4rem; font-weight:700; color:var(--success);" id="adminValCourseComp">0%</div>
+              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">Course Completion</div>
+            </div>
+            <div style="background:var(--bg); padding:12px; border-radius:8px; text-align:center;">
+              <div style="font-size:1.4rem; font-weight:700; color:var(--accent);" id="adminValInternComp">0%</div>
+              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">Internship Completion</div>
+            </div>
+            <div style="background:var(--bg); padding:12px; border-radius:8px; text-align:center;">
+              <div style="font-size:1.4rem; font-weight:700; color:var(--purple);" id="adminValProjComp">0%</div>
+              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">Project Completion</div>
+            </div>
+            <div style="background:var(--bg); padding:12px; border-radius:8px; text-align:center;">
+              <div style="font-size:1.4rem; font-weight:700; color:var(--warning);" id="adminValPlacementReady">0%</div>
+              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">Placement Readiness</div>
+            </div>
+            <div style="background:var(--bg); padding:12px; border-radius:8px; text-align:center;">
+              <div style="font-size:1.4rem; font-weight:700; color:var(--success);" id="adminValCertsCount">0</div>
+              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">Certificates Issued</div>
+            </div>
           </div>
         </div>
       </div>
@@ -199,7 +222,15 @@
         <div class="card-header">
           <span class="card-title"><i class="fa fa-users" style="color:var(--primary)"></i> User Management</span>
           <div class="flex gap-8 items-center">
-            <div class="search-bar" style="max-width:240px;padding:8px 14px">
+            <select id="statusFilter" class="form-control" style="max-width:140px;font-size:0.85rem;padding:4px 8px;height:38px;" onchange="renderUsersTable()">
+              <option value="">All Statuses</option>
+              <option value="Active">Active</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+              <option value="Expired">Expired</option>
+              <option value="Archived">Archived</option>
+            </select>
+            <div class="search-bar" style="max-width:200px;padding:8px 14px">
               <i class="fa fa-search" style="color:var(--text-muted)"></i>
               <input type="text" id="userSearch" placeholder="Search users..." style="font-size:0.85rem">
             </div>
@@ -274,12 +305,92 @@
         </div>
         <div class="form-group">
           <label class="form-label">Role</label>
-          <select id="newRole" class="form-control">
+          <select id="newRole" class="form-control" onchange="toggleAdminAddStudentFields(this.value)">
             <option value="">Select role</option>
             <option value="student">Student</option>
             <option value="faculty">Faculty</option>
             <option value="admin">Admin</option>
           </select>
+        </div>
+        <!-- Student Lifecycle Enrollment Fields -->
+        <div id="adminAddStudentFields" style="display:none; margin-top:15px; border-top:1px dashed var(--border); padding-top:15px;">
+          <div class="form-group">
+            <label class="form-label">Register Number</label>
+            <input type="text" id="newRegNumber" class="form-control" placeholder="e.g. REG-88902">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mobile Number</label>
+            <input type="text" id="newMobile" class="form-control" placeholder="e.g. +1 555-019-2834">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Year of Study</label>
+            <select id="newYearSelect" class="form-control">
+              <option value="1st Year">1st Year</option>
+              <option value="2nd Year">2nd Year</option>
+              <option value="3rd Year">3rd Year</option>
+              <option value="4th Year">4th Year</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Course Name</label>
+            <select id="newCourseSelect" class="form-control">
+              <option value="Complete Web Development Bootcamp">Complete Web Development Bootcamp</option>
+              <option value="Machine Learning A-Z">Machine Learning A-Z</option>
+              <option value="UI/UX Design Fundamentals">UI/UX Design Fundamentals</option>
+              <option value="Data Structures & Algorithms">Data Structures & Algorithms</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Internship Name</label>
+            <input type="text" id="newInternshipName" class="form-control" placeholder="Internship title">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Project Name</label>
+            <input type="text" id="newProjectName" class="form-control" placeholder="Final Project title">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Faculty Mentor</label>
+            <select id="newFacultyMentor" class="form-control">
+              <option value="Dr. Sarah Chen">Dr. Sarah Chen</option>
+              <option value="Prof. Alan Turing">Prof. Alan Turing</option>
+              <option value="Dr. Richard Feynman">Dr. Richard Feynman</option>
+              <option value="Dr. Steve Jobs">Dr. Steve Jobs</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Training Batch</label>
+            <input type="text" id="newTrainingBatch" class="form-control" placeholder="e.g. Batch 2026-A">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Enrollment Date</label>
+            <input type="date" id="newEnrollmentDate" class="form-control">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Course Duration</label>
+            <select id="newCourseDuration" class="form-control" onchange="updateAdminAddExpectedCompletion()">
+              <option value="1 Month">1 Month</option>
+              <option value="2 Months">2 Months</option>
+              <option value="3 Months">3 Months</option>
+              <option value="6 Months">6 Months</option>
+              <option value="Custom">Custom Duration</option>
+            </select>
+          </div>
+          <div id="newCustomDurationGroup" class="form-group" style="display:none;">
+            <label class="form-label">Custom Duration (Days)</label>
+            <input type="number" id="newCustomDurationDays" class="form-control" placeholder="e.g. 45" min="1" oninput="updateAdminAddExpectedCompletion()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Expected Completion Date</label>
+            <input type="date" id="newExpectedCompletionDate" class="form-control" readonly style="background:var(--bg)">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Internship Duration</label>
+            <input type="text" id="newInternshipDuration" class="form-control" placeholder="e.g. 2 Months">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Project Duration</label>
+            <input type="text" id="newProjectDuration" class="form-control" placeholder="e.g. 2 Months">
+          </div>
         </div>
         <div class="form-group">
           <label class="form-label">Department</label>
@@ -299,10 +410,10 @@
 <div class="modal-overlay" id="editUserModal">
   <div class="modal">
     <div class="modal-header">
-      <span class="modal-title">Edit User</span>
+      <span class="modal-title">Edit User Details</span>
       <button class="modal-close" onclick="Modal.close('editUserModal')"><i class="fa fa-times"></i></button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" style="max-height: 480px; overflow-y: auto;">
       <input type="hidden" id="editUserId">
       <div class="form-group">
         <label class="form-label">Full Name</label>
@@ -314,11 +425,101 @@
       </div>
       <div class="form-group">
         <label class="form-label">Role</label>
-        <select id="editUserRole" class="form-control">
+        <select id="editUserRole" class="form-control" onchange="toggleAdminEditStudentFields(this.value)">
           <option value="student">Student</option>
           <option value="faculty">Faculty</option>
           <option value="admin">Admin</option>
         </select>
+      </div>
+      <!-- Student Edit Lifecycle Fields -->
+      <div id="adminEditStudentFields" style="display:none; margin-top:15px; border-top:1px dashed var(--border); padding-top:15px;">
+        <div class="form-group">
+          <label class="form-label">Register Number</label>
+          <input type="text" id="editRegNumber" class="form-control">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mobile Number</label>
+          <input type="text" id="editMobile" class="form-control">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Year of Study</label>
+          <select id="editYearSelect" class="form-control">
+            <option value="1st Year">1st Year</option>
+            <option value="2nd Year">2nd Year</option>
+            <option value="3rd Year">3rd Year</option>
+            <option value="4th Year">4th Year</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Course Name</label>
+          <select id="editCourseSelect" class="form-control">
+            <option value="Complete Web Development Bootcamp">Complete Web Development Bootcamp</option>
+            <option value="Machine Learning A-Z">Machine Learning A-Z</option>
+            <option value="UI/UX Design Fundamentals">UI/UX Design Fundamentals</option>
+            <option value="Data Structures & Algorithms">Data Structures & Algorithms</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Internship Name</label>
+          <input type="text" id="editInternshipName" class="form-control">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Project Name</label>
+          <input type="text" id="editProjectName" class="form-control">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Faculty Mentor</label>
+          <select id="editFacultyMentor" class="form-control">
+            <option value="Dr. Sarah Chen">Dr. Sarah Chen</option>
+            <option value="Prof. Alan Turing">Prof. Alan Turing</option>
+            <option value="Dr. Richard Feynman">Dr. Richard Feynman</option>
+            <option value="Dr. Steve Jobs">Dr. Steve Jobs</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Training Batch</label>
+          <input type="text" id="editTrainingBatch" class="form-control">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Enrollment Date</label>
+          <input type="date" id="editEnrollmentDate" class="form-control" onchange="updateAdminEditExpectedCompletion()">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Course Duration</label>
+          <select id="editCourseDuration" class="form-control" onchange="updateAdminEditExpectedCompletion()">
+            <option value="1 Month">1 Month</option>
+            <option value="2 Months">2 Months</option>
+            <option value="3 Months">3 Months</option>
+            <option value="6 Months">6 Months</option>
+            <option value="Custom">Custom Duration</option>
+          </select>
+        </div>
+        <div id="editCustomDurationGroup" class="form-group" style="display:none;">
+          <label class="form-label">Custom Duration (Days)</label>
+          <input type="number" id="editCustomDurationDays" class="form-control" placeholder="e.g. 45" min="1" oninput="updateAdminEditExpectedCompletion()">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Expected Completion Date</label>
+          <input type="date" id="editExpectedCompletionDate" class="form-control" readonly style="background:var(--bg)">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Internship Duration</label>
+          <input type="text" id="editInternshipDuration" class="form-control">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Project Duration</label>
+          <input type="text" id="editProjectDuration" class="form-control">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Student Status</label>
+          <select id="editStudentStatus" class="form-control">
+            <option value="Active">Active</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="Expired">Expired</option>
+            <option value="Archived">Archived</option>
+          </select>
+        </div>
       </div>
       <div class="form-group">
         <label class="form-label">Department</label>
@@ -328,6 +529,98 @@
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="Modal.close('editUserModal')">Cancel</button>
       <button class="btn btn-primary" onclick="saveEditUser()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Extend Duration Modal -->
+<div class="modal-overlay" id="extendDurationModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Extend Course Duration</span>
+      <button class="modal-close" onclick="Modal.close('extendDurationModal')"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="extendStudentId">
+      <p style="margin-bottom: 12px;">Extend course duration for <strong id="extendStudentName">Student</strong>.</p>
+      <div class="form-group">
+        <label class="form-label">New Course Duration</label>
+        <select id="extendDurationSelect" class="form-control" onchange="updateExtendExpectedDate()">
+          <option value="1 Month">1 Month</option>
+          <option value="2 Months">2 Months</option>
+          <option value="3 Months">3 Months</option>
+          <option value="6 Months">6 Months</option>
+          <option value="Custom">Custom Duration</option>
+        </select>
+      </div>
+      <div id="extendCustomDurationGroup" class="form-group" style="display:none;">
+        <label class="form-label">Custom Duration (Days)</label>
+        <input type="number" id="extendCustomDurationDays" class="form-control" placeholder="e.g. 45" min="1" oninput="updateExtendExpectedDate()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">New Expected Completion Date</label>
+        <input type="date" id="extendExpectedDate" class="form-control" readonly style="background:var(--bg)">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="Modal.close('extendDurationModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveExtendDuration()">Save Extension</button>
+    </div>
+  </div>
+</div>
+
+<!-- Re-enroll Modal -->
+<div class="modal-overlay" id="reEnrollModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Re-enroll Student</span>
+      <button class="modal-close" onclick="Modal.close('reEnrollModal')"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="reEnrollStudentId">
+      <p style="margin-bottom: 12px;">Re-enroll <strong id="reEnrollStudentName">Student</strong>. This resets the student status to In Progress, updates the enrollment date to today, and resets progress metrics.</p>
+      
+      <div class="form-group">
+        <label class="form-label">Course Duration</label>
+        <select id="reEnrollDuration" class="form-control" onchange="updateReEnrollExpectedDate()">
+          <option value="1 Month">1 Month</option>
+          <option value="2 Months">2 Months</option>
+          <option value="3 Months">3 Months</option>
+          <option value="6 Months">6 Months</option>
+          <option value="Custom">Custom Duration</option>
+        </select>
+      </div>
+      <div id="reEnrollCustomGroup" class="form-group" style="display:none;">
+        <label class="form-label">Custom Duration (Days)</label>
+        <input type="number" id="reEnrollCustomDays" class="form-control" placeholder="e.g. 45" min="1" oninput="updateReEnrollExpectedDate()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">New Expected Completion Date</label>
+        <input type="date" id="reEnrollExpectedDate" class="form-control" readonly style="background:var(--bg)">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="Modal.close('reEnrollModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveReEnroll()">Confirm Re-enroll</button>
+    </div>
+  </div>
+</div>
+
+<!-- View Logs Modal -->
+<div class="modal-overlay" id="viewLogsModal">
+  <div class="modal" style="max-width: 600px;">
+    <div class="modal-header">
+      <span class="modal-title">Student Activity Logs</span>
+      <button class="modal-close" onclick="Modal.close('viewLogsModal')"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <p style="margin-bottom: 12px;">Activity history for <strong id="logStudentName">Student</strong>.</p>
+      <div id="logListContainer" style="max-height: 350px; overflow-y: auto; border: 1px solid var(--border); border-radius: var(--radius); padding: 10px; display:flex; flex-direction:column; gap:8px;">
+        <!-- Log rows populated dynamically -->
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="Modal.close('viewLogsModal')">Close</button>
     </div>
   </div>
 </div>

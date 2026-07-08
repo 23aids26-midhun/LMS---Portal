@@ -2,6 +2,11 @@
    Acadex LMS — app.js  (Global Utilities & Auth Guard)
    ============================================================ */
 
+// Synchronously load Lifecycle engine if not already present
+if (typeof Lifecycle === 'undefined') {
+  document.write('<script src="js/lifecycle.js"></script>');
+}
+
 // ── Constants ────────────────────────────────────────────────
 const APP_NAME   = 'Acadex LMS';
 const STORAGE_KEY = 'Acadex_user';
@@ -36,10 +41,52 @@ const Auth = {
 
   /** Guard: redirect to login if not authenticated */
   requireAuth() {
-    if (!this.isLoggedIn()) {
+    const user = this.getUser();
+    if (!user) {
       window.location.href = 'login.html';
       return false;
     }
+
+    // Lifecycle status guards for student accounts
+    if (user.role === 'student') {
+      const users = Store.get('users', []);
+      const latestUser = users.find(u => u.email === user.email);
+
+      if (latestUser && typeof Lifecycle !== 'undefined') {
+        const evaluated = Lifecycle.evaluateStudentStatus(latestUser, users);
+        
+        if (evaluated.status === 'Archived') {
+          localStorage.removeItem(STORAGE_KEY);
+          alert('Your account is Archived. Please contact the administrator to restore access.');
+          window.location.href = 'login.html';
+          return false;
+        }
+
+        // Keep session data updated with latest status/progress
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(evaluated));
+
+        const path = window.location.pathname.split('/').pop();
+
+        if (evaluated.status === 'Expired') {
+          const restricted = ['course.html', 'course-details.html', 'assignment.html', 'quiz.html', 'tasks.html', 'placement.html', 'notes.html'];
+          if (restricted.includes(path)) {
+            alert('Your course access duration has expired. Study access is locked.');
+            window.location.href = 'student.html';
+            return false;
+          }
+        }
+
+        if (evaluated.status === 'Completed') {
+          const restricted = ['course.html', 'course-details.html', 'assignment.html', 'quiz.html', 'tasks.html', 'placement.html'];
+          if (restricted.includes(path)) {
+            alert('Program Completed! Coursework is locked, but you can access achievements and portfolio reports.');
+            window.location.href = 'student.html';
+            return false;
+          }
+        }
+      }
+    }
+
     return true;
   },
 

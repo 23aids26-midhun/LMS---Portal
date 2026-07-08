@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/navbar.css">
   <link rel="stylesheet" href="css/sidebar.css">
   <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/training.css">
   <link rel="stylesheet" href="css/responsive.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -56,6 +57,48 @@
           <span class="sidebar-label">Attendance</span>
         </a>
       </div>
+
+      <!-- Training & Placement Sidebar Group -->
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Training & Placement</div>
+        <a href="training.html" class="sidebar-link" data-tooltip="Training Programs">
+          <span class="sidebar-icon"><i class="fa fa-graduation-cap"></i></span>
+          <span class="sidebar-label">Training Programs</span>
+        </a>
+        <a href="live-classes.html" class="sidebar-link" data-tooltip="Live Classes">
+          <span class="sidebar-icon"><i class="fa fa-video-camera"></i></span>
+          <span class="sidebar-label">Live Classes</span>
+        </a>
+        <a href="notes.html" class="sidebar-link" data-tooltip="Notes Submissions">
+          <span class="sidebar-icon"><i class="fa fa-file-text"></i></span>
+          <span class="sidebar-label">Notes</span>
+        </a>
+        <a href="tasks.html" class="sidebar-link" data-tooltip="Task Management">
+          <span class="sidebar-icon"><i class="fa fa-check-square-o"></i></span>
+          <span class="sidebar-label">Tasks</span>
+        </a>
+        <a href="placement.html" class="sidebar-link" data-tooltip="Placement Training">
+          <span class="sidebar-icon"><i class="fa fa-briefcase"></i></span>
+          <span class="sidebar-label">Placement Dashboard</span>
+        </a>
+        <a href="resume-builder.html" class="sidebar-link" data-tooltip="Resume Builder">
+          <span class="sidebar-icon"><i class="fa fa-id-card-o"></i></span>
+          <span class="sidebar-label">Resume Builder</span>
+        </a>
+        <a href="portfolio.html" class="sidebar-link" data-tooltip="Portfolio Builder">
+          <span class="sidebar-icon"><i class="fa fa-globe"></i></span>
+          <span class="sidebar-label">Portfolio Builder</span>
+        </a>
+        <a href="placement-tracker.html" class="sidebar-link" data-tooltip="Placement Tracker">
+          <span class="sidebar-icon"><i class="fa fa-line-chart"></i></span>
+          <span class="sidebar-label">Placement Tracker</span>
+        </a>
+        <a href="reports.html" class="sidebar-link" data-tooltip="Reports">
+          <span class="sidebar-icon"><i class="fa fa-file-pdf-o"></i></span>
+          <span class="sidebar-label">Reports</span>
+        </a>
+      </div>
+
       <div class="sidebar-group">
         <div class="sidebar-group-label">Achievements</div>
         <a href="certificate.html" class="sidebar-link" data-tooltip="Certificates">
@@ -105,8 +148,7 @@
           <button class="notif-btn" data-dropdown-toggle title="Notifications">
             <i class="fa fa-bell"></i>
             <span class="notif-badge">3</span>
-          </button>
-          <div class="dropdown-menu notif-dropdown" style="min-width:320px">
+            <div class="dropdown-menu notif-dropdown" id="notifDropdown" style="min-width:320px">
             <div class="notif-dropdown-header">
               <span class="notif-dropdown-title">Notifications</span>
               <span class="notif-mark-all">Mark all read</span>
@@ -118,21 +160,6 @@
                 <div class="notif-time">2 hours ago</div>
               </div>
               <div class="notif-unread-dot"></div>
-            </div>
-            <div class="notif-item unread">
-              <div class="notif-avatar" style="background:var(--danger-light);color:var(--danger)"><i class="fa fa-clock-o"></i></div>
-              <div class="notif-content">
-                <div class="notif-text">Assignment due in 2 days: Build REST API</div>
-                <div class="notif-time">4 hours ago</div>
-              </div>
-              <div class="notif-unread-dot"></div>
-            </div>
-            <div class="notif-item">
-              <div class="notif-avatar" style="background:var(--success-light);color:var(--success)"><i class="fa fa-check"></i></div>
-              <div class="notif-content">
-                <div class="notif-text">Quiz graded: JavaScript Fundamentals — 88%</div>
-                <div class="notif-time">1 day ago</div>
-              </div>
             </div>
           </div>
         </div>
@@ -154,12 +181,35 @@
         </div>
       </div>
     </header>
-
+ 
     <!-- Page Content -->
     <div class="page-content">
-      <div class="page-header">
-        <h1 class="page-title">Welcome back, <span data-user-name style="color:var(--primary)">Student</span>! 👋</h1>
-        <p class="page-subtitle">Here's your learning overview for today.</p>
+      <!-- Account Status Alerts -->
+      <div id="lifecycleAlertContainer"></div>
+
+      <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <h1 class="page-title">Welcome back, <span data-user-name style="color:var(--primary)">Student</span>! 👋</h1>
+          <p class="page-subtitle">Here's your learning overview for today.</p>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center;">
+          <!-- Course Countdown Widget -->
+          <div class="streak-card" id="lifecycleCountdownCard" style="padding: 10px 18px; border-radius: 8px;">
+            <span id="lifecycleCountdownIcon" style="font-size: 1.5rem;">⏳</span>
+            <div class="streak-info">
+              <div class="streak-count" id="lifecycleCountdownValue" style="font-size: 1.2rem;">-- Days</div>
+              <div class="streak-label" id="lifecycleCountdownLabel" style="font-size: 0.72rem;">Remaining</div>
+            </div>
+          </div>
+          <!-- Learning streak counter widget -->
+          <div class="streak-card" style="padding: 10px 18px; border-radius: 8px;">
+            <span class="streak-flame" style="font-size: 1.5rem;">🔥</span>
+            <div class="streak-info">
+              <div class="streak-count" id="dashStreakValue" style="font-size: 1.2rem;">12 Days</div>
+              <div class="streak-label" style="font-size: 0.72rem;">Learning Streak</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Stats Cards -->
@@ -188,24 +238,181 @@
             <div class="stat-change up"><i class="fa fa-arrow-up"></i> +2% vs last month</div>
           </div>
         </div>
+        <!-- Placement Readiness Score Counter Widget -->
         <div class="stat-card">
-          <div class="stat-icon purple"><i class="fa fa-tasks"></i></div>
+          <div class="stat-icon purple"><i class="fa fa-briefcase"></i></div>
           <div class="stat-info">
-            <div class="stat-value" id="pendingAssignments">0</div>
-            <div class="stat-label">Pending Assignments</div>
-            <div class="stat-change down"><i class="fa fa-arrow-down"></i> Due soon</div>
+            <div class="stat-value" id="dashReadinessValue">0</div>
+            <div class="stat-label">Placement Score</div>
+            <div class="stat-change up" id="dashReadinessBadge" style="background:var(--success-light);color:var(--success);padding:2px 8px;border-radius:99px;font-size:0.7rem;font-weight:700;">Job Ready</div>
           </div>
         </div>
       </div>
 
       <!-- Main Grid -->
       <div class="dashboard-grid">
-        <!-- Left: Courses + Chart -->
+        <!-- Left: Courses + Readiness + Chart -->
         <div>
+          <!-- Current Training program banner widget -->
+          <div class="card" style="margin-bottom:24px; background: linear-gradient(135deg, rgba(37,99,235,0.06) 0%, rgba(16,185,129,0.06) 100%);">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-graduation-cap" style="color:var(--primary)"></i> Current Training Program</span>
+              <a href="training.html" class="btn btn-ghost btn-sm">Full Details</a>
+            </div>
+            <div class="card-body" style="padding: 16px;">
+              <h4 id="dashTrainingTitle" style="font-weight: 700; font-size: 0.95rem;">Full Stack Java & Cloud Placement Program</h4>
+              <p id="dashTrainingInstructor" class="text-xs text-muted" style="margin-top: 2px;">Instructor: Dr. Alan Turing</p>
+              <div class="training-card-progress" style="margin-top: 12px;">
+                <div class="training-progress-bar-wrap">
+                  <div class="tp-progress-bar" style="height: 6px;">
+                    <div class="tp-progress-fill" id="dashTrainingProgressBar" style="width: 75%"></div>
+                  </div>
+                  <div class="tp-progress-pct" id="dashTrainingProgressPct">75%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Class Attendance Dashboard Widget -->
+          <div class="card" style="margin-bottom:24px">
+            <div class="card-header flex-between">
+              <span class="card-title"><i class="fa fa-calendar-check-o" style="color:var(--primary)"></i> Class Attendance Dashboard</span>
+              <span id="dashAttendanceStatusBadge" class="badge badge-success">Good</span>
+            </div>
+            <div class="card-body" style="padding:20px">
+              <!-- Stats Counters -->
+              <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:8px; margin-bottom:20px;">
+                <div style="background:var(--bg); padding:8px; border-radius:6px; text-align:center;">
+                  <div style="font-size:1.15rem; font-weight:700; color:var(--primary);" id="dashConductedClasses">0</div>
+                  <div style="font-size:0.62rem; color:var(--text-muted); margin-top:2px;">Conducted</div>
+                </div>
+                <div style="background:var(--bg); padding:8px; border-radius:6px; text-align:center;">
+                  <div style="font-size:1.15rem; font-weight:700; color:var(--success);" id="dashAttendedClasses">0</div>
+                  <div style="font-size:0.62rem; color:var(--text-muted); margin-top:2px;">Attended</div>
+                </div>
+                <div style="background:var(--bg); padding:8px; border-radius:6px; text-align:center;">
+                  <div style="font-size:1.15rem; font-weight:700; color:var(--danger);" id="dashMissedClasses">0</div>
+                  <div style="font-size:0.62rem; color:var(--text-muted); margin-top:2px;">Missed</div>
+                </div>
+                <div style="background:var(--bg); padding:8px; border-radius:6px; text-align:center;">
+                  <div style="font-size:1.15rem; font-weight:700; color:var(--warning);" id="dashLateClasses">0</div>
+                  <div style="font-size:0.62rem; color:var(--text-muted); margin-top:2px;">Late</div>
+                </div>
+                <div style="background:var(--bg); padding:8px; border-radius:6px; text-align:center;">
+                  <div style="font-size:1.15rem; font-weight:700; color:var(--accent);" id="dashRemainingClasses">0</div>
+                  <div style="font-size:0.62rem; color:var(--text-muted); margin-top:2px;">Remaining</div>
+                </div>
+              </div>
+              
+              <h4 style="font-size:0.75rem; font-weight:700; margin-bottom:8px; text-transform:uppercase; color:var(--text-light); letter-spacing:0.5px;">Scheduled Live Sessions</h4>
+              <div id="dashTodayClassesList" style="display:flex; flex-direction:column; gap:8px;">
+                <!-- Dynamically filled -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Course Progress Breakdown -->
+          <div class="card" style="margin-bottom:24px">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-line-chart" style="color:var(--success)"></i> Course Progress Breakdown</span>
+            </div>
+            <div class="card-body" style="padding: 20px;">
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:16px;">
+                <div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">Syllabus Modules Completed</div>
+                  <div style="font-size:1.1rem; font-weight:700; margin-top:2px;" id="courseModulesMetric">0 / 0 Modules</div>
+                </div>
+                <div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">Accumulated Learning Time</div>
+                  <div style="font-size:1.1rem; font-weight:700; margin-top:2px;" id="courseHoursMetric">0 Hours</div>
+                </div>
+              </div>
+              <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:6px;">Course Completion Progress</div>
+              <div class="progress" style="height:8px; border-radius:4px; overflow:hidden; background:var(--border);">
+                <div class="progress-bar" id="courseProgressFill" style="width:0%; background:var(--success);"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Internship & Project Progression -->
+          <div class="card" style="margin-bottom:24px">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-briefcase" style="color:var(--accent)"></i> Internship & Project Milestones</span>
+            </div>
+            <div class="card-body" style="padding:20px">
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                <!-- Internship Panel -->
+                <div style="border-right: 1px solid var(--border); padding-right:15px;">
+                  <h4 style="font-size:0.85rem; font-weight:700; color:var(--text); margin-bottom:8px;" id="dashInternshipTitle">Internship Tasks</h4>
+                  <div style="font-size:0.72rem; color:var(--text-muted); margin-bottom:10px;" id="dashInternshipTasksCompleted">0 of 0 Tasks complete</div>
+                  <div class="progress" style="height:6px; border-radius:3px; background:var(--border); margin-bottom:12px; overflow:hidden;">
+                    <div class="progress-bar" id="dashInternshipFill" style="width:0%; background:var(--accent);"></div>
+                  </div>
+                  <div style="background:var(--bg); padding:8px; border-radius:6px; border-left:3px solid var(--accent);">
+                    <div style="font-size:0.65rem; color:var(--text-light); font-weight:700; text-transform:uppercase;">Mentor Remarks</div>
+                    <div style="font-size:0.72rem; color:var(--text); margin-top:2px; font-style:italic;" id="dashInternshipRemarks">No feedback provided yet.</div>
+                  </div>
+                </div>
+                
+                <!-- Project Panel -->
+                <div style="padding-left:5px;">
+                  <h4 style="font-size:0.85rem; font-weight:700; color:var(--text); margin-bottom:8px;" id="dashProjectTitle">Project Milestones</h4>
+                  <div style="font-size:0.72rem; color:var(--text-muted); margin-bottom:10px;" id="dashProjectMilestonesCompleted">0 of 0 Completed</div>
+                  <div class="progress" style="height:6px; border-radius:3px; background:var(--border); margin-bottom:12px; overflow:hidden;">
+                    <div class="progress-bar" id="dashProjectFill" style="width:0%; background:var(--primary);"></div>
+                  </div>
+                  
+                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; font-size:0.68rem;">
+                    <div style="display:flex; justify-content:space-between; padding:4px 6px; background:var(--bg); border-radius:4px;">
+                      <span style="color:var(--text-muted);">Documentation:</span>
+                      <strong id="dashProjectDocStatus" style="color:var(--text);">Pending</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding:4px 6px; background:var(--bg); border-radius:4px;">
+                      <span style="color:var(--text-muted);">Code:</span>
+                      <strong id="dashProjectCodeStatus" style="color:var(--text);">Pending</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding:4px 6px; background:var(--bg); border-radius:4px;">
+                      <span style="color:var(--text-muted);">Testing:</span>
+                      <strong id="dashProjectTestingStatus" style="color:var(--text);">Pending</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding:4px 6px; background:var(--bg); border-radius:4px;">
+                      <span style="color:var(--text-muted);">Review:</span>
+                      <strong id="dashProjectReviewStatus" style="color:var(--text);">Pending</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Daily Activity & Study Log -->
+          <div class="card" style="margin-bottom:24px">
+            <div class="card-header flex-between">
+              <span class="card-title"><i class="fa fa-clock-o" style="color:var(--warning)"></i> Daily Activity & Study Log</span>
+              <span class="text-xs text-muted" id="dashAccumulatedTime">Total Study Hours this week</span>
+            </div>
+            <div class="card-body" style="padding:20px">
+              <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; margin-bottom:20px;">
+                <div style="border:1px solid var(--border); padding:10px; border-radius:8px; text-align:center;">
+                  <div style="font-size:1.2rem; font-weight:700; color:var(--warning);" id="dashHoursWatched">0.0h</div>
+                  <div style="font-size:0.68rem; color:var(--text-muted); margin-top:2px;">Study Hours</div>
+                </div>
+                <div style="border:1px solid var(--border); padding:10px; border-radius:8px; text-align:center;">
+                  <div style="font-size:1.2rem; font-weight:700; color:var(--primary);" id="dashVideosCount">0</div>
+                  <div style="font-size:0.68rem; color:var(--text-muted); margin-top:2px;">Videos Watched</div>
+                </div>
+                <div style="border:1px solid var(--border); padding:10px; border-radius:8px; text-align:center;">
+                  <div style="font-size:1.2rem; font-weight:700; color:var(--success);" id="dashSubmittedNotes">0</div>
+                  <div style="font-size:0.68rem; color:var(--text-muted); margin-top:2px;">Notes Uploaded</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- My Courses -->
           <div class="card" style="margin-bottom:24px">
             <div class="card-header">
-              <span class="card-title"><i class="fa fa-book" style="color:var(--primary)"></i> My Courses</span>
+              <span class="card-title"><i class="fa fa-book" style="color:var(--primary)"></i> My Enrolled Courses</span>
               <a href="course.html" class="btn btn-ghost btn-sm">View All <i class="fa fa-arrow-right"></i></a>
             </div>
             <div class="card-body">
@@ -217,10 +424,10 @@
             </div>
           </div>
 
-          <!-- Monthly Progress Chart -->
+          <!-- Monthly Attendance Chart -->
           <div class="card">
             <div class="card-header">
-              <span class="card-title"><i class="fa fa-bar-chart" style="color:var(--primary)"></i> Monthly Attendance</span>
+              <span class="card-title"><i class="fa fa-bar-chart" style="color:var(--primary)"></i> Weekly Attendance Analytics</span>
               <span class="badge badge-success">On Track</span>
             </div>
             <div class="card-body">
@@ -233,6 +440,47 @@
 
         <!-- Right: Sidebar Widgets -->
         <div>
+          <!-- Resume & Portfolio completion widgets -->
+          <div class="card" style="margin-bottom:24px">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-id-card-o" style="color:var(--primary)"></i> Profile Builders</span>
+            </div>
+            <div class="card-body" style="padding:16px; display:flex; flex-direction:column; gap:12px;">
+              <div class="tp-widget-mini">
+                <div class="tp-widget-mini-icon" style="background:var(--primary-light); color:var(--primary);"><i class="fa fa-file-text"></i></div>
+                <div class="tp-widget-mini-info">
+                  <div class="tp-widget-mini-val" id="dashValResume">0%</div>
+                  <div class="tp-widget-mini-label">Resume Strength</div>
+                  <div class="tp-widget-mini-bar"><div class="tp-widget-mini-fill" id="dashFillResume" style="background:var(--primary);"></div></div>
+                </div>
+                <a href="resume-builder.html" class="btn btn-ghost btn-sm" style="padding: 4px 8px;"><i class="fa fa-arrow-right"></i></a>
+              </div>
+              
+              <div class="tp-widget-mini">
+                <div class="tp-widget-mini-icon" style="background:var(--accent-light); color:var(--accent);"><i class="fa fa-globe"></i></div>
+                <div class="tp-widget-mini-info">
+                  <div class="tp-widget-mini-val" id="dashValPortfolio">0%</div>
+                  <div class="tp-widget-mini-label">Portfolio Completion</div>
+                  <div class="tp-widget-mini-bar"><div class="tp-widget-mini-fill" id="dashFillPortfolio" style="background:var(--accent);"></div></div>
+                </div>
+                <a href="portfolio.html" class="btn btn-ghost btn-sm" style="padding: 4px 8px;"><i class="fa fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upcoming Live Sessions Widget -->
+          <div class="card" style="margin-bottom:24px">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-video-camera" style="color:var(--danger)"></i> Upcoming Sessions</span>
+              <a href="live-classes.html" class="btn btn-ghost btn-sm">Join</a>
+            </div>
+            <div class="card-body" style="padding: 16px;">
+              <div id="dashLiveClassesContainer" style="display:flex; flex-direction:column; gap:10px;">
+                <!-- Filled dynamically -->
+              </div>
+            </div>
+          </div>
+
           <!-- Assignments -->
           <div class="card" style="margin-bottom:24px">
             <div class="card-header">
@@ -273,5 +521,59 @@
 
 <script src="js/app.js"></script>
 <script src="js/student.js"></script>
+<script src="js/training.js"></script>
+<script>
+  function renderDashTPWidgets() {
+    const summary = TP.getPlacementReadiness();
+    const resumeVal = TP.calculateResumeCompletion();
+    const portfolioVal = TP.calculatePortfolioCompletion();
+    const activeProg = TP.db.programs.find(p => p.status === 'In Progress') || TP.db.programs[0];
+
+    // Strengths
+    document.getElementById('dashValResume').innerText = resumeVal + '%';
+    document.getElementById('dashFillResume').style.width = resumeVal + '%';
+    document.getElementById('dashValPortfolio').innerText = portfolioVal + '%';
+    document.getElementById('dashFillPortfolio').style.width = portfolioVal + '%';
+
+    // Current Program details
+    if (activeProg) {
+      document.getElementById('dashTrainingTitle').innerText = activeProg.title;
+      document.getElementById('dashTrainingInstructor').innerText = 'Instructor: ' + activeProg.instructor;
+      const completion = Math.round((activeProg.completedHours / activeProg.totalHours) * 100);
+      document.getElementById('dashTrainingProgressBar').style.width = completion + '%';
+      document.getElementById('dashTrainingProgressPct').innerText = completion + '%';
+      document.getElementById('dashStreakValue').innerText = activeProg.streak + ' Days';
+    }
+
+    // Score widget stats
+    document.getElementById('dashReadinessValue').innerText = summary.score;
+    const badge = document.getElementById('dashReadinessBadge');
+    badge.innerText = summary.status;
+    badge.style.background = summary.status === 'Job Ready' ? 'var(--success-light)' : summary.status === 'Almost Ready' ? 'var(--warning-light)' : 'var(--danger-light)';
+    badge.style.color = summary.status === 'Job Ready' ? 'var(--success)' : summary.status === 'Almost Ready' ? 'var(--warning)' : 'var(--danger)';
+
+    // Render Upcoming sessions
+    const sessions = TP.db.classes.filter(c => c.status === 'live' || c.status === 'upcoming').slice(0, 2);
+    const container = document.getElementById('dashLiveClassesContainer');
+    if (sessions.length === 0) {
+      container.innerHTML = '<span class="text-xs text-muted">No sessions scheduled.</span>';
+    } else {
+      container.innerHTML = sessions.map(s => `
+        <div class="note-item" style="padding: 8px 12px;">
+          <div class="note-icon doc"><i class="fa fa-video-camera"></i></div>
+          <div class="note-info">
+            <div class="note-name" style="font-size: 0.8rem;">${s.title}</div>
+            <div class="note-meta">${s.time} · ${s.status.toUpperCase()}</div>
+          </div>
+          <a href="live-classes.html" class="btn btn-ghost btn-sm" style="padding:2px 8px; font-size: 0.7rem;"><i class="fa fa-external-link"></i></a>
+        </div>
+      `).join('');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(renderDashTPWidgets, 200);
+  });
+</script>
 </body>
 </html>

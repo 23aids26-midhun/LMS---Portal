@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes Submissions — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/training.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body id="studentDashboard">
+<div class="dashboard-layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fa fa-graduation-cap"></i></div>
+      <span class="sidebar-brand">ACAD<span>EX</span></span>
+    </div>
+
+    <a href="profile.html" class="sidebar-user">
+      <div class="sidebar-avatar" data-user-avatar></div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" data-user-name>User</div>
+        <div class="sidebar-user-role" data-user-role>student</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav" id="sidebarNavList">
+      <!-- Loaded dynamically based on role -->
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" data-logout data-tooltip="Logout">
+        <span class="sidebar-icon"><i class="fa fa-sign-out"></i></span>
+        <span class="sidebar-label">Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="main-content" id="mainContent">
+    <!-- Inner Navbar -->
+    <header class="inner-navbar" id="innerNavbar">
+      <div class="inner-navbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
+        <div class="breadcrumb">
+          <a href="student.html">LMS</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Notes Submissions</span>
+        </div>
+      </div>
+      <div class="inner-navbar-right">
+        <button class="theme-toggle notif-btn" title="Toggle theme"><i class="fa fa-moon"></i></button>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-content tp-animate-in">
+      <div class="tp-page-header">
+        <div>
+          <h1 class="page-title">Notes & Learning Materials</h1>
+          <p class="page-subtitle">Submit your self-prepared study notes for evaluation, review remarks, and download references.</p>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Left Section: Search, Filters & List -->
+        <div style="grid-column: span 2;">
+          <!-- Search & Filter bar -->
+          <div class="search-filter-bar">
+            <div class="search-input-wrap">
+              <i class="fa fa-search"></i>
+              <input type="text" id="searchNotesInput" placeholder="Search notes by name or course..." oninput="renderNotes()">
+            </div>
+            <select id="filterCourseSelect" onchange="renderNotes()">
+              <option value="all">All Programs</option>
+              <option value="Full Stack Java & Cloud Placement Program">Full Stack Java & Cloud</option>
+              <option value="Data Science & Generative AI Accelerator">Data Science & AI</option>
+              <option value="System Design & DSA Bootcamp">DSA Bootcamp</option>
+            </select>
+            <select id="filterStatusSelect" onchange="renderNotes()">
+              <option value="all">All Statuses</option>
+              <option value="Pending">Pending</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
+
+          <!-- Notes Grid -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-file-text" style="color:var(--primary)"></i> Submission History</span>
+            </div>
+            <div class="card-body">
+              <div class="notes-list" id="notesListContainer"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Section: Uploader (Student) or Quick Review Panel (Faculty) -->
+        <div>
+          <!-- Student Upload widget -->
+          <div class="card" id="studentUploadCard" style="display: none;">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-cloud-upload" style="color:var(--accent)"></i> Upload Study Notes</span>
+            </div>
+            <div class="card-body">
+              <form id="uploadNotesForm" onsubmit="handleNoteUpload(event)">
+                <div class="tp-form-group">
+                  <label>Target Course / Program</label>
+                  <select id="uploadCourseSelect" required>
+                    <option value="Full Stack Java & Cloud Placement Program">Full Stack Java & Cloud</option>
+                    <option value="Data Science & Generative AI Accelerator">Data Science & AI</option>
+                    <option value="System Design & DSA Bootcamp">DSA Bootcamp</option>
+                  </select>
+                </div>
+                
+                <div class="tp-form-group">
+                  <label>Select File</label>
+                  <div class="upload-dropzone" id="uploadDropzone" onclick="document.getElementById('noteFileInput').click()">
+                    <i class="fa fa-file-pdf-o"></i>
+                    <p>Drag & Drop or <strong>Browse File</strong></p>
+                    <span class="text-xs text-muted" id="selectedFileName">Supports PDF, DOC, PPT, Images up to 25MB</span>
+                  </div>
+                  <input type="file" id="noteFileInput" style="display: none;" onchange="updateSelectedFileName()" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;"><i class="fa fa-upload"></i> Submit Notes</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Faculty Review Details widget -->
+          <div class="card" id="facultyReviewCard" style="display: none;">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-check-square-o" style="color:var(--warning)"></i> Review Note Submission</span>
+            </div>
+            <div class="card-body" id="reviewPanelBody">
+              <div class="tp-empty-state" style="padding: 20px 0;">
+                <i class="fa fa-hand-pointer-o" style="font-size: 1.6rem;"></i>
+                <p>Click on any pending note in the list to evaluate and grade here.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/training.js"></script>
+<script>
+  const user = Auth.getUser();
+  let selectedNoteForReview = null;
+
+  function renderSidebarNav() {
+    const nav = document.getElementById('sidebarNavList');
+    if (!nav) return;
+
+    if (user.role === 'faculty') {
+      nav.innerHTML = `
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Main</div>
+          <a href="faculty.html" class="sidebar-link" data-tooltip="Dashboard">
+            <span class="sidebar-icon"><i class="fa fa-th-large"></i></span>
+            <span class="sidebar-label">Dashboard</span>
+          </a>
+          <a href="course.html" class="sidebar-link" data-tooltip="Upload Course">
+            <span class="sidebar-icon"><i class="fa fa-upload"></i></span>
+            <span class="sidebar-label">Upload Course</span>
+          </a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Training & Placement</div>
+          <a href="live-classes.html" class="sidebar-link" data-tooltip="Live Classes">
+            <span class="sidebar-icon"><i class="fa fa-video-camera"></i></span>
+            <span class="sidebar-label">Live Classes</span>
+          </a>
+          <a href="notes.html" class="sidebar-link active" data-tooltip="Notes">
+            <span class="sidebar-icon"><i class="fa fa-file-text"></i></span>
+            <span class="sidebar-label">Notes Review</span>
+          </a>
+          <a href="tasks.html" class="sidebar-link" data-tooltip="Tasks">
+            <span class="sidebar-icon"><i class="fa fa-check-square-o"></i></span>
+            <span class="sidebar-label">Task Management</span>
+          </a>
+          <a href="reports.html" class="sidebar-link" data-tooltip="Reports">
+            <span class="sidebar-icon"><i class="fa fa-file-pdf-o"></i></span>
+            <span class="sidebar-label">Reports</span>
+          </a>
+        </div>
+      `;
+    } else {
+      nav.innerHTML = `
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Main</div>
+          <a href="student.html" class="sidebar-link" data-tooltip="Dashboard">
+            <span class="sidebar-icon"><i class="fa fa-th-large"></i></span>
+            <span class="sidebar-label">Dashboard</span>
+          </a>
+          <a href="course.html" class="sidebar-link" data-tooltip="My Courses">
+            <span class="sidebar-icon"><i class="fa fa-book"></i></span>
+            <span class="sidebar-label">My Courses</span>
+          </a>
+          <a href="assignment.html" class="sidebar-link" data-tooltip="Assignments">
+            <span class="sidebar-icon"><i class="fa fa-tasks"></i></span>
+            <span class="sidebar-label">Assignments</span>
+          </a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Training & Placement</div>
+          <a href="training.html" class="sidebar-link" data-tooltip="Training Programs">
+            <span class="sidebar-icon"><i class="fa fa-graduation-cap"></i></span>
+            <span class="sidebar-label">Training Programs</span>
+          </a>
+          <a href="live-classes.html" class="sidebar-link" data-tooltip="Live Classes">
+            <span class="sidebar-icon"><i class="fa fa-video-camera"></i></span>
+            <span class="sidebar-label">Live Classes</span>
+          </a>
+          <a href="notes.html" class="sidebar-link active" data-tooltip="Notes">
+            <span class="sidebar-icon"><i class="fa fa-file-text"></i></span>
+            <span class="sidebar-label">Notes</span>
+          </a>
+          <a href="tasks.html" class="sidebar-link" data-tooltip="Tasks">
+            <span class="sidebar-icon"><i class="fa fa-check-square-o"></i></span>
+            <span class="sidebar-label">Tasks</span>
+          </a>
+          <a href="placement.html" class="sidebar-link" data-tooltip="Placement Training">
+            <span class="sidebar-icon"><i class="fa fa-briefcase"></i></span>
+            <span class="sidebar-label">Placement Dashboard</span>
+          </a>
+          <a href="resume-builder.html" class="sidebar-link" data-tooltip="Resume Builder">
+            <span class="sidebar-icon"><i class="fa fa-id-card-o"></i></span>
+            <span class="sidebar-label">Resume Builder</span>
+          </a>
+          <a href="portfolio.html" class="sidebar-link" data-tooltip="Portfolio Builder">
+            <span class="sidebar-icon"><i class="fa fa-globe"></i></span>
+            <span class="sidebar-label">Portfolio Builder</span>
+          </a>
+          <a href="placement-tracker.html" class="sidebar-link" data-tooltip="Placement Tracker">
+            <span class="sidebar-icon"><i class="fa fa-line-chart"></i></span>
+            <span class="sidebar-label">Placement Tracker</span>
+          </a>
+          <a href="reports.html" class="sidebar-link" data-tooltip="Reports">
+            <span class="sidebar-icon"><i class="fa fa-file-pdf-o"></i></span>
+            <span class="sidebar-label">Reports</span>
+          </a>
+        </div>
+      `;
+    }
+  }
+
+  function renderNotes() {
+    const list = TP.db.notes;
+    const container = document.getElementById('notesListContainer');
+    if (!container) return;
+
+    // Toggle Card Visibility based on User Role
+    if (user.role === 'faculty') {
+      document.getElementById('facultyReviewCard').style.display = 'block';
+      document.getElementById('studentUploadCard').style.display = 'none';
+    } else {
+      document.getElementById('studentUploadCard').style.display = 'block';
+      document.getElementById('facultyReviewCard').style.display = 'none';
+    }
+
+    const searchQuery = document.getElementById('searchNotesInput').value.toLowerCase();
+    const filterCourse = document.getElementById('filterCourseSelect').value;
+    const filterStatus = document.getElementById('filterStatusSelect').value;
+
+    const filtered = list.filter(n => {
+      const matchSearch = n.fileName.toLowerCase().includes(searchQuery) || n.course.toLowerCase().includes(searchQuery);
+      const matchCourse = filterCourse === 'all' || n.course === filterCourse;
+      const matchStatus = filterStatus === 'all' || n.status === filterStatus;
+      
+      // Students only see their own notes, Faculty see all submissions
+      const matchOwner = user.role === 'faculty' || n.studentId === (user.id || 'stu-101');
+      
+      return matchSearch && matchCourse && matchStatus && matchOwner;
+    });
+
+    if (filtered.length === 0) {
+      container.innerHTML = `
+        <div class="tp-empty-state">
+          <i class="fa fa-folder-open-o"></i>
+          <p>No note submissions found matching current search filters.</p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = filtered.map(n => {
+      const dateStr = Format.relative(n.uploadDate);
+      const badgeClass = n.status.toLowerCase();
+      let actions = '';
+
+      if (user.role === 'faculty') {
+        actions = `<button class="note-action-btn" onclick="selectNote('${n.id}')" title="Review Submission"><i class="fa fa-edit"></i></button>`;
+      } else {
+        actions = `
+          <button class="note-action-btn" onclick="downloadNote('${n.fileName}')" title="Download"><i class="fa fa-download"></i></button>
+          <button class="note-action-btn danger" onclick="deleteNote('${n.id}')" title="Delete"><i class="fa fa-trash"></i></button>
+        `;
+      }
+
+      return `
+        <div class="note-item">
+          <div class="note-icon ${n.fileType}"><i class="fa ${getFileIcon(n.fileType)}"></i></div>
+          <div class="note-info">
+            <div class="note-name">${n.fileName}</div>
+            <div class="note-meta">${n.course} · ${n.fileSize} · Uploaded ${dateStr}</div>
+            ${n.comments ? `<div class="note-meta text-primary" style="margin-top: 4px;"><strong>Feedback:</strong> ${n.comments}</div>` : ''}
+          </div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span class="badge-status ${badgeClass}">${n.status}</span>
+            <div class="note-actions">
+              ${actions}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function getFileIcon(type) {
+    const icons = { pdf: 'fa-file-pdf-o', doc: 'fa-file-word-o', ppt: 'fa-file-powerpoint-o', img: 'fa-file-image-o' };
+    return icons[type] || 'fa-file-o';
+  }
+
+  function updateSelectedFileName() {
+    const fileInput = document.getElementById('noteFileInput');
+    const display = document.getElementById('selectedFileName');
+    if (fileInput.files.length > 0) {
+      display.innerHTML = `Selected: <strong>${fileInput.files[0].name}</strong> (${(fileInput.files[0].size / (1024*1024)).toFixed(2)} MB)`;
+    } else {
+      display.innerText = 'Supports PDF, DOC, PPT, Images up to 25MB';
+    }
+  }
+
+  async function handleNoteUpload(e) {
+    e.preventDefault();
+    const course = document.getElementById('uploadCourseSelect').value;
+    const fileInput = document.getElementById('noteFileInput');
+    if (fileInput.files.length === 0) return;
+
+    const file = fileInput.files[0];
+    const sizeStr = (file.size / (1024 * 1024)).toFixed(1) + ' MB';
+
+    await TP.uploadNote(file.name, sizeStr, course);
+    document.getElementById('uploadNotesForm').reset();
+    document.getElementById('selectedFileName').innerText = 'Supports PDF, DOC, PPT, Images up to 25MB';
+    renderNotes();
+    Toast.success('Success', 'Study notes uploaded and synced to cloud.');
+  }
+
+  async function deleteNote(id) {
+    if (confirm('Are you sure you want to delete this note submission?')) {
+      await TP.deleteNote(id);
+      renderNotes();
+      Toast.info('Deleted', 'Notes submission removed successfully.');
+    }
+  }
+
+  function downloadNote(name) {
+    Toast.info('Downloading', `Retrieving secure link for ${name}`);
+    setTimeout(() => {
+      window.open('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', '_blank');
+    }, 500);
+  }
+
+  // Select note for review (Faculty)
+  function selectNote(id) {
+    const note = TP.db.notes.find(n => n.id === id);
+    if (!note) return;
+
+    selectedNoteForReview = note;
+    const body = document.getElementById('reviewPanelBody');
+    body.innerHTML = `
+      <div class="tp-form-group">
+        <label>Selected File</label>
+        <div class="note-item" style="padding: 10px; margin-bottom: 0;">
+          <div class="note-icon ${note.fileType}"><i class="fa ${getFileIcon(note.fileType)}"></i></div>
+          <div class="note-info">
+            <div class="note-name">${note.fileName}</div>
+            <div class="note-meta">${note.studentName} · ${note.fileSize}</div>
+          </div>
+        </div>
+      </div>
+      <div class="tp-form-group">
+        <label>Faculty Comments</label>
+        <textarea id="reviewComments" placeholder="Enter feedback or correction suggestions...">${note.comments}</textarea>
+      </div>
+      <div class="review-actions">
+        <button class="btn btn-success" style="flex: 1;" onclick="submitReview('Approved')"><i class="fa fa-check"></i> Approve</button>
+        <button class="btn btn-danger" style="flex: 1;" onclick="submitReview('Rejected')"><i class="fa fa-times"></i> Reject</button>
+      </div>
+    `;
+  }
+
+  async function submitReview(status) {
+    if (!selectedNoteForReview) return;
+    const comments = document.getElementById('reviewComments').value;
+
+    await TP.reviewNote(selectedNoteForReview.id, status, comments);
+    
+    // Create notification
+    const userMsg = `Your notes submission "${selectedNoteForReview.fileName}" has been ${status.toUpperCase()}.`;
+    TP.addNotification(userMsg, status === 'Approved' ? 'recorded' : 'warning');
+
+    selectedNoteForReview = null;
+    document.getElementById('reviewPanelBody').innerHTML = `
+      <div class="tp-empty-state" style="padding: 20px 0;">
+        <i class="fa fa-hand-pointer-o" style="font-size: 1.6rem;"></i>
+        <p>Click on any pending note in the list to evaluate and grade here.</p>
+      </div>
+    `;
+    renderNotes();
+    Toast.success('Review Synced', `Notes set to ${status}.`);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderSidebarNav();
+    renderNotes();
+  });
+</script>
+</body>
+</html>

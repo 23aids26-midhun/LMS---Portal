@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Training Programs — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/training.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body id="studentDashboard">
+<div class="dashboard-layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fa fa-graduation-cap"></i></div>
+      <span class="sidebar-brand">ACAD<span>EX</span></span>
+    </div>
+
+    <a href="profile.html" class="sidebar-user">
+      <div class="sidebar-avatar" data-user-avatar></div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" data-user-name>Student</div>
+        <div class="sidebar-user-role">student</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Main</div>
+        <a href="student.html" class="sidebar-link" data-tooltip="Dashboard">
+          <span class="sidebar-icon"><i class="fa fa-th-large"></i></span>
+          <span class="sidebar-label">Dashboard</span>
+        </a>
+        <a href="course.html" class="sidebar-link" data-tooltip="My Courses">
+          <span class="sidebar-icon"><i class="fa fa-book"></i></span>
+          <span class="sidebar-label">My Courses</span>
+        </a>
+        <a href="assignment.html" class="sidebar-link" data-tooltip="Assignments">
+          <span class="sidebar-icon"><i class="fa fa-tasks"></i></span>
+          <span class="sidebar-label">Assignments</span>
+        </a>
+        <a href="quiz.html?id=1" class="sidebar-link" data-tooltip="Quiz">
+          <span class="sidebar-icon"><i class="fa fa-question-circle"></i></span>
+          <span class="sidebar-label">Quiz</span>
+        </a>
+        <a href="attendance.html" class="sidebar-link" data-tooltip="Attendance">
+          <span class="sidebar-icon"><i class="fa fa-calendar-check-o"></i></span>
+          <span class="sidebar-label">Attendance</span>
+        </a>
+      </div>
+      
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Training & Placement</div>
+        <a href="training.html" class="sidebar-link active" data-tooltip="Training Programs">
+          <span class="sidebar-icon"><i class="fa fa-graduation-cap"></i></span>
+          <span class="sidebar-label">Training Programs</span>
+        </a>
+        <a href="live-classes.html" class="sidebar-link" data-tooltip="Live Classes">
+          <span class="sidebar-icon"><i class="fa fa-video-camera"></i></span>
+          <span class="sidebar-label">Live Classes</span>
+        </a>
+        <a href="notes.html" class="sidebar-link" data-tooltip="Notes Submissions">
+          <span class="sidebar-icon"><i class="fa fa-file-text"></i></span>
+          <span class="sidebar-label">Notes</span>
+        </a>
+        <a href="tasks.html" class="sidebar-link" data-tooltip="Task Management">
+          <span class="sidebar-icon"><i class="fa fa-check-square-o"></i></span>
+          <span class="sidebar-label">Tasks & Tasks</span>
+        </a>
+        <a href="placement.html" class="sidebar-link" data-tooltip="Placement Training">
+          <span class="sidebar-icon"><i class="fa fa-briefcase"></i></span>
+          <span class="sidebar-label">Placement Dashboard</span>
+        </a>
+        <a href="resume-builder.html" class="sidebar-link" data-tooltip="Resume Builder">
+          <span class="sidebar-icon"><i class="fa fa-id-card-o"></i></span>
+          <span class="sidebar-label">Resume Builder</span>
+        </a>
+        <a href="portfolio.html" class="sidebar-link" data-tooltip="Portfolio Builder">
+          <span class="sidebar-icon"><i class="fa fa-globe"></i></span>
+          <span class="sidebar-label">Portfolio Builder</span>
+        </a>
+        <a href="placement-tracker.html" class="sidebar-link" data-tooltip="Placement Tracker">
+          <span class="sidebar-icon"><i class="fa fa-line-chart"></i></span>
+          <span class="sidebar-label">Placement Tracker</span>
+        </a>
+        <a href="reports.html" class="sidebar-link" data-tooltip="Reports">
+          <span class="sidebar-icon"><i class="fa fa-file-pdf-o"></i></span>
+          <span class="sidebar-label">Reports</span>
+        </a>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Achievements</div>
+        <a href="certificate.html" class="sidebar-link" data-tooltip="Certificates">
+          <span class="sidebar-icon"><i class="fa fa-certificate"></i></span>
+          <span class="sidebar-label">Certificates</span>
+        </a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Account</div>
+        <a href="profile.html" class="sidebar-link" data-tooltip="Profile">
+          <span class="sidebar-icon"><i class="fa fa-user"></i></span>
+          <span class="sidebar-label">Profile</span>
+        </a>
+        <a href="settings.html" class="sidebar-link" data-tooltip="Settings">
+          <span class="sidebar-icon"><i class="fa fa-cog"></i></span>
+          <span class="sidebar-label">Settings</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" data-logout data-tooltip="Logout">
+        <span class="sidebar-icon"><i class="fa fa-sign-out"></i></span>
+        <span class="sidebar-label">Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="main-content" id="mainContent">
+    <!-- Inner Navbar -->
+    <header class="inner-navbar" id="innerNavbar">
+      <div class="inner-navbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
+        <div class="breadcrumb">
+          <a href="student.html">LMS</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Training & Placements</span>
+          <span class="breadcrumb-sep">/</span>
+          <span>Programs</span>
+        </div>
+      </div>
+      <div class="inner-navbar-right">
+        <button class="theme-toggle notif-btn" title="Toggle theme"><i class="fa fa-moon"></i></button>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-content tp-animate-in">
+      <div class="tp-page-header">
+        <div>
+          <h1 class="page-title">Training Programs</h1>
+          <p class="page-subtitle">Track your structured career learning plans and overall completion status.</p>
+        </div>
+      </div>
+
+      <!-- Training Duration Stats -->
+      <div class="duration-stats">
+        <div class="duration-stat-card">
+          <div class="duration-stat-icon blue"><i class="fa fa-hourglass-start"></i></div>
+          <div class="duration-stat-value" id="statTotalHours">0h</div>
+          <div class="duration-stat-label">Total Duration</div>
+        </div>
+        <div class="duration-stat-card">
+          <div class="duration-stat-icon green"><i class="fa fa-hourglass-half"></i></div>
+          <div class="duration-stat-value" id="statCompletedHours">0h</div>
+          <div class="duration-stat-label">Completed Hours</div>
+        </div>
+        <div class="duration-stat-card">
+          <div class="duration-stat-icon orange"><i class="fa fa-hourglass-end"></i></div>
+          <div class="duration-stat-value" id="statRemainingHours">0h</div>
+          <div class="duration-stat-label">Remaining Hours</div>
+        </div>
+        <div class="duration-stat-card">
+          <div class="duration-stat-icon purple"><i class="fa fa-calendar-check-o"></i></div>
+          <div class="duration-stat-value" id="statCompletionDate">-</div>
+          <div class="duration-stat-label">Est. Completion</div>
+        </div>
+        <div class="duration-stat-card">
+          <div class="duration-stat-icon teal"><i class="fa fa-bolt"></i></div>
+          <div class="duration-stat-value" id="statWeeklyHours">0h</div>
+          <div class="duration-stat-label">Weekly Target</div>
+        </div>
+        <div class="duration-stat-card">
+          <div class="duration-stat-icon red"><i class="fa fa-clock-o"></i></div>
+          <div class="duration-stat-value" id="statDailyHours">0h</div>
+          <div class="duration-stat-label">Daily Avg.</div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid" style="margin-top: 24px;">
+        <!-- Left: Course Cards & Status -->
+        <div style="grid-column: span 2;">
+          <h2 class="card-title" style="margin-bottom: 16px;"><i class="fa fa-graduation-cap" style="color:var(--primary)"></i> Enrolled Programs</h2>
+          <div class="training-grid" id="trainingProgramGrid"></div>
+        </div>
+
+        <!-- Right: Progress metrics -->
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-dashboard" style="color:var(--accent)"></i> Learning Progress Tracker</span>
+            </div>
+            <div class="card-body">
+              <div class="ring-wrap" style="margin: 16px 0 24px;">
+                <svg width="120" height="120" class="ring-svg">
+                  <circle cx="60" cy="60" r="50" stroke-width="10" class="ring-bg"></circle>
+                  <circle cx="60" cy="60" r="50" stroke-width="10" stroke="var(--primary)" class="ring-fill" id="overallProgressRing" stroke-dasharray="314.15" stroke-dashoffset="314.15"></circle>
+                  <text x="60" y="65" class="ring-value" text-anchor="middle" id="overallProgressPercent">0%</text>
+                </svg>
+                <div class="ring-label">Overall Completion</div>
+              </div>
+
+              <div class="progress-detail-grid">
+                <div class="progress-detail-item">
+                  <div class="progress-detail-label">Modules</div>
+                  <div class="progress-detail-bar">
+                    <div class="progress-detail-fill" id="barModules" style="background:var(--primary)"></div>
+                  </div>
+                  <div class="progress-detail-pct" id="valModules">0/0</div>
+                </div>
+                <div class="progress-detail-item">
+                  <div class="progress-detail-label">Lessons</div>
+                  <div class="progress-detail-bar">
+                    <div class="progress-detail-fill" id="barLessons" style="background:var(--accent)"></div>
+                  </div>
+                  <div class="progress-detail-pct" id="valLessons">0/0</div>
+                </div>
+                <div class="progress-detail-item">
+                  <div class="progress-detail-label">Videos</div>
+                  <div class="progress-detail-bar">
+                    <div class="progress-detail-fill" id="barVideos" style="background:var(--warning)"></div>
+                  </div>
+                  <div class="progress-detail-pct" id="valVideos">0/0</div>
+                </div>
+                <div class="progress-detail-item">
+                  <div class="progress-detail-label font-semibold">Streak</div>
+                  <div class="progress-detail-bar">
+                    <div class="progress-detail-fill" id="barStreak" style="background:var(--danger); width: 100%"></div>
+                  </div>
+                  <div class="progress-detail-pct" id="valStreak">0 Days 🔥</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal: Course Details -->
+<div class="modal-overlay" id="programDetailModal">
+  <div class="modal-card" style="max-width: 600px;">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modalTitle">Program Details</h3>
+      <button class="modal-close" onclick="Modal.close('programDetailModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="tp-form-group">
+        <label>Instructor</label>
+        <p id="modalInstructor" class="text-sm font-semibold"></p>
+      </div>
+      <div class="tp-form-group">
+        <label>Duration & Date Ranges</label>
+        <p id="modalDuration" class="text-sm"></p>
+        <p id="modalDates" class="text-sm text-muted"></p>
+      </div>
+      <div class="tp-form-group">
+        <label>Schedule & Batch Info</label>
+        <p id="modalSchedule" class="text-sm"></p>
+        <p id="modalBatch" class="text-sm text-muted"></p>
+      </div>
+      <div class="tp-form-group">
+        <label>Objectives</label>
+        <ul id="modalObjectives" class="text-sm" style="padding-left: 20px; list-style-type: disc;"></ul>
+      </div>
+      <div class="tp-form-group">
+        <label>Learning Outcomes</label>
+        <ul id="modalOutcomes" class="text-sm" style="padding-left: 20px; list-style-type: disc;"></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/training.js"></script>
+<script>
+  function renderPrograms() {
+    const list = TP.db.programs;
+    const grid = document.getElementById('trainingProgramGrid');
+    if (!grid) return;
+
+    // Calculate aggregated duration stats
+    let total = 0, completed = 0, weekly = 0, daily = 0;
+    let modulesTotal = 0, modulesDone = 0;
+    let lessonsTotal = 0, lessonsDone = 0;
+    let videosTotal = 0, videosDone = 0;
+    let maxStreak = 0;
+
+    list.forEach(p => {
+      total += p.totalHours;
+      completed += p.completedHours;
+      weekly += p.weeklyHours;
+      daily += p.dailyHours;
+      
+      modulesTotal += p.modulesCount;
+      modulesCompleted = p.modulesCompleted;
+      modulesDone += p.modulesCompleted;
+
+      lessonsTotal += p.lessonsCount;
+      lessonsDone += p.lessonsCompleted;
+
+      videosTotal += p.videosCount;
+      videosDone += p.videosCompleted;
+
+      if (p.streak > maxStreak) maxStreak = p.streak;
+    });
+
+    document.getElementById('statTotalHours').innerText = total + ' hrs';
+    document.getElementById('statCompletedHours').innerText = completed + ' hrs';
+    document.getElementById('statRemainingHours').innerText = (total - completed) + ' hrs';
+    document.getElementById('statWeeklyHours').innerText = weekly + ' hrs';
+    document.getElementById('statDailyHours').innerText = daily + ' hrs';
+    document.getElementById('statCompletionDate').innerText = 'July 31, 2026';
+
+    // Renders the Grid of cards
+    grid.innerHTML = list.map(p => {
+      const completionPct = Math.round((p.completedHours / p.totalHours) * 100);
+      const colorMap = { 'Completed': 'green', 'In Progress': 'blue', 'Not Started': 'orange' };
+      const cardColor = colorMap[p.status] || 'blue';
+
+      return `
+        <div class="training-card" onclick="openDetails('${p.id}')">
+          <div class="training-card-banner ${cardColor}"></div>
+          <div class="training-card-body">
+            <div class="training-card-header">
+              <div>
+                <span class="badge-status ${p.status.toLowerCase().replace(' ', '-')}">${p.status}</span>
+                <h3 class="training-card-title" style="margin-top:8px">${p.title}</h3>
+                <p class="training-card-subtitle">${p.instructor}</p>
+              </div>
+            </div>
+            <div class="training-card-meta">
+              <div class="training-meta-item"><i class="fa fa-calendar"></i> ${p.duration}</div>
+              <div class="training-meta-item"><i class="fa fa-users"></i> ${p.batch} - ${p.section}</div>
+            </div>
+            <div class="training-card-progress">
+              <div class="training-progress-bar-wrap">
+                <div class="tp-progress-bar">
+                  <div class="tp-progress-fill" style="width:${completionPct}%"></div>
+                </div>
+                <div class="tp-progress-pct">${completionPct}%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Overall circular ring
+    const overallPct = Math.round((completed / total) * 100);
+    const dash = 314.15;
+    const offset = dash - (overallPct / 100) * dash;
+    document.getElementById('overallProgressRing').setAttribute('stroke-dashoffset', offset);
+    document.getElementById('overallProgressPercent').innerText = overallPct + '%';
+
+    // Bar variables
+    document.getElementById('barModules').style.width = Math.round((modulesDone / modulesTotal) * 100) + '%';
+    document.getElementById('valModules').innerText = `${modulesDone}/${modulesTotal}`;
+
+    document.getElementById('barLessons').style.width = Math.round((lessonsDone / lessonsTotal) * 100) + '%';
+    document.getElementById('valLessons').innerText = `${lessonsDone}/${lessonsTotal}`;
+
+    document.getElementById('barVideos').style.width = Math.round((videosDone / videosTotal) * 100) + '%';
+    document.getElementById('valVideos').innerText = `${videosDone}/${videosTotal}`;
+
+    document.getElementById('valStreak').innerText = `${maxStreak} Days 🔥`;
+  }
+
+  function openDetails(id) {
+    const p = TP.db.programs.find(prog => prog.id === id);
+    if (!p) return;
+
+    document.getElementById('modalTitle').innerText = p.title;
+    document.getElementById('modalInstructor').innerText = `Instructor: ${p.instructor}`;
+    document.getElementById('modalDuration').innerText = `Duration: ${p.duration}`;
+    document.getElementById('modalDates').innerText = `Start: ${p.startDate}  |  End: ${p.endDate}`;
+    document.getElementById('modalSchedule').innerText = `Schedule: ${p.schedule}`;
+    document.getElementById('modalBatch').innerText = `Batch: ${p.batch}  |  Section: ${p.section}`;
+
+    document.getElementById('modalObjectives').innerHTML = p.objectives.map(o => `<li>${o}</li>`).join('');
+    document.getElementById('modalOutcomes').innerHTML = p.outcomes.map(o => `<li>${o}</li>`).join('');
+
+    Modal.open('programDetailModal');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Override standard stat element reference fix
+    setTimeout(renderPrograms, 100);
+  });
+</script>
+</body>
+</html>

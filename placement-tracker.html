@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Placement Tracker — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/training.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body id="studentDashboard">
+<div class="dashboard-layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fa fa-graduation-cap"></i></div>
+      <span class="sidebar-brand">ACAD<span>EX</span></span>
+    </div>
+
+    <a href="profile.html" class="sidebar-user">
+      <div class="sidebar-avatar" data-user-avatar></div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" data-user-name>Student</div>
+        <div class="sidebar-user-role">student</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Main</div>
+        <a href="student.html" class="sidebar-link" data-tooltip="Dashboard">
+          <span class="sidebar-icon"><i class="fa fa-th-large"></i></span>
+          <span class="sidebar-label">Dashboard</span>
+        </a>
+        <a href="course.html" class="sidebar-link" data-tooltip="My Courses">
+          <span class="sidebar-icon"><i class="fa fa-book"></i></span>
+          <span class="sidebar-label">My Courses</span>
+        </a>
+        <a href="assignment.html" class="sidebar-link" data-tooltip="Assignments">
+          <span class="sidebar-icon"><i class="fa fa-tasks"></i></span>
+          <span class="sidebar-label">Assignments</span>
+        </a>
+      </div>
+      
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Training & Placement</div>
+        <a href="training.html" class="sidebar-link" data-tooltip="Training Programs">
+          <span class="sidebar-icon"><i class="fa fa-graduation-cap"></i></span>
+          <span class="sidebar-label">Training Programs</span>
+        </a>
+        <a href="live-classes.html" class="sidebar-link" data-tooltip="Live Classes">
+          <span class="sidebar-icon"><i class="fa fa-video-camera"></i></span>
+          <span class="sidebar-label">Live Classes</span>
+        </a>
+        <a href="notes.html" class="sidebar-link" data-tooltip="Notes Submissions">
+          <span class="sidebar-icon"><i class="fa fa-file-text"></i></span>
+          <span class="sidebar-label">Notes</span>
+        </a>
+        <a href="tasks.html" class="sidebar-link" data-tooltip="Task Management">
+          <span class="sidebar-icon"><i class="fa fa-check-square-o"></i></span>
+          <span class="sidebar-label">Tasks</span>
+        </a>
+        <a href="placement.html" class="sidebar-link" data-tooltip="Placement Training">
+          <span class="sidebar-icon"><i class="fa fa-briefcase"></i></span>
+          <span class="sidebar-label">Placement Dashboard</span>
+        </a>
+        <a href="resume-builder.html" class="sidebar-link" data-tooltip="Resume Builder">
+          <span class="sidebar-icon"><i class="fa fa-id-card-o"></i></span>
+          <span class="sidebar-label">Resume Builder</span>
+        </a>
+        <a href="portfolio.html" class="sidebar-link" data-tooltip="Portfolio Builder">
+          <span class="sidebar-icon"><i class="fa fa-globe"></i></span>
+          <span class="sidebar-label">Portfolio Builder</span>
+        </a>
+        <a href="placement-tracker.html" class="sidebar-link active" data-tooltip="Placement Tracker">
+          <span class="sidebar-icon"><i class="fa fa-line-chart"></i></span>
+          <span class="sidebar-label">Placement Tracker</span>
+        </a>
+        <a href="reports.html" class="sidebar-link" data-tooltip="Reports">
+          <span class="sidebar-icon"><i class="fa fa-file-pdf-o"></i></span>
+          <span class="sidebar-label">Reports</span>
+        </a>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Achievements</div>
+        <a href="certificate.html" class="sidebar-link" data-tooltip="Certificates">
+          <span class="sidebar-icon"><i class="fa fa-certificate"></i></span>
+          <span class="sidebar-label">Certificates</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" data-logout data-tooltip="Logout">
+        <span class="sidebar-icon"><i class="fa fa-sign-out"></i></span>
+        <span class="sidebar-label">Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="main-content" id="mainContent">
+    <!-- Inner Navbar -->
+    <header class="inner-navbar" id="innerNavbar">
+      <div class="inner-navbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
+        <div class="breadcrumb">
+          <a href="student.html">LMS</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Placement Tracker</span>
+        </div>
+      </div>
+      <div class="inner-navbar-right">
+        <button class="theme-toggle notif-btn" title="Toggle theme"><i class="fa fa-moon"></i></button>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-content tp-animate-in">
+      <div class="tp-page-header">
+        <div>
+          <h1 class="page-title">Placement Readiness</h1>
+          <p class="page-subtitle">Track your multi-dimensional job preparation stats and recommended improvements.</p>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Left: 10 Core Placement Tracker Metrics -->
+        <div style="grid-column: span 2;">
+          <div class="card" style="margin-bottom: 24px;">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-line-chart" style="color:var(--primary)"></i> 10 Core Placement Indicators</span>
+            </div>
+            <div class="card-body">
+              <div class="tracker-grid" id="trackerMetricsGrid"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Gauge & Recommendation cards -->
+        <div>
+          <!-- Score Gauge Card -->
+          <div class="card" style="margin-bottom: 24px;">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-dashboard" style="color:var(--accent)"></i> Readiness Score</span>
+            </div>
+            <div class="card-body">
+              <div class="gauge-wrap" style="padding: 10px 0;">
+                <svg width="160" height="100" class="gauge-svg">
+                  <path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke-width="12" class="gauge-bg"></path>
+                  <path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke-width="12" stroke="var(--primary)" class="gauge-fill" id="trackGaugeFill" stroke-dasharray="190" stroke-dashoffset="190"></path>
+                  <text x="80" y="75" class="gauge-score" id="trackScoreText" style="font-size: 2.2rem;">0</text>
+                </svg>
+                <div class="gauge-status ready" id="trackStatusBadge">Job Ready</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recommendations card -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-lightbulb-o" style="color:var(--warning)"></i> Recommended Improvements</span>
+            </div>
+            <div class="card-body" style="padding: 16px;">
+              <div class="recommendation-list" id="recommendationsContainer"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/training.js"></script>
+<script>
+  function renderTracker() {
+    const summary = TP.getPlacementReadiness();
+    
+    // SVG gauge configuration
+    document.getElementById('trackScoreText').innerText = summary.score;
+    const badge = document.getElementById('trackStatusBadge');
+    badge.innerText = summary.status;
+    badge.className = 'gauge-status ' + (summary.status === 'Job Ready' ? 'ready' : summary.status === 'Almost Ready' ? 'partial' : 'not-ready');
+
+    const dash = 190;
+    const offset = dash - (summary.score / 100) * dash;
+    document.getElementById('trackGaugeFill').setAttribute('stroke-dashoffset', offset);
+
+    // Build the 10 core indicators data
+    const resumeComp = TP.calculateResumeCompletion();
+    const portfolioComp = TP.calculatePortfolioCompletion();
+    const trainingComp = Math.round(
+      TP.db.programs.reduce((acc, curr) => acc + (curr.completedHours / curr.totalHours) * 100, 0) / TP.db.programs.length
+    );
+    const certCount = TP.db.certificates.length;
+    const certScore = Math.min((certCount / 4) * 100, 100);
+
+    const s = TP.db.scores;
+    const metrics = [
+      { name: 'Resume Completion', value: resumeComp, icon: 'fa-file-text-o', color: 'var(--primary)' },
+      { name: 'Portfolio Completion', value: portfolioComp, icon: 'fa-globe', color: 'var(--accent)' },
+      { name: 'Aptitude Score', value: s.aptitude, icon: 'fa-calculator', color: 'var(--warning)' },
+      { name: 'Technical Score', value: s.technical, icon: 'fa-code-fork', color: 'var(--primary)' },
+      { name: 'Mock Interview Score', value: s.mockInterview, icon: 'fa-microphone', color: 'var(--danger)' },
+      { name: 'Communication Skills', value: s.communication, icon: 'fa-comments-o', color: 'var(--accent)' },
+      { name: 'Soft Skills', value: s.softSkills, icon: 'fa-user', color: 'var(--warning)' },
+      { name: 'Attendance Rate', value: 85, icon: 'fa-calendar-check-o', color: 'var(--primary)' },
+      { name: 'Training Completion', value: trainingComp, icon: 'fa-graduation-cap', color: 'var(--accent)' },
+      { name: 'Certification Index', value: certScore, icon: 'fa-certificate', color: 'var(--danger)' }
+    ];
+
+    const metricsGrid = document.getElementById('trackerMetricsGrid');
+    metricsGrid.innerHTML = metrics.map(m => `
+      <div class="tracker-metric">
+        <div class="tracker-metric-header">
+          <span class="tracker-metric-name"><i class="fa ${m.icon}"></i> ${m.name}</span>
+          <span class="tracker-metric-value">${m.value}%</span>
+        </div>
+        <div class="tracker-metric-bar">
+          <div class="tracker-metric-fill" style="width: ${m.value}%; background: ${m.color};"></div>
+        </div>
+      </div>
+    `).join('');
+
+    // Render improvements
+    const recContainer = document.getElementById('recommendationsContainer');
+    if (summary.improvements.length === 0) {
+      recContainer.innerHTML = `
+        <div class="tp-empty-state" style="padding: 20px 0;">
+          <i class="fa fa-check-circle" style="color: var(--success); font-size: 2.2rem;"></i>
+          <p>Perfect score! You are fully prepared and job-ready.</p>
+        </div>
+      `;
+    } else {
+      recContainer.innerHTML = summary.improvements.map(i => `
+        <div class="recommendation-item">
+          <div class="recommendation-icon" style="background: var(--primary-light); color: var(--primary);">
+            <i class="fa ${i.icon}"></i>
+          </div>
+          <div>
+            <div class="recommendation-text">${i.text}</div>
+            <div class="recommendation-priority ${i.priority}">${i.priority} Priority</div>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(renderTracker, 100);
+  });
+</script>
+</body>
+</html>

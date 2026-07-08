@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Management — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/training.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body id="studentDashboard">
+<div class="dashboard-layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fa fa-graduation-cap"></i></div>
+      <span class="sidebar-brand">ACAD<span>EX</span></span>
+    </div>
+
+    <a href="profile.html" class="sidebar-user">
+      <div class="sidebar-avatar" data-user-avatar></div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" data-user-name>User</div>
+        <div class="sidebar-user-role" data-user-role>student</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav" id="sidebarNavList">
+      <!-- Loaded dynamically based on role -->
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" data-logout data-tooltip="Logout">
+        <span class="sidebar-icon"><i class="fa fa-sign-out"></i></span>
+        <span class="sidebar-label">Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="main-content" id="mainContent">
+    <!-- Inner Navbar -->
+    <header class="inner-navbar" id="innerNavbar">
+      <div class="inner-navbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
+        <div class="breadcrumb">
+          <a href="student.html">LMS</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Task & Assignment Management</span>
+        </div>
+      </div>
+      <div class="inner-navbar-right">
+        <button class="theme-toggle notif-btn" title="Toggle theme"><i class="fa fa-moon"></i></button>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-content tp-animate-in">
+      <div class="tp-page-header">
+        <div>
+          <h1 class="page-title">Task & Assignment Board</h1>
+          <p class="page-subtitle">Track project deadlines, check graded feedback, and submit solutions.</p>
+        </div>
+        <div class="page-actions" id="facultyActions" style="display: none;">
+          <button class="btn btn-primary" onclick="Modal.open('createAssignmentModal')"><i class="fa fa-plus"></i> Create Assignment</button>
+        </div>
+      </div>
+
+      <!-- Task Status Board -->
+      <div class="task-board">
+        <!-- Column: Pending -->
+        <div class="task-column">
+          <div class="task-column-header">
+            <span class="task-column-title"><i class="fa fa-clock-o text-warning"></i> Pending Tasks</span>
+            <span class="task-column-count" id="countPending">0</span>
+          </div>
+          <div class="task-cards" id="colPending"></div>
+        </div>
+
+        <!-- Column: Submitted / Grading Pending -->
+        <div class="task-column">
+          <div class="task-column-header">
+            <span class="task-column-title"><i class="fa fa-arrow-circle-up text-info"></i> Submitted Solutions</span>
+            <span class="task-column-count" id="countSubmitted">0</span>
+          </div>
+          <div class="task-cards" id="colSubmitted"></div>
+        </div>
+
+        <!-- Column: Reviewed & Graded -->
+        <div class="task-column">
+          <div class="task-column-header">
+            <span class="task-column-title"><i class="fa fa-check-circle text-success"></i> Graded & Completed</span>
+            <span class="task-column-count" id="countReviewed">0</span>
+          </div>
+          <div class="task-cards" id="colReviewed"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal: Create Assignment (Faculty) -->
+<div class="modal-overlay" id="createAssignmentModal">
+  <div class="modal-card" style="max-width: 500px;">
+    <div class="modal-header">
+      <h3 class="modal-title">Create New Task</h3>
+      <button class="modal-close" onclick="Modal.close('createAssignmentModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="createAssignmentForm" onsubmit="handleCreateAssignment(event)">
+        <div class="tp-form-group">
+          <label>Assignment Title</label>
+          <input type="text" id="taskTitle" required placeholder="e.g. Implement Binary Search Tree">
+        </div>
+        <div class="tp-form-group">
+          <label>Course / Program</label>
+          <select id="taskCourse" required>
+            <option value="Full Stack Java & Cloud Placement Program">Full Stack Java & Cloud</option>
+            <option value="Data Science & Generative AI Accelerator">Data Science & AI</option>
+            <option value="System Design & DSA Bootcamp">DSA Bootcamp</option>
+          </select>
+        </div>
+        <div class="tp-form-group">
+          <label>Due Date</label>
+          <input type="datetime-local" id="taskDue" required>
+        </div>
+        <div class="tp-form-group">
+          <label>Evaluation Criteria</label>
+          <textarea id="taskCriteria" required placeholder="1. Time complexity checks&#10;2. Clean variable definitions&#10;3. Correct output format"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Create Task</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Submit Assignment (Student) -->
+<div class="modal-overlay" id="submitAssignmentModal">
+  <div class="modal-card" style="max-width: 480px;">
+    <div class="modal-header">
+      <h3 class="modal-title">Submit Solution</h3>
+      <button class="modal-close" onclick="Modal.close('submitAssignmentModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <h4 id="submitTaskTitle" class="text-sm font-semibold mb-3">Task Name</h4>
+      <div class="tp-form-group">
+        <label>Evaluation Criteria</label>
+        <p id="submitTaskCriteria" class="text-xs text-muted mb-4" style="white-space: pre-line; background: var(--bg); padding: 8px; border-radius: 4px;"></p>
+      </div>
+      <form id="submitAssignmentForm" onsubmit="handleSubmitAssignment(event)">
+        <input type="hidden" id="submitTaskId">
+        <div class="tp-form-group">
+          <label>Select Code Solution File</label>
+          <div class="upload-dropzone" onclick="document.getElementById('solFileInput').click()">
+            <i class="fa fa-code"></i>
+            <p>Select code submission file</p>
+            <span class="text-xs text-muted" id="selectedSolName">Supports ZIP, PY, JAVA, JS, PDF up to 10MB</span>
+          </div>
+          <input type="file" id="solFileInput" style="display: none;" onchange="updateSelectedSolName()" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Upload & Sync Solution</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Grade & Feedback (Faculty) -->
+<div class="modal-overlay" id="gradeAssignmentModal">
+  <div class="modal-card" style="max-width: 480px;">
+    <div class="modal-header">
+      <h3 class="modal-title">Grade Submission</h3>
+      <button class="modal-close" onclick="Modal.close('gradeAssignmentModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <h4 id="gradeTaskTitle" class="text-sm font-semibold mb-3">Task Name</h4>
+      <p id="gradeStudentName" class="text-xs text-muted mb-3">Student Name</p>
+      <div class="tp-form-group">
+        <label>Submitted Solution</label>
+        <div class="note-item" style="padding: 8px 12px; margin-bottom: 12px;">
+          <div class="note-icon doc"><i class="fa fa-code"></i></div>
+          <div class="note-info">
+            <div id="gradeFileName" class="note-name" style="font-size: 0.8rem;">solution.py</div>
+            <div id="gradeFileDate" class="note-meta">Date submitted</div>
+          </div>
+        </div>
+      </div>
+      <form id="gradeAssignmentForm" onsubmit="handleGradeAssignment(event)">
+        <input type="hidden" id="gradeTaskId">
+        <div class="tp-form-group">
+          <label>Score (Max: 100)</label>
+          <input type="number" id="gradeScore" min="0" max="100" required placeholder="e.g. 95">
+        </div>
+        <div class="tp-form-group">
+          <label>Feedback Remarks</label>
+          <textarea id="gradeFeedback" placeholder="Provide correction notes or improvement points..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-success" style="width: 100%;">Post Grade & Comments</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/training.js"></script>
+<script>
+  const user = Auth.getUser();
+  let currentSelectedTask = null;
+
+  function renderSidebarNav() {
+    const nav = document.getElementById('sidebarNavList');
+    if (!nav) return;
+
+    if (user.role === 'faculty') {
+      nav.innerHTML = `
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Main</div>
+          <a href="faculty.html" class="sidebar-link" data-tooltip="Dashboard">
+            <span class="sidebar-icon"><i class="fa fa-th-large"></i></span>
+            <span class="sidebar-label">Dashboard</span>
+          </a>
+          <a href="course.html" class="sidebar-link" data-tooltip="Upload Course">
+            <span class="sidebar-icon"><i class="fa fa-upload"></i></span>
+            <span class="sidebar-label">Upload Course</span>
+          </a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Training & Placement</div>
+          <a href="live-classes.html" class="sidebar-link" data-tooltip="Live Classes">
+            <span class="sidebar-icon"><i class="fa fa-video-camera"></i></span>
+            <span class="sidebar-label">Live Classes</span>
+          </a>
+          <a href="notes.html" class="sidebar-link" data-tooltip="Notes">
+            <span class="sidebar-icon"><i class="fa fa-file-text"></i></span>
+            <span class="sidebar-label">Notes Review</span>
+          </a>
+          <a href="tasks.html" class="sidebar-link active" data-tooltip="Tasks">
+            <span class="sidebar-icon"><i class="fa fa-check-square-o"></i></span>
+            <span class="sidebar-label">Task Management</span>
+          </a>
+          <a href="reports.html" class="sidebar-link" data-tooltip="Reports">
+            <span class="sidebar-icon"><i class="fa fa-file-pdf-o"></i></span>
+            <span class="sidebar-label">Reports</span>
+          </a>
+        </div>
+      `;
+    } else {
+      nav.innerHTML = `
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Main</div>
+          <a href="student.html" class="sidebar-link" data-tooltip="Dashboard">
+            <span class="sidebar-icon"><i class="fa fa-th-large"></i></span>
+            <span class="sidebar-label">Dashboard</span>
+          </a>
+          <a href="course.html" class="sidebar-link" data-tooltip="My Courses">
+            <span class="sidebar-icon"><i class="fa fa-book"></i></span>
+            <span class="sidebar-label">My Courses</span>
+          </a>
+          <a href="assignment.html" class="sidebar-link" data-tooltip="Assignments">
+            <span class="sidebar-icon"><i class="fa fa-tasks"></i></span>
+            <span class="sidebar-label">Assignments</span>
+          </a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Training & Placement</div>
+          <a href="training.html" class="sidebar-link" data-tooltip="Training Programs">
+            <span class="sidebar-icon"><i class="fa fa-graduation-cap"></i></span>
+            <span class="sidebar-label">Training Programs</span>
+          </a>
+          <a href="live-classes.html" class="sidebar-link" data-tooltip="Live Classes">
+            <span class="sidebar-icon"><i class="fa fa-video-camera"></i></span>
+            <span class="sidebar-label">Live Classes</span>
+          </a>
+          <a href="notes.html" class="sidebar-link" data-tooltip="Notes">
+            <span class="sidebar-icon"><i class="fa fa-file-text"></i></span>
+            <span class="sidebar-label">Notes</span>
+          </a>
+          <a href="tasks.html" class="sidebar-link active" data-tooltip="Tasks">
+            <span class="sidebar-icon"><i class="fa fa-check-square-o"></i></span>
+            <span class="sidebar-label">Tasks</span>
+          </a>
+          <a href="placement.html" class="sidebar-link" data-tooltip="Placement Training">
+            <span class="sidebar-icon"><i class="fa fa-briefcase"></i></span>
+            <span class="sidebar-label">Placement Dashboard</span>
+          </a>
+          <a href="resume-builder.html" class="sidebar-link" data-tooltip="Resume Builder">
+            <span class="sidebar-icon"><i class="fa fa-id-card-o"></i></span>
+            <span class="sidebar-label">Resume Builder</span>
+          </a>
+          <a href="portfolio.html" class="sidebar-link" data-tooltip="Portfolio Builder">
+            <span class="sidebar-icon"><i class="fa fa-globe"></i></span>
+            <span class="sidebar-label">Portfolio Builder</span>
+          </a>
+          <a href="placement-tracker.html" class="sidebar-link" data-tooltip="Placement Tracker">
+            <span class="sidebar-icon"><i class="fa fa-line-chart"></i></span>
+            <span class="sidebar-label">Placement Tracker</span>
+          </a>
+          <a href="reports.html" class="sidebar-link" data-tooltip="Reports">
+            <span class="sidebar-icon"><i class="fa fa-file-pdf-o"></i></span>
+            <span class="sidebar-label">Reports</span>
+          </a>
+        </div>
+      `;
+    }
+  }
+
+  function renderBoard() {
+    const list = TP.db.tasks;
+    const colPending = document.getElementById('colPending');
+    const colSubmitted = document.getElementById('colSubmitted');
+    const colReviewed = document.getElementById('colReviewed');
+
+    if (user.role === 'faculty') {
+      document.getElementById('facultyActions').style.display = 'block';
+    }
+
+    const pending = list.filter(t => t.status === 'Pending');
+    const submitted = list.filter(t => t.status === 'Submitted');
+    const reviewed = list.filter(t => t.status === 'Reviewed');
+
+    document.getElementById('countPending').innerText = pending.length;
+    document.getElementById('countSubmitted').innerText = submitted.length;
+    document.getElementById('countReviewed').innerText = reviewed.length;
+
+    // Render columns
+    colPending.innerHTML = renderTaskCards(pending, 'Pending');
+    colSubmitted.innerHTML = renderTaskCards(submitted, 'Submitted');
+    colReviewed.innerHTML = renderTaskCards(reviewed, 'Reviewed');
+  }
+
+  function renderTaskCards(tasks, status) {
+    if (tasks.length === 0) {
+      return '<div class="text-muted text-center text-xs py-4">No tasks in this list</div>';
+    }
+
+    return tasks.map(t => {
+      const isFaculty = user.role === 'faculty';
+      const due = new Date(t.due);
+      const isOverdue = due < new Date() && t.status === 'Pending';
+      const dueText = isOverdue ? 'Overdue!' : `Due ${Format.date(due)}`;
+      
+      let clickAction = '';
+      if (isFaculty) {
+        if (status === 'Submitted') {
+          clickAction = `onclick="openGradeModal('${t.id}')"`;
+        }
+      } else {
+        if (status === 'Pending') {
+          clickAction = `onclick="openSubmitModal('${t.id}')"`;
+        }
+      }
+
+      return `
+        <div class="task-card" ${clickAction}>
+          <div class="task-card-title">${t.title}</div>
+          <div class="task-card-course">${t.course}</div>
+          <div class="task-card-meta">
+            <div class="task-due ${isOverdue ? 'overdue' : ''}"><i class="fa fa-calendar"></i> ${dueText}</div>
+            ${t.points ? `<span class="badge-status reviewed" style="font-size:0.68rem; padding: 2px 6px;">Score: ${t.points}/${t.maxPoints}</span>` : ''}
+          </div>
+          ${t.feedback ? `<p class="text-xs text-muted mt-2" style="border-top: 1px solid var(--border); padding-top: 6px;"><strong>Remark:</strong> ${t.feedback}</p>` : ''}
+        </div>
+      `;
+    }).join('');
+  }
+
+  function openSubmitModal(id) {
+    const t = TP.db.tasks.find(task => task.id === id);
+    if (!t) return;
+
+    document.getElementById('submitTaskId').value = t.id;
+    document.getElementById('submitTaskTitle').innerText = t.title;
+    document.getElementById('submitTaskCriteria').innerText = t.criteria;
+    Modal.open('submitAssignmentModal');
+  }
+
+  function updateSelectedSolName() {
+    const input = document.getElementById('solFileInput');
+    const label = document.getElementById('selectedSolName');
+    if (input.files.length > 0) {
+      label.innerHTML = `Selected: <strong>${input.files[0].name}</strong>`;
+    }
+  }
+
+  async function handleSubmitAssignment(e) {
+    e.preventDefault();
+    const id = document.getElementById('submitTaskId').value;
+    const file = document.getElementById('solFileInput').files[0];
+    if (!file) return;
+
+    await TP.submitAssignment(id, file.name);
+    Modal.close('submitAssignmentModal');
+    document.getElementById('submitAssignmentForm').reset();
+    document.getElementById('selectedSolName').innerText = 'Supports ZIP, PY, JAVA, JS, PDF up to 10MB';
+    renderBoard();
+    Toast.success('Submitted', 'Solution uploaded and queued for review.');
+  }
+
+  function openGradeModal(id) {
+    const t = TP.db.tasks.find(task => task.id === id);
+    if (!t) return;
+
+    document.getElementById('gradeTaskId').value = t.id;
+    document.getElementById('gradeTaskTitle').innerText = t.title;
+    document.getElementById('gradeStudentName').innerText = 'Submitted by student: John Doe';
+    document.getElementById('gradeFileName').innerText = t.submissionFile || 'solution.zip';
+    document.getElementById('gradeFileDate').innerText = 'Submitted ' + Format.relative(t.submissionDate);
+    
+    Modal.open('gradeAssignmentModal');
+  }
+
+  async function handleGradeAssignment(e) {
+    e.preventDefault();
+    const id = document.getElementById('gradeTaskId').value;
+    const score = parseInt(document.getElementById('gradeScore').value);
+    const feedback = document.getElementById('gradeFeedback').value;
+
+    await TP.gradeAssignment(id, score, feedback);
+    Modal.close('gradeAssignmentModal');
+    document.getElementById('gradeAssignmentForm').reset();
+    renderBoard();
+    Toast.success('Graded', 'Task evaluated successfully.');
+  }
+
+  async function handleCreateAssignment(e) {
+    e.preventDefault();
+    const title = document.getElementById('taskTitle').value;
+    const course = document.getElementById('taskCourse').value;
+    const due = document.getElementById('taskDue').value;
+    const criteria = document.getElementById('taskCriteria').value;
+
+    await TP.createAssignment(title, course, due, criteria);
+    Modal.close('createAssignmentModal');
+    document.getElementById('createAssignmentForm').reset();
+    renderBoard();
+    Toast.success('Success', 'New task added to board.');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderSidebarNav();
+    renderBoard();
+  });
+</script>
+</body>
+</html>

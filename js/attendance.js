@@ -5,38 +5,38 @@
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
-// Generate realistic attendance for the current year
-function generateAttendanceData() {
+// Load logged in student's real data from users list
+function getStudentAttendanceData() {
+  const user = Auth.getUser();
+  const users = Store.get('users', []);
+  const student = users.find(u => u.email === user.email) || user;
+  const logs = student.attendanceLogs || [];
+  
   const data = {};
-  const now  = new Date();
+  logs.forEach(log => {
+    data[log.date] = log.status.toLowerCase();
+  });
+  
+  // Seed holidays for visual completeness in calendar
+  const now = new Date();
   const year = now.getFullYear();
-
-  for (let m = 0; m < now.getMonth() + 1; m++) {
-    for (let d = 1; d <= 28; d++) {
+  for (let m = 0; m <= now.getMonth(); m++) {
+    for (let d = 1; d <= 31; d++) {
       const date = new Date(year, m, d);
       if (date > now) break;
-      const day = date.getDay();
-      if (day === 0 || day === 6) continue; // Skip weekends
-
       const key = `${year}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-
-      // Holidays
+      
+      // Holiday mappings
       if ((m === 0 && d === 1) || (m === 7 && d === 15) || (m === 9 && d === 2)) {
         data[key] = 'holiday';
-        continue;
       }
-
-      const rand = Math.random();
-      if (rand < 0.80) data[key] = 'present';
-      else if (rand < 0.90) data[key] = 'late';
-      else data[key] = 'absent';
     }
   }
-
+  
   return data;
 }
 
-let attendanceData = Store.get('attendance_data', null) || generateAttendanceData();
+let attendanceData = getStudentAttendanceData();
 let viewYear   = new Date().getFullYear();
 let viewMonth  = new Date().getMonth();
 let viewSubject = 'all';
@@ -192,37 +192,47 @@ function renderMonthlyTrendChart() {
   });
 }
 
-// ── Subject Breakdown ──────────────────────────────────────────
-function renderSubjectAttendance() {
-  const container = document.getElementById('subjectAttendance');
+// ── Session Attendance Logs History ──────────────────────────────────
+function renderSessionAttendanceLogs() {
+  const container = document.getElementById('sessionAttendanceLogs');
   if (!container) return;
 
-  const subjects = [
-    { name: 'Web Development', present: 22, total: 24 },
-    { name: 'Machine Learning', present: 18, total: 22 },
-    { name: 'UI/UX Design', present: 20, total: 20 },
-    { name: 'Data Structures', present: 16, total: 20 },
-    { name: 'Database Management', present: 14, total: 18 }
-  ];
+  const user = Auth.getUser();
+  const users = Store.get('users', []);
+  const student = users.find(u => u.email === user.email) || user;
+  const logs = student.attendanceLogs || [];
 
-  container.innerHTML = subjects.map(s => {
-    const pct = Math.round(s.present / s.total * 100);
+  if (logs.length === 0) {
+    container.innerHTML = '<div class="text-muted text-center py-4">No class logs found. Join live sessions to generate records.</div>';
+    return;
+  }
+
+  // Sort logs by date descending
+  const sortedLogs = [...logs].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  container.innerHTML = sortedLogs.map(log => {
+    let statusClass = 'primary';
+    if (log.status === 'Present') statusClass = 'success';
+    else if (log.status === 'Late') statusClass = 'warning';
+    else if (log.status === 'Absent') statusClass = 'danger';
+
     return `
-      <div class="report-row">
-        <div class="report-subject">${s.name}</div>
-        <div class="report-bar" style="flex:2;padding:0 16px">
-          <div class="progress">
-            <div class="progress-bar ${pct >= 85 ? 'success' : pct >= 70 ? '' : 'warning'}"
-                 data-width="${pct}" style="width:0%"></div>
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding:12px 0; gap:16px;">
+        <div style="flex:1;">
+          <div class="font-semi" style="font-size:0.95rem; color:var(--text);">${log.className}</div>
+          <div style="font-size:0.78rem; color:var(--text-muted); margin-top:3px;">
+            Mentor: <strong>${log.faculty}</strong> · Date: ${log.date}
+          </div>
+          <div style="font-size:0.72rem; color:var(--text-light); margin-top:2px;">
+            Join: ${log.joinTime} · Exit: ${log.exitTime} · Duration: ${log.durationMinutes} mins · Dev: ${log.device || 'Web Browser'}
           </div>
         </div>
-        <div class="report-score" style="color:${pct >= 85 ? 'var(--success)' : pct >= 70 ? 'var(--primary)' : 'var(--warning)'}">${pct}%</div>
-        <div style="font-size:0.78rem;color:var(--text-muted);white-space:nowrap">${s.present}/${s.total}</div>
+        <div style="text-align:right;">
+          <span class="badge badge-${statusClass}">${log.status}</span>
+        </div>
       </div>
     `;
   }).join('');
-
-  initProgressBars();
 }
 
 // ── Month Navigation ───────────────────────────────────────────
@@ -255,5 +265,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderAttendanceCalendar();
   renderMonthlyTrendChart();
-  renderSubjectAttendance();
+  renderSessionAttendanceLogs();
 });

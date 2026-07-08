@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Placement Dashboard — Acadex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/training.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body id="studentDashboard">
+<div class="dashboard-layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fa fa-graduation-cap"></i></div>
+      <span class="sidebar-brand">ACAD<span>EX</span></span>
+    </div>
+
+    <a href="profile.html" class="sidebar-user">
+      <div class="sidebar-avatar" data-user-avatar></div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" data-user-name>Student</div>
+        <div class="sidebar-user-role">student</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Main</div>
+        <a href="student.html" class="sidebar-link" data-tooltip="Dashboard">
+          <span class="sidebar-icon"><i class="fa fa-th-large"></i></span>
+          <span class="sidebar-label">Dashboard</span>
+        </a>
+        <a href="course.html" class="sidebar-link" data-tooltip="My Courses">
+          <span class="sidebar-icon"><i class="fa fa-book"></i></span>
+          <span class="sidebar-label">My Courses</span>
+        </a>
+        <a href="assignment.html" class="sidebar-link" data-tooltip="Assignments">
+          <span class="sidebar-icon"><i class="fa fa-tasks"></i></span>
+          <span class="sidebar-label">Assignments</span>
+        </a>
+      </div>
+      
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Training & Placement</div>
+        <a href="training.html" class="sidebar-link" data-tooltip="Training Programs">
+          <span class="sidebar-icon"><i class="fa fa-graduation-cap"></i></span>
+          <span class="sidebar-label">Training Programs</span>
+        </a>
+        <a href="live-classes.html" class="sidebar-link" data-tooltip="Live Classes">
+          <span class="sidebar-icon"><i class="fa fa-video-camera"></i></span>
+          <span class="sidebar-label">Live Classes</span>
+        </a>
+        <a href="notes.html" class="sidebar-link" data-tooltip="Notes Submissions">
+          <span class="sidebar-icon"><i class="fa fa-file-text"></i></span>
+          <span class="sidebar-label">Notes</span>
+        </a>
+        <a href="tasks.html" class="sidebar-link" data-tooltip="Task Management">
+          <span class="sidebar-icon"><i class="fa fa-check-square-o"></i></span>
+          <span class="sidebar-label">Tasks</span>
+        </a>
+        <a href="placement.html" class="sidebar-link active" data-tooltip="Placement Training">
+          <span class="sidebar-icon"><i class="fa fa-briefcase"></i></span>
+          <span class="sidebar-label">Placement Dashboard</span>
+        </a>
+        <a href="resume-builder.html" class="sidebar-link" data-tooltip="Resume Builder">
+          <span class="sidebar-icon"><i class="fa fa-id-card-o"></i></span>
+          <span class="sidebar-label">Resume Builder</span>
+        </a>
+        <a href="portfolio.html" class="sidebar-link" data-tooltip="Portfolio Builder">
+          <span class="sidebar-icon"><i class="fa fa-globe"></i></span>
+          <span class="sidebar-label">Portfolio Builder</span>
+        </a>
+        <a href="placement-tracker.html" class="sidebar-link" data-tooltip="Placement Tracker">
+          <span class="sidebar-icon"><i class="fa fa-line-chart"></i></span>
+          <span class="sidebar-label">Placement Tracker</span>
+        </a>
+        <a href="reports.html" class="sidebar-link" data-tooltip="Reports">
+          <span class="sidebar-icon"><i class="fa fa-file-pdf-o"></i></span>
+          <span class="sidebar-label">Reports</span>
+        </a>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Achievements</div>
+        <a href="certificate.html" class="sidebar-link" data-tooltip="Certificates">
+          <span class="sidebar-icon"><i class="fa fa-certificate"></i></span>
+          <span class="sidebar-label">Certificates</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" data-logout data-tooltip="Logout">
+        <span class="sidebar-icon"><i class="fa fa-sign-out"></i></span>
+        <span class="sidebar-label">Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="main-content" id="mainContent">
+    <!-- Inner Navbar -->
+    <header class="inner-navbar" id="innerNavbar">
+      <div class="inner-navbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
+        <div class="breadcrumb">
+          <a href="student.html">LMS</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Placement Dashboard</span>
+        </div>
+      </div>
+      <div class="inner-navbar-right">
+        <button class="theme-toggle notif-btn" title="Toggle theme"><i class="fa fa-moon"></i></button>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-content tp-animate-in">
+      <div class="tp-page-header">
+        <div>
+          <h1 class="page-title">Placement Preparation</h1>
+          <p class="page-subtitle">Hone your corporate skills, practice aptitude tests, and track your syllabus readiness.</p>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Left: Category list -->
+        <div style="grid-column: span 2;">
+          <h2 class="card-title" style="margin-bottom: 16px;"><i class="fa fa-tasks" style="color:var(--primary)"></i> Category Preparation Status</h2>
+          <div class="placement-grid" id="categoriesGrid"></div>
+        </div>
+
+        <!-- Right: Readiness index & Radar Chart -->
+        <div>
+          <!-- Readiness summary gauge -->
+          <div class="card" style="margin-bottom: 24px;">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-dashboard" style="color:var(--accent)"></i> Preparation Score</span>
+            </div>
+            <div class="card-body">
+              <div class="gauge-wrap">
+                <svg width="180" height="110" class="gauge-svg">
+                  <!-- Semi-circular SVG ring gauge -->
+                  <path d="M 20 90 A 70 70 0 0 1 160 90" fill="none" stroke-width="14" class="gauge-bg"></path>
+                  <path d="M 20 90 A 70 70 0 0 1 160 90" fill="none" stroke-width="14" stroke="var(--primary)" class="gauge-fill" id="readinessGaugeFill" stroke-dasharray="220" stroke-dashoffset="220"></path>
+                  <text x="90" y="85" class="gauge-score" id="readinessScoreText">0</text>
+                </svg>
+                <div class="gauge-status ready" id="readinessStatusBadge">Job Ready</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preparation Radar Chart -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title"><i class="fa fa-dot-circle-o" style="color:var(--primary)"></i> Prep Coverage</span>
+            </div>
+            <div class="card-body">
+              <div style="max-height: 220px; position: relative;">
+                <canvas id="prepRadarChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/training.js"></script>
+<script>
+  function renderPrepCategories() {
+    const list = TP.db.placementCategories;
+    const grid = document.getElementById('categoriesGrid');
+    if (!grid) return;
+
+    const icons = {
+      'Aptitude Training': 'fa-calculator',
+      'Technical Training': 'fa-code-fork',
+      'Coding Practice': 'fa-code',
+      'Verbal Ability': 'fa-font',
+      'Logical Reasoning': 'fa-puzzle-piece',
+      'Communication Skills': 'fa-comments-o',
+      'Soft Skills': 'fa-user',
+      'Group Discussion Prep': 'fa-users',
+      'HR Interview Prep': 'fa-briefcase',
+      'Mock Interviews': 'fa-microphone'
+    };
+
+    grid.innerHTML = list.map((c, index) => `
+      <div class="placement-cat-card c${(index % 10) + 1}">
+        <div class="placement-cat-icon">
+          <i class="fa ${icons[c.name] || 'fa-book'}"></i>
+        </div>
+        <div class="placement-cat-name">${c.name}</div>
+        <div class="tp-progress-bar">
+          <div class="tp-progress-fill" style="width: ${c.progress}%"></div>
+        </div>
+        <div class="placement-cat-pct">${c.progress}%</div>
+      </div>
+    `).join('');
+
+    // Readiness Gauge Calculation
+    const summary = TP.getPlacementReadiness();
+    document.getElementById('readinessScoreText').innerText = summary.score;
+    
+    // Set gauge status badge
+    const badge = document.getElementById('readinessStatusBadge');
+    badge.innerText = summary.status;
+    badge.className = 'gauge-status ' + (summary.status === 'Job Ready' ? 'ready' : summary.status === 'Almost Ready' ? 'partial' : 'not-ready');
+
+    // SVG arc stroke-dasharray is approx 220. Let's animate
+    const dash = 220;
+    const offset = dash - (summary.score / 100) * dash;
+    document.getElementById('readinessGaugeFill').setAttribute('stroke-dashoffset', offset);
+
+    // Render Chart
+    renderRadarChart(list);
+  }
+
+  function renderRadarChart(categories) {
+    const canvas = document.getElementById('prepRadarChart');
+    if (!canvas) return;
+
+    const labels = categories.map(c => c.name);
+    const dataValues = categories.map(c => c.progress);
+
+    const isDark = Theme.isDark();
+    const textColor = isDark ? '#94A3B8' : '#64748B';
+    const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+
+    new Chart(canvas, {
+      type: 'radar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Preparation %',
+          data: dataValues,
+          backgroundColor: 'rgba(37,99,235,0.2)',
+          borderColor: '#2563EB',
+          borderWidth: 2,
+          pointBackgroundColor: '#2563EB'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          r: {
+            grid: { color: gridColor },
+            angleLines: { color: gridColor },
+            pointLabels: {
+              color: textColor,
+              font: { size: 9, weight: 'bold' }
+            },
+            ticks: {
+              display: false,
+              stepSize: 20
+            },
+            suggestedMin: 0,
+            suggestedMax: 100
+          }
+        }
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(renderPrepCategories, 100);
+  });
+</script>
+</body>
+</html>

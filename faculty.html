@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="css/sidebar.css">
   <link rel="stylesheet" href="css/dashboard.css">
   <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/training.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
@@ -55,6 +56,28 @@
           <span class="sidebar-badge" id="pendingGradesBadge">2</span>
         </a>
       </div>
+
+      <!-- Training & Placement Sidebar Group -->
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Training & Placement</div>
+        <a href="live-classes.html" class="sidebar-link" data-tooltip="Live Classes">
+          <span class="sidebar-icon"><i class="fa fa-video-camera"></i></span>
+          <span class="sidebar-label">Live Classes</span>
+        </a>
+        <a href="notes.html" class="sidebar-link" data-tooltip="Notes Review">
+          <span class="sidebar-icon"><i class="fa fa-file-text"></i></span>
+          <span class="sidebar-label">Notes Review</span>
+        </a>
+        <a href="tasks.html" class="sidebar-link" data-tooltip="Task Management">
+          <span class="sidebar-icon"><i class="fa fa-check-square-o"></i></span>
+          <span class="sidebar-label">Task Management</span>
+        </a>
+        <a href="reports.html" class="sidebar-link" data-tooltip="Reports">
+          <span class="sidebar-icon"><i class="fa fa-file-pdf-o"></i></span>
+          <span class="sidebar-label">Reports</span>
+        </a>
+      </div>
+
       <div class="sidebar-group">
         <div class="sidebar-group-label">Reports</div>
         <a href="attendance.html" class="sidebar-link" data-tooltip="Attendance">
@@ -239,6 +262,56 @@
           </table>
         </div>
       </div>
+
+      <!-- Performance Interventions & Alerts -->
+      <div class="card" style="margin-top:24px; border-color: rgba(239, 68, 68, 0.15); background: rgba(239, 68, 68, 0.01);">
+        <div class="card-header" style="background: rgba(239, 68, 68, 0.05); border-bottom: 1px solid rgba(239,68,68,0.15);">
+          <span class="card-title" style="color: var(--danger);"><i class="fa fa-exclamation-triangle"></i> Student Performance Interventions & Alerts</span>
+        </div>
+        <div class="card-body" style="padding:16px 20px;">
+          <div class="table-container" style="max-height: 240px; overflow-y: auto;">
+            <table class="table" style="margin-bottom:0;">
+              <thead>
+                <tr>
+                  <th>Student Details</th>
+                  <th>Alert Triggers</th>
+                  <th>Attendance</th>
+                  <th>Progress Parameters</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="facultyInterventionTable">
+                <tr><td colspan="5" class="text-center text-muted" style="padding:16px;">All students on track. No interventions required.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Student Directory Section -->
+      <div class="card" style="margin-top:24px;">
+        <div class="card-header">
+          <span class="card-title"><i class="fa fa-users" style="color:var(--accent)"></i> Student Directory & Lifecycle Management</span>
+        </div>
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Student Details</th>
+                <th>Course Enrolled</th>
+                <th>Progress (Course / Intern / Project)</th>
+                <th>Attendance</th>
+                <th>Recommendation</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="facultyStudentDirectoryTable">
+              <tr><td colspan="6" class="text-center" style="padding:32px;color:var(--text-muted)">Loading students...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
   </main>
 </div>
@@ -305,6 +378,7 @@
 
 <script src="js/app.js"></script>
 <script src="js/faculty.js"></script>
+<script src="js/training.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const pending = document.getElementById('pendingCount');
